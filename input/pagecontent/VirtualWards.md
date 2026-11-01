@@ -59,7 +59,7 @@ sequenceDiagram
 
 | Step | What happens | Interaction | FHIR |
 |---|---|---|---|
-| Refer | Initiator refers; a single point of access may triage and forward | [PCC-55](PCC-55.html) | [Referral Request](StructureDefinition-ReferralRequest.html) |
+| Refer | Initiator refers, with the ward's eligibility form ([Referral Forms](ReferralForms.html)); a single point of access may triage and forward | [PCC-55](PCC-55.html) | [Referral Request](StructureDefinition-ReferralRequest.html) |
 | Accept / decline | Virtual ward team accepts, or declines (e.g. needs face-to-face hospital care) | [PCC-55](PCC-55.html), [PCC-56](PCC-56.html) | [Referral Task](StructureDefinition-ReferralTask.html) |
 | Admit | The stay starts; the patient's home is the location | HL7 v2 ADT A01 / A04 - **To confirm** which event trusts use | [Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html) |
 | Plan | Monitoring, visits, medication and escalation plan, shared with the care team | [Dynamic Care Planning](DCP.html) | [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html) |
@@ -118,14 +118,14 @@ inside the receiving organisation, not the interface between providers.
 
 ### Example
 
-A GP refers Mrs Jones, who has an exacerbation of COPD, to the respiratory virtual ward
+A GP refers Sansa MANCHESTER (an [NW GMSA test patient](https://nw-gmsa.github.io/en/testing.html#test-patients)), who has an exacerbation of COPD, to the respiratory virtual ward
 instead of admitting her to hospital (step-up):
 
 | Step | Example |
 |---|---|
 | Referral Request [PCC-55] | [GP to respiratory virtual ward](ServiceRequest-VirtualWardReferral.html) |
 | Accept [PCC-55] | [Virtual ward accepted](Task-VirtualWardReferralAccepted.html) |
-| Virtual ward stay | [Encounter](Encounter-VirtualWardStay.html) at the [patient's home](Location-PatientJonesHome.html) |
+| Virtual ward stay | [Encounter](Encounter-VirtualWardStay.html) at the [patient's home](Location-PatientManchesterHome.html) |
 | Care plan | [Remote monitoring care plan](CarePlan-VirtualWardPlan.html) |
 | Monitoring | [SpO2 reading](Observation-VirtualWardSpO2.html) |
 | Referral Outcome [PCC-57] | [Discharge report (HDR)](Bundle-VirtualWardDischargeReport.html), [completed](Task-VirtualWardReferralCompleted.html) |

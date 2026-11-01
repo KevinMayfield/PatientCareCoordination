@@ -15,7 +15,7 @@ against NHS England virtual ward data collection rules.
 """
 
 * identifier 1..* MS
-* identifier ^short = "Hospital provider spell number / visit number"
+* identifier ^short = "Hospital Provider Spell Identifier (Account Number, type AN) - see Patient Administration"
 * status MS
 * class = $v3-ActCode#IMP
 * serviceType 1..1 MS

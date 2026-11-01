@@ -30,6 +30,22 @@ outside `input/`. Dates are when the source was checked.
 | 22 | Is the EPS dispense notification returned to the prescriber's system, or only visible in the prescription tracker? | NHS England EPS team | To confirm |
 | 23 | EPS FHIR API message / operation names (prescription, cancel, release, return, dispense notification) and the prescription ID element | EPS FHIR API specification | To confirm |
 | 24 | How virtual wards prescribe today (EPS in secondary / community care, FP10, hospital pharmacy) | NHS England virtual wards / EPS teams | To confirm |
+| 25 | How a service publishes its referral form (HealthcareService, directory, ActivityDefinition / PlanDefinition) | IG authors | Open |
+| 26 | Align Task.input / output types with the SDC form-request pattern and the Physical Activity IG | IG authors | To confirm |
+| 27 | HL7 v2 for a form requested after referral (no 360X equivalent) | IG authors | Open |
+| 28 | PAR-Q+ licence terms for publishing it as a FHIR Questionnaire (example form is illustrative, not PAR-Q+) | PAR-Q+ Collaboration | To confirm |
+| 29 | Health Data API Document Access Provider lacks the `related` search parameter, so documents cannot be found by referral | HL7 Europe / Xt-EHR | Open |
+| 30 | Does an accepted referral establish the legitimate relationship for the Recipient to query the record before the patient is seen? | IG authors, information governance | To confirm |
+| 31 | Single Patient Record architecture and APIs (fact sheet 19 May 2026 gives none) | NHS England / DHSC | Open |
+| 32 | QEDm covers procedures; Health Data API Resource Access Provider does not list Procedure | IG authors | To confirm |
+| 33 | Which HL7 v2 field each trust uses for the spell (Account Number): PID-18 (HL7 v2 definition) or PV1-19 with CX.5 AN (NW GMSA PV1) | Trust integration teams | To confirm |
+| 34 | Consultant episode (NHS Data Dictionary) - model as Encounter partOf the spell, or not at all? | IG authors | Open |
+| 35 | A&E attendance followed by admission: NW GMSA Hospital Spell + Visit vs Interweave Encounter Grouping | NW GMSA / Interweave authors | To confirm |
+| 36 | Replace the copied NW GMSA admin profiles with a shared NW core package (see #16) | NW GMSA IG authors | Open |
+| 37 | FHIR code system for NHS Data Dictionary ACCOMMODATION STATUS CODE (Social Context uses free text) | NHS England terminology | To confirm |
+| 38 | Can the IG Publisher / tx.fhir.org expand the UK refsets used by Social Context (1027891000000106, 999001571000000109, 999000891000000102)? Same issue as Imaging #15 | IG authors | To confirm |
+| 39 | RF1-11 External Referral Identifier for the UBRN in REF_I12 - NHS practice? | Trust integration teams | To confirm |
+| 40 | PAR-Q+ in a FHIR Questionnaire needs written permission from the PAR-Q+ Collaboration (eparmedx@gmail.com); the example is structure-only | IG authors | Open |
 | 17 | Publisher / canonical: copied the NHS North West Genomics publisher and `fhir.nwgenomics.nhs.uk` canonical from the sibling IGs - confirm this is right for a general referral guide | IG authors | To confirm |
 
 ## Sources Checked (2026-11-01)
@@ -52,6 +68,21 @@ outside `input/`. Dates are when the source was checked.
 - eRS FHIR API catalogue page is rendered by JavaScript; eRS details taken from the
   NW GMSA Genetic Referrals analysis.
 - SNOMED CT UK Edition codes and LOINC codes in terminology.md checked on tx.fhir.org.
+- HL7 Physical Activity IG 1.0.1 STU 1, workflow page (continuous build): Care Manager, Full / Light
+  Service Provider, Patient Engagement App; Task drives the workflow; outcome DiagnosticReport (PDF);
+  Questionnaire only for patient feedback; no PAR-Q.
+- GOV.UK Health Bill single patient record fact sheet, published 2026-05-19: clinicians 80% by March
+  2027, NHS App from 2028; "build on and connect with existing ... source systems"; no architecture.
+- IHE QEDm 3.0.0 (2024-12-12), IHE MHD 4.2.5 (package 2026-10-18).
+- Interweave IG 0.1.0 (2024-09-30): Encounter (one encounter per continuous care setting, one level of
+  hierarchy, no planned status, account discouraged), Encounter Grouping (class GROUPING),
+  EpisodeOfCare (referralRequest, careManager, team), Location, Schedule, Slot.
+- NW GMSA artifacts section 7 = Resource Profiles; Encounter / HospitalSpell / Visit / HospitalProviderSpellIdentifier
+  copied from ../FHIRGenomics (commit 82022faf).
+- PRSB Core Information Standard v2.01 JSON (Core-Information-Standard-v2_01_FINAL.json, April 2026): Social context
+  elements and code sets used for the Social Context questionnaire.
+- PAR-Q+ 2025 for individuals (PARQPlus2025Fillable.pdf) and terms and conditions: reproduction and electronic
+  incorporation need prior written authorisation.
 - GP Connect specifications page: Access Record HTML 0.7.4, Appointment Management
   1.2.7-beta, Access Record Structured 1.5.0-beta, Access Document 1.5.1-beta (link points
   to 1.5.0-beta), Send Document 2.0.2, Update Record 1.2.1-public-beta.

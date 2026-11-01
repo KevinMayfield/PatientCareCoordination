@@ -62,6 +62,12 @@ flowchart LR
   document sharing alternatives.
 - **The referral identifier closes the loop.** Every message about a referral,
   in either direction, carries the Referral Initiator's Referral ID (PCC TF-1 X.1.3).
+- **Share data through APIs; keep messages for workflow.** Sharing the record through
+  an API ([EU Health Data API](HealthDataAPI.html): IHE QEDm and MHD) is highly
+  recommended. It significantly reduces the data passed around in messages, leaving
+  messaging to focus on workflow. This is the hoped-for outcome of the NHS England
+  Single Patient Record; the referral and report exchanges are the core of what is
+  often called "write back".
 - **Reports are FHIR Documents.** Outcomes follow
   [HL7 Europe Hospital Discharge Report (HDR)](https://hl7.eu/fhir/hdr/), the likely
   successor to Transfer of Care, and are shared through the
@@ -74,9 +80,9 @@ flowchart LR
 
 | Volume | Pages |
 |---|---|
-| Analysis and Design (Volume 1) | [Clinical Process](ClinicalProcess.html), [Order and Report Workflow Pattern](WorkflowPatterns.html), [Closed Loop Referral (360X)](360X.html), [NHS England Referral and Report Services](NHSEngland.html), [Referral Outcome Reports](Reports.html), [Virtual Wards (Hospital at Home)](VirtualWards.html), [Dynamic Care Planning (DCP)](DCP.html) |
-| Interactions (Volume 2) | [Exchange Options](Transport.html), [Referral Request [PCC-55]](PCC-55.html), [Referral Decline [PCC-56]](PCC-56.html), [Referral Outcome [PCC-57]](PCC-57.html), [Referral Cancellation [PCC-58]](PCC-58.html), [Interim Consultation Note [PCC-59]](PCC-59.html), [Appointment [PCC-60] / No-Show [PCC-61]](PCC-60.html) |
-| Data Models (Volume 3) | [FHIR Resources](DataModel.html), [Referral logical model](StructureDefinition-Referral.html), [Terminology](terminology.html) |
+| Analysis and Design (Volume 1) | [Clinical Process](ClinicalProcess.html), [Order and Report Workflow Pattern](WorkflowPatterns.html), [Closed Loop Referral (360X)](360X.html), [Referral Forms](ReferralForms.html), [NHS England Referral and Report Services](NHSEngland.html), [Referral Outcome Reports](Reports.html), [EU Health Data API](HealthDataAPI.html), [Virtual Wards (Hospital at Home)](VirtualWards.html), [Dynamic Care Planning (DCP)](DCP.html) |
+| Interactions (Volume 2) | [Exchange Options](Transport.html), [Referral Request [PCC-55]](PCC-55.html), [Patient Referral [I12]](I12.html), [Referral Decline [PCC-56]](PCC-56.html), [Referral Outcome [PCC-57]](PCC-57.html), [Referral Cancellation [PCC-58]](PCC-58.html), [Interim Consultation Note [PCC-59]](PCC-59.html), [Appointment [PCC-60] / No-Show [PCC-61]](PCC-60.html), [Query Existing Data [PCC-44]](QEDm.html), [Document Sharing [MHD]](MHD.html) |
+| Data Models (Volume 3) | [Patient Administration](PatientAdministration.html), [FHIR Resources](DataModel.html), [Referral logical model](StructureDefinition-Referral.html), [Terminology](terminology.html) |
 {:.grid}
 
 ### Related Guides
@@ -86,5 +92,6 @@ flowchart LR
 - [NW GMSA](https://nw-gmsa.github.io/en/) - laboratory workflow, enterprise integration patterns and the Health Data API; [Genetic Referrals](https://nw-gmsa.github.io/en/GeneticReferrals.html) applies the same closed loop to clinical genetics
 - [Cancer Pathology Report](https://kevinmayfield.github.io/CancerPathologyReport/) and [Enterprise Imaging](https://kevinmayfield.github.io/Imaging/) - the same order and report pattern for pathology and radiology
 - [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/) (1.0.0 STU 1) and [EU Health Data API](https://hl7.eu/fhir/health-data-api/1.0.0-ballot/en/) (1.0.0-ballot)
+- [HL7 Physical Activity IG](https://build.fhir.org/ig/HL7/physical-activity/workflow.html) - a recent FHIR referral workflow (ServiceRequest, Task, Observations, Subscription)
 - [HL7 AU eRequesting](https://build.fhir.org/ig/hl7au/au-fhir-erequesting/) - a national FHIR order workflow using ServiceRequest and Task
 

@@ -81,7 +81,9 @@ erDiagram
 | [Discharge Report](StructureDefinition-DischargeReport.html) / [Document](StructureDefinition-DischargeReportDocument.html) | HL7 Europe HDR Composition / Bundle | Outcome after an inpatient or virtual ward stay | PCC-57 (document) |
 | [Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html) | HL7 Europe HDR Encounter | Virtual ward stay | - |
 | [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html) | HL7 Europe HDR CarePlan | Virtual ward treatment plan | - (DCP) |
+| `Questionnaire` / `QuestionnaireResponse` (core) | - | Referral forms, in `supportingInfo` or `Task.input` / `output` - see [Referral Forms](ReferralForms.html) | OBX (ask at order entry) |
 | [Patient](StructureDefinition-Patient.html) | HL7 Europe Patient | Patient (NW GMSA conventions) | PID |
+| Core NHS patient administration - Organization, Practitioner, PractitionerRole, RelatedPerson, Location, Encounter, Hospital Spell, Visit, Episode Of Care, Schedule, Slot | NW GMSA / Interweave | See [Patient Administration](PatientAdministration.html) | PID, PV1, SCH |
 {:.grid}
 
 Identifier profiles: [Referral Identifier](StructureDefinition-ReferralIdentifier.html)
@@ -99,7 +101,8 @@ identifier data types (NHS Number, MRN, ODS code and others) are copied from the
 | Local patient identifier | PID-3 | `Patient.identifier:MedicalRecordNumber` | Each organisation |
 | Appointment ID | SCH-2 | `Appointment.identifier` | Referral Recipient |
 | Document ID | TXA-12 | `Composition.identifier`, `Bundle.identifier` | Referral Recipient |
-| Spell / visit number | PV1-19 | `Encounter.identifier` | Referral Recipient |
+| Account / Spell Number | PV1-19 (CX.5 `AN`; HL7 v2 PID-18) | `Encounter.identifier` type `AN` ([Hospital Spell](StructureDefinition-HospitalSpell.html)) | Referral Recipient |
+| Visit Number | PV1-19 (CX.5 `VN`) | `Encounter.identifier` type `VN` ([Visit](StructureDefinition-Visit.html)) | Referral Recipient |
 {:.grid}
 
 References to the referral **SHOULD** carry the Referral ID as `Reference.identifier`
@@ -134,6 +137,7 @@ one-to-one mapping (e.g. `IP` covers both accepted and in progress).
 
 | Scenario | Resources |
 |---|---|
-| GP to cardiology (360X Use Case #1) | [Patient](Patient-PatientPackton.html), [Referral](ServiceRequest-CardiologyReferral.html), [Accepted](Task-CardiologyReferralAccepted.html), [Declined](Task-CardiologyReferralDeclined.html), [Appointment](Appointment-CardiologyAppointment.html), [Interim note](Composition-CardiologyInterimNote.html), [Outcome note](Composition-CardiologyOutcomeNote.html), [Completed](Task-CardiologyReferralCompleted.html) |
-| GP to respiratory virtual ward (step-up) | [Patient](Patient-PatientJones.html), [Referral](ServiceRequest-VirtualWardReferral.html), [Accepted](Task-VirtualWardReferralAccepted.html), [Stay](Encounter-VirtualWardStay.html), [Care plan](CarePlan-VirtualWardPlan.html), [SpO2](Observation-VirtualWardSpO2.html), [Discharge report](Bundle-VirtualWardDischargeReport.html), [Completed](Task-VirtualWardReferralCompleted.html) |
+| GP to cardiology (360X Use Case #1) | [Patient](Patient-Patient-Tameside.html), [Referral](ServiceRequest-CardiologyReferral.html), [Accepted](Task-CardiologyReferralAccepted.html), [Declined](Task-CardiologyReferralDeclined.html), [Appointment](Appointment-CardiologyAppointment.html), [Interim note](Composition-CardiologyInterimNote.html), [Outcome note](Composition-CardiologyOutcomeNote.html), [Completed](Task-CardiologyReferralCompleted.html) |
+| GP to exercise on referral, with forms | [Referral](ServiceRequest-ExerciseReferral.html), [referrer's form](QuestionnaireResponse-ExerciseReferralFormResponse.html), [blood pressure](Observation-ExerciseReferralBloodPressure.html), [form requested](Task-ExerciseReferralFormRequested.html), [patient's form](QuestionnaireResponse-ExercisePreParticipationResponse.html), [activity baseline](Observation-ExerciseVitalSignBaseline.html), [in progress](Task-ExerciseReferralInProgress.html) |
+| GP to respiratory virtual ward (step-up) | [Patient](Patient-Patient-Manchester.html), [Referral](ServiceRequest-VirtualWardReferral.html), [Accepted](Task-VirtualWardReferralAccepted.html), [Stay](Encounter-VirtualWardStay.html), [Care plan](CarePlan-VirtualWardPlan.html), [SpO2](Observation-VirtualWardSpO2.html), [Discharge report](Bundle-VirtualWardDischargeReport.html), [Completed](Task-VirtualWardReferralCompleted.html) |
 {:.grid}

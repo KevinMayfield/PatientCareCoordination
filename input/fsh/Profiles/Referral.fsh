@@ -105,7 +105,8 @@ for referrals to a [virtual ward](VirtualWards.html).
 * reasonReference only Reference(Condition or Observation or DiagnosticReport or DocumentReference)
 
 * supportingInfo MS
-* supportingInfo ^short = "Clinical information: referral letter, FHIR Document, questionnaire response, results"
+* supportingInfo ^short = "Clinical information: referral form (QuestionnaireResponse), observations, referral letter, FHIR Document, results"
+* supportingInfo ^comment = "Forms completed at referral (ask at order entry), such as exercise pre-participation screening, are QuestionnaireResponses; the answers needed as data SHOULD also be sent as Observations. Attached forms (PDF) are DocumentReferences. See Referral Forms."
 
 * note MS
 * note ^short = "Referral question - the clinical question for the Referral Recipient (OBX with OBX-29 QST)"
@@ -167,10 +168,18 @@ the status mapping.
 
 * note MS
 
+* input MS
+* input ^short = "Form the Referral Recipient asks to be completed (Questionnaire), by the patient or the referrer"
+* input.type from ReferralTaskParameterVS (extensible)
+* input.value[x] only canonical or Reference
+* input.valueCanonical only Canonical(Questionnaire)
+* input.valueReference only Reference(Questionnaire or DocumentReference)
+
 * output MS
-* output ^short = "Appointment, interim consultation note or referral outcome"
+* output ^short = "Completed form, appointment, interim consultation note, progress observations or referral outcome"
+* output.type from ReferralTaskParameterVS (extensible)
 * output.value[x] only Reference
-* output.valueReference only Reference(Appointment or Composition or Bundle or DocumentReference or Encounter or CarePlan)
+* output.valueReference only Reference(QuestionnaireResponse or Observation or Appointment or Composition or Bundle or DocumentReference or DiagnosticReport or Encounter or CarePlan)
 
 // Appointment Notification [PCC-60] and No-Show Notification [PCC-61]
 
@@ -194,6 +203,9 @@ Option HL7 v2 `SIU^S12` (new), `SIU^S13` (reschedule), `SIU^S15` (cancel) and
 * basedOn ^short = "The referral (SCH-26 Referral ID)"
 * serviceType MS
 * reasonCode MS
+* slot MS
+* slot only Reference(Slot)
+* slot ^short = "The Slot booked (eRS, GP Connect Appointment Management and local booking all book Slots)"
 * start 1..1 MS
 * start ^short = "Appointment date and time (TQ1-7)"
 * end MS
@@ -225,6 +237,8 @@ Europe Hospital Discharge Report where they overlap.
 * subject 1..1 MS
 * subject only Reference(Patient)
 * encounter MS
+* encounter only Reference(Visit or HospitalSpell)
+* encounter ^short = "The outpatient attendance (Visit) or admission (Hospital Spell) the note is about"
 * date MS
 * author 1..* MS
 * title MS

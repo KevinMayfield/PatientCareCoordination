@@ -1,5 +1,6 @@
 // 360X Use Case #1 (PCP to Specialist) restated for the NHS: a GP refers a patient
-// with shortness of breath to a hospital cardiology service. Fictitious data.
+// with shortness of breath to a hospital cardiology service. Patients are NW GMSA test
+// patients (https://nw-gmsa.github.io/en/testing.html#test-patients); other data is fictitious.
 
 Alias: $sct = http://snomed.info/sct
 Alias: $loinc = http://loinc.org
@@ -15,35 +16,38 @@ Alias: $event-basedOn = http://hl7.org/fhir/StructureDefinition/event-basedOn
 
 // Participants
 
-Instance: PatientPackton
+Instance: Patient-Tameside
 InstanceOf: Patient
-Title: "Patient - Michael Packton"
-Description: "Fictitious patient referred by his GP to cardiology."
+Title: "Patient - Hodor TAMESIDE NHS Number: 9737383397"
+Description: "NW GMSA test patient (https://nw-gmsa.github.io/en/testing.html#test-patients), MFT MRN from the NW GMSA Testing MRN-Mapping. Referred by his GP to cardiology."
 Usage: #example
 * identifier[nhsNumber].system = $nhs-number
-* identifier[nhsNumber].value = "9876543210"
+* identifier[nhsNumber].value = "9737383397"
 * identifier[nhsNumber].type = $v2-0203#NH
 * identifier[MedicalRecordNumber].type = $v2-0203#MR
 * identifier[MedicalRecordNumber].system = "https://fhir.mft.nhs.uk/Id/mrn"
-* identifier[MedicalRecordNumber].value = "MFT1234567"
+* identifier[MedicalRecordNumber].value = "B6789012"
 * identifier[MedicalRecordNumber].assigner.identifier.system = $ods-code
 * identifier[MedicalRecordNumber].assigner.identifier.value = "R0A"
-* name.family = "Packton"
-* name.given = "Michael"
+* name.family = "TAMESIDE"
+* name.given = "Hodor"
 * gender = #male
-* birthDate = "1967-03-12"
-* address.line = "1 Example Street"
-* address.city = "Manchester"
-* address.postalCode = "M1 1AA"
+* birthDate = "1960-07-27"
+* address.line = "Stockport Road"
+* address.city = "Tameside"
+* address.postalCode = "OL7 0NS"
+* generalPractitioner.identifier.system = $ods-code
+* generalPractitioner.identifier.value = "P89020"
+* generalPractitioner.display = "HT PRACTICE"
 
-Instance: GPPractice
+Instance: P89020
 InstanceOf: Organization
-Title: "Organization - Example Medical Practice"
-Description: "Fictitious GP practice - the Referral Initiator."
+Title: "Organization - HT PRACTICE (P89020)"
+Description: "GP practice of the test patient Hodor TAMESIDE (real ODS code, as the NW GMSA test patients require) - the Referral Initiator."
 Usage: #example
-* identifier.system = $ods-code
-* identifier.value = "Y00001"
-* name = "Example Medical Practice"
+* identifier[odsOrganisationCode].system = $ods-code
+* identifier[odsOrganisationCode].value = "P89020"
+* name = "HT PRACTICE"
 
 Instance: R0A
 InstanceOf: Organization
@@ -66,11 +70,13 @@ Usage: #example
 
 Instance: GPAllenRole
 InstanceOf: PractitionerRole
-Title: "PractitionerRole - Dr Allen at Example Medical Practice"
-Description: "The referring GP at the GP practice - the Referral Initiator."
+Title: "PractitionerRole - Dr Allen at HT PRACTICE"
+Description: "The referring GP at HT PRACTICE (P89020) - the Referral Initiator."
 Usage: #example
 * practitioner = Reference(GPAllen)
-* organization = Reference(GPPractice)
+* organization = Reference(P89020)
+* organization.identifier.system = $ods-code
+* organization.identifier.value = "P89020"
 * code = $sct#62247001 "General practitioner"
 
 Instance: CardiologistBrown
@@ -90,6 +96,8 @@ Description: "The consultant cardiologist at the hospital trust."
 Usage: #example
 * practitioner = Reference(CardiologistBrown)
 * organization = Reference(R0A)
+* organization.identifier.system = $ods-code
+* organization.identifier.value = "R0A"
 * specialty = $sct#394579002 "Cardiology"
 
 Instance: CardiologyService
@@ -113,7 +121,7 @@ Usage: #example
 * clinicalStatus = $condition-clinical#active
 * category = $condition-category#problem-list-item
 * code = $sct#267036007 "Dyspnea"
-* subject = Reference(PatientPackton)
+* subject = Reference(Patient-Tameside)
 * recordedDate = "2026-09-04"
 
 // Referral Request [PCC-55]
@@ -121,13 +129,13 @@ Usage: #example
 Instance: CardiologyReferral
 InstanceOf: ReferralRequest
 Title: "Referral Request - GP to Cardiology"
-Description: "Referral Request [PCC-55]: Dr Allen refers Mr Packton to cardiology, to be seen within a week."
+Description: "Referral Request [PCC-55]: Dr Allen refers Mr Tameside to cardiology, to be seen within a week."
 Usage: #example
 * identifier[referralId].type = $v2-0203#PLAC
 * identifier[referralId].system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * identifier[referralId].value = "REF-2026-000123"
 * identifier[referralId].assigner.identifier.system = $ods-code
-* identifier[referralId].assigner.identifier.value = "Y00001"
+* identifier[referralId].assigner.identifier.value = "P89020"
 * identifier[ubrn].system = "https://fhir.nhs.uk/Id/UBRN"
 * identifier[ubrn].value = "000049637246"
 * status = #active
@@ -135,9 +143,9 @@ Usage: #example
 * category = $sct#3457005 "Patient referral"
 * priority = #urgent
 * code = $sct#183519002 "Referral to cardiology service"
-* subject = Reference(PatientPackton)
+* subject = Reference(Patient-Tameside)
 * subject.identifier.system = $nhs-number
-* subject.identifier.value = "9876543210"
+* subject.identifier.value = "9737383397"
 * subject.identifier.type = $v2-0203#NH
 * occurrenceDateTime = "2026-09-11"
 * authoredOn = "2026-09-04T10:15:00+01:00"
@@ -145,7 +153,7 @@ Usage: #example
 * performer = Reference(CardiologyService)
 * reasonCode = $sct#267036007 "Dyspnea"
 * reasonReference = Reference(ConditionDyspnoea)
-* note.text = "Determine the origin of Mr Packton's shortness of breath. BMI 30, non-smoker, no chest pain, family history of coronary artery disease."
+* note.text = "Determine the origin of Mr Tameside's shortness of breath. BMI 30, non-smoker, no chest pain, family history of coronary artery disease."
 
 // Referral Accept [PCC-55]
 
@@ -159,9 +167,9 @@ Usage: #example
 * basedOn.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * basedOn.identifier.value = "REF-2026-000123"
 * basedOn.identifier.assigner.identifier.system = $ods-code
-* basedOn.identifier.assigner.identifier.value = "Y00001"
+* basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
-* for = Reference(PatientPackton)
+* for = Reference(Patient-Tameside)
 * status = #accepted
 * businessStatus = ReferralWorkflowStatus#accepted
 * intent = #order
@@ -183,9 +191,9 @@ Usage: #example
 * basedOn.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * basedOn.identifier.value = "REF-2026-000123"
 * basedOn.identifier.assigner.identifier.system = $ods-code
-* basedOn.identifier.assigner.identifier.value = "Y00001"
+* basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
-* for = Reference(PatientPackton)
+* for = Reference(Patient-Tameside)
 * status = #rejected
 * businessStatus = ReferralWorkflowStatus#declined
 * statusReason = ReferralStatusReason#service-not-provided
@@ -212,11 +220,12 @@ Usage: #example
 * basedOn.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * basedOn.identifier.value = "REF-2026-000123"
 * basedOn.identifier.assigner.identifier.system = $ods-code
-* basedOn.identifier.assigner.identifier.value = "Y00001"
+* basedOn.identifier.assigner.identifier.value = "P89020"
 * serviceType = $sct#394579002 "Cardiology"
+* slot = Reference(CardiologyClinicSlot)
 * start = "2026-09-07T14:00:00+01:00"
 * end = "2026-09-07T14:30:00+01:00"
-* participant[+].actor = Reference(PatientPackton)
+* participant[+].actor = Reference(Patient-Tameside)
 * participant[=].status = #accepted
 * participant[+].actor = Reference(CardiologistBrownRole)
 * participant[=].status = #accepted
@@ -233,12 +242,13 @@ Usage: #example
 * extension[basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * extension[basedOn].valueReference.identifier.value = "REF-2026-000123"
 * extension[basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
-* extension[basedOn].valueReference.identifier.assigner.identifier.value = "Y00001"
+* extension[basedOn].valueReference.identifier.assigner.identifier.value = "P89020"
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-55501"
 * status = #final
 * type = $loinc#11488-4 "Consult Note"
-* subject = Reference(PatientPackton)
+* subject = Reference(Patient-Tameside)
+* encounter = Reference(CardiologyOutpatientAttendance)
 * date = "2026-09-07T16:00:00+01:00"
 * author = Reference(CardiologistBrownRole)
 * title = "Cardiology clinic letter"
@@ -268,12 +278,13 @@ Usage: #example
 * extension[basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * extension[basedOn].valueReference.identifier.value = "REF-2026-000123"
 * extension[basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
-* extension[basedOn].valueReference.identifier.assigner.identifier.value = "Y00001"
+* extension[basedOn].valueReference.identifier.assigner.identifier.value = "P89020"
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-55777"
 * status = #final
 * type = $loinc#11488-4 "Consult Note"
-* subject = Reference(PatientPackton)
+* subject = Reference(Patient-Tameside)
+* encounter = Reference(CardiacCatheterisationSpell)
 * date = "2026-09-24T11:00:00+01:00"
 * author = Reference(CardiologistBrownRole)
 * title = "Cardiology discharge letter"
@@ -297,9 +308,9 @@ Usage: #example
 * basedOn.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
 * basedOn.identifier.value = "REF-2026-000123"
 * basedOn.identifier.assigner.identifier.system = $ods-code
-* basedOn.identifier.assigner.identifier.value = "Y00001"
+* basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
-* for = Reference(PatientPackton)
+* for = Reference(Patient-Tameside)
 * status = #completed
 * businessStatus = ReferralWorkflowStatus#completed
 * intent = #order
@@ -308,9 +319,9 @@ Usage: #example
 * lastModified = "2026-09-24T11:00:00+01:00"
 * requester = Reference(GPAllenRole)
 * owner = Reference(CardiologyService)
-* output[+].type = $loinc#11488-4 "Consult Note"
+* output[+].type = ReferralTaskParameter#interim-report
 * output[=].valueReference = Reference(CardiologyInterimNote)
-* output[+].type = $loinc#11488-4 "Consult Note"
+* output[+].type = ReferralTaskParameter#outcome-report
 * output[=].valueReference = Reference(CardiologyOutcomeNote)
-* output[+].type.text = "Appointment"
+* output[+].type = ReferralTaskParameter#appointment
 * output[=].valueReference = Reference(CardiologyAppointment)

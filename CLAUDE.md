@@ -26,7 +26,10 @@ NW GMSA IG (`../FHIRGenomics`).
   inpatient / virtual ward stays, the Consultation Note for outpatient outcomes
   (HDR only allows inpatient encounters). Sharing: EU Health Data API.
 - Profiles are kept few. Identifier data types and Patient are copied from the
-  NW GMSA IG (via `../Imaging`) - see the DUPLICATION comments.
+  NW GMSA IG (via `../Imaging`) - see the DUPLICATION comments. Core NHS patient
+  administration profiles (`input/fsh/Core/PatientAdministration.fsh`) are copied from
+  NW GMSA and follow Interweave; keep Account / Spell Number (AN) and Visit Number (VN)
+  distinct.
 
 ## Layout
 

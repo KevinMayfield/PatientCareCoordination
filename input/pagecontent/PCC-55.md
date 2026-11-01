@@ -65,6 +65,12 @@ Example: [Referral Request - GP to Cardiology](ServiceRequest-CardiologyReferral
 
 #### Clinical Information
 
+Where the record can be queried ([EU Health Data API](HealthDataAPI.html):
+[QEDm](QEDm.html), [MHD](MHD.html)), the referral **SHOULD** carry only what the
+Recipient cannot read for itself - the reason, the question, the referral form - and
+reference the rest. Querying is highly recommended over copying the record into the
+referral.
+
 360X sends a CDA document (XDS-MS Referral Summary or C-CDA Referral Note) with the
 order. This guide allows, in order of preference:
 
@@ -72,8 +78,9 @@ order. This guide allows, in order of preference:
    results) - HL7 Europe / IPS sections, as in the [Consultation Note](StructureDefinition-ConsultationNote.html)
 2. A **referral letter** as a `DocumentReference` with a PDF attachment (as eRS
    referral letters are today)
-3. A **`QuestionnaireResponse`** for a structured referral form (e.g. referral criteria
-   for a virtual ward or a specialist service)
+3. A **`QuestionnaireResponse`** for the service's referral form (e.g. exercise
+   pre-participation screening, virtual ward eligibility), with the answers needed as
+   data also sent as `Observation`s - see [Referral Forms](ReferralForms.html)
 
 Where the Referral Initiator is a GP practice, the Referral Recipient may instead **pull**
 the record when triaging, with [GP Connect](NHSEngland.html#gp-connect) Access Record
@@ -139,8 +146,9 @@ according to its policy for patients it will not treat.
 
 ### More Information Requested (NHS)
 
-eRS and BaRS allow a provider to return a referral to the referrer for more
-information. 360X has no such step. This guide uses `businessStatus`
+eRS allows a provider to return a referral to the referrer for more information, and
+the HL7 Physical Activity IG puts Tasks `on-hold`; a service may also need a form
+completed by the patient ([Referral Forms](ReferralForms.html)). 360X has no such step. This guide uses `businessStatus`
 `information-requested` with Task `status` `on-hold`, and the question in `Task.note`
 or a `Communication`; the Referral Initiator updates `ServiceRequest.supportingInfo` and
 the Task returns to `requested`. HL7 v2 equivalent - **Open**.
@@ -151,5 +159,6 @@ the Task returns to `requested`. HL7 v2 equivalent - **Open**.
 |---|---|---|---|
 | Referral | eRS referral with attachments (UBRN) | `ServiceRequest` in a FHIR Message | `OMG^O19` (360X) or `REF_I12` |
 | Accept / decline | eRS triage outcome: accept, return to referrer, reject | Response from the target service - **To confirm** | `OSU^O51` or `RRI_I12` |
+| Message | | | `OMG^O19` (360X) or `REF_I12` - see [Patient Referral [I12]](I12.html) |
 | Mapping to this guide | UBRN in `identifier:ubrn`; eRS service as `performer` | Map to [Referral Request](StructureDefinition-ReferralRequest.html); status, cancellation and outcome are not defined by BaRS and follow this guide | As above |
 {:.grid}

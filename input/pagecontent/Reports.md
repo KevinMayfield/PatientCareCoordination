@@ -106,6 +106,8 @@ queries for it.
 
 ### From Document Messaging to Document Sharing
 
+See also [EU Health Data API](HealthDataAPI.html) and [Document Sharing [MHD]](MHD.html).
+
 The [EU Health Data API](https://hl7.eu/fhir/health-data-api/1.0.0-ballot/en/) defines
 the actors for sharing documents and resources, based on IHE MHD, PDQm and HL7 IPA:
 

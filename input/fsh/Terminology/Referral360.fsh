@@ -15,7 +15,7 @@ values are on the [FHIR Resources](DataModel.html#referral-status) page.
 * ^experimental = true
 * ^caseSensitive = true
 * #requested "Referral requested" "The Referral Initiator has sent the referral request [PCC-55]."
-* #information-requested "More information requested" "The Referral Recipient has asked the Referral Initiator for more information before deciding (eRS / BaRS; not in 360X)."
+* #information-requested "More information requested" "The Referral Recipient has asked for more information or a completed form (Task.input) before deciding or starting (eRS return to referrer, HL7 Physical Activity IG; not in 360X)."
 * #accepted "Referral accepted" "The Referral Recipient has accepted the referral [PCC-55] (ORC-1 OK, ORC-5 IP)."
 * #declined "Referral declined" "The Referral Recipient has declined the referral, initially [PCC-55] or after acceptance [PCC-56] (ORC-1 UA, ORC-5 CA)."
 * #appointment-booked "Appointment booked" "An appointment has been booked [PCC-60] (SIU^S12)."
@@ -128,3 +128,29 @@ Title: "Virtual Ward Admission Route Value Set"
 Description: "Step-up or step-down admission to a virtual ward."
 * ^experimental = true
 * include codes from system VirtualWardAdmissionRoute
+
+// Task.input / Task.output types
+
+CodeSystem: ReferralTaskParameter
+Id: referral-task-parameter
+Title: "Referral Task Parameter"
+Description: """
+Types of `Task.input` and `Task.output` on a [Referral Task](StructureDefinition-ReferralTask.html).
+**To confirm** alignment with the HL7 SDC form-request pattern and the HL7 Physical Activity IG.
+"""
+* ^experimental = true
+* ^caseSensitive = true
+* #questionnaire "Form to complete" "A Questionnaire the Referral Recipient asks the patient or referrer to complete."
+* #questionnaire-response "Completed form" "The completed QuestionnaireResponse."
+* #appointment "Appointment" "An appointment booked to carry out the referral."
+* #observation "Progress observation" "An observation recorded while carrying out the referral, e.g. physical activity or vital signs."
+* #interim-report "Interim consultation note" "A document sent before the end of care [PCC-59]."
+* #outcome-report "Referral outcome" "The document that closes the referral [PCC-57]."
+* #encounter "Encounter" "The stay or encounter carrying out the referral (e.g. a virtual ward stay)."
+
+ValueSet: ReferralTaskParameterVS
+Id: referral-task-parameter-vs
+Title: "Referral Task Parameter Value Set"
+Description: "Types of Task.input and Task.output on a Referral Task."
+* ^experimental = true
+* include codes from system ReferralTaskParameter

@@ -54,7 +54,7 @@ conventions for MSH, PID and PV1.
 {:.grid}
 
 **Alternative:** HL7 v2 `REF_I12` (patient referral) and `RRI_I12` (response) are the
-v2 referral messages some UK systems support; the
+v2 referral messages some UK systems support - see [Patient Referral [I12]](I12.html), with examples and FHIR Message equivalents; the
 [NW GMSA Genetic Referrals](https://nw-gmsa.github.io/en/GeneticReferrals.html#referral-data-model)
 page maps them. 360X uses the order messages instead, which match LTW and SWF.b.
 
@@ -134,11 +134,15 @@ GET [base]/Task?based-on:identifier={system}|{referralId}<br/>
 PUT [base]/Task/{id}
 </div>
 
+The [HL7 Physical Activity IG](ReferralForms.html#hl7-physical-activity-ig) uses this pattern, including "light" recipients without their own FHIR server whose Tasks are held on the initiator's server.
+
 Updates follow the DCP read-change-write rule with versioning (`If-Match`), see
 [Dynamic Care Planning](DCP.html).
 
 ### Document Sharing
 
+See [Document Sharing [MHD]](MHD.html) and [Query Existing Data [PCC-44]](QEDm.html).
+Sharing data through an API is highly recommended - see [EU Health Data API](HealthDataAPI.html).
 Reports (and referral letters) are published to a Document Access Provider so other
 carers can find them, as described in
 [Referral Outcome Reports](Reports.html#from-document-messaging-to-document-sharing).

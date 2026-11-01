@@ -17,6 +17,7 @@ SNOMED CT codes are from the UK Edition; expansions use the UK Edition
 | [Referral Category](ValueSet-referral-category.html) | `ServiceRequest.category` (extensible) | SNOMED CT referral, virtual ward, hospital at home |
 | [Referral Service Type](ValueSet-referral-service-type.html) | `ServiceRequest.code` (extensible) | SNOMED CT descendants of 3457005 Patient referral |
 | [Referral Document Type](ValueSet-referral-document-type.html) | Document type (`DocumentReference.type`) | LOINC (360X, HL7 Europe) and SNOMED CT record types (Transfer of Care, NRL) |
+| [Referral Task Parameter](CodeSystem-referral-task-parameter.html) / [value set](ValueSet-referral-task-parameter-vs.html) | `Task.input.type`, `Task.output.type` (extensible) | Form to complete, completed form, appointment, observation, interim / outcome report, encounter - **To confirm** against SDC |
 | [Virtual Ward Admission Route](CodeSystem-virtual-ward-admission-route.html) / [value set](ValueSet-virtual-ward-admission-route-vs.html) | `Encounter.hospitalization.admitSource` (extensible) | Step-up, step-down - **To confirm** a national code set |
 {:.grid}
 
@@ -39,6 +40,8 @@ SNOMED CT codes are from the UK Edition; expansions use the UK Edition
 | 34105-7 | LOINC | Hospital Discharge Summary | HDR Composition type |
 | 18842-5 | LOINC | Discharge summary | Health Data API document type - see [Reports](Reports.html) **Open** |
 | 18776-5 | LOINC | Plan of Care Note | Plan of care section |
+| 526151000000109 | SNOMED CT | Referral to exercise on referral programme | Example referral code |
+| 89574-8 | LOINC | Exercise Vital Sign (EVS) | Physical activity observation |
 {:.grid}
 
 ### HL7 v2 Tables

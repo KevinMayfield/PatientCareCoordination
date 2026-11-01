@@ -120,6 +120,10 @@ graph TD
 | Conversational Workflow | Task-based: accept, decline, request information | Task completed, output references the report | eRS API, GOMS; BaRS (partial - see [assessment](NHSEngland.html#booking-and-referral-standard-bars)) |
 {:.grid}
 
+Sharing data through an API (Document and Resource Sharing, see
+[EU Health Data API](HealthDataAPI.html)) is **highly recommended**: it significantly
+reduces the data carried in messages and leaves messaging to focus on workflow.
+
 This guide's interactions work at the **Document Messaging** layer first (HL7 v2 or FHIR
 messages, see [Exchange Options](Transport.html)), because that is where most NHS
 systems are, and show how they move to the other layers without changing the data.

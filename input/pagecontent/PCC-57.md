@@ -99,5 +99,5 @@ Examples:
 | GP Connect Update Record (community pharmacy) | None | Structured consultation summary | **To confirm** |
 | IM1 (EMIS Web, SystmOne) | Supplier-specific | Written to the GP record | Supplier-specific |
 | FHIR Message | `Task` | FHIR Document | `Composition` `basedOn`, `Task.basedOn` |
-| Document Sharing (Health Data API) | Notification | `DocumentReference` + document | `DocumentReference.context.related` - **To confirm** |
+| Document Sharing ([MHD](MHD.html), Health Data API) - recommended | Status message or notification referencing the `DocumentReference` | Published document | `DocumentReference.context.related` - **To confirm** |
 {:.grid}
