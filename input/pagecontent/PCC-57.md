@@ -79,6 +79,33 @@ Examples:
 - Outpatient: [Consultation Note - Referral Outcome](Composition-CardiologyOutcomeNote.html), [Referral Task - Completed](Task-CardiologyReferralCompleted.html)
 - Virtual ward: [Discharge Report Document](Bundle-VirtualWardDischargeReport.html), [Referral Task - Virtual ward completed](Task-VirtualWardReferralCompleted.html)
 
+### Example
+
+The outcome status update and the discharge letter (`MDM^T02`, Referral ID in ORC-2 and
+TXA-14). The letter follows the day case admission, so PV1-19 carries the Account / Spell
+Number (type `AN`).
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260924110000+0100||OSU^O51^OSU_O51|MFT-MSG-779950|P|2.5.1|||AL|NE
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+ORC|SC|REF-2026-000123^P89020|||CM||||20260924110000+0100
+```
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260924110000+0100||MDM^T02^MDM_T02|MFT-MSG-779951|P|2.5.1|||AL|NE
+EVN|T02|20260924110000+0100
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+PV1|1|I|^^^R0A||||||||||||||||1001166717^^^R0A^AN
+ORC|SC|REF-2026-000123^P89020
+OBR|1|REF-2026-000123^P89020||57133-1^Referral note^LN
+TXA|1|11488-4^Consult note^LN|AP|20260924110000+0100|7654321^Brown^^^^Dr^^^GMC|||||||DOC-55777^R0A||REF-2026-000123^P89020|||AU||AV
+OBX|1|ED|11488-4^Consult note^LN||^application^pdf^Base64^JVBERi0xLjQK...||||||F
+```
+
+FHIR Message: [Bundle Message - Referral Order Status (O51), referral outcome](Bundle-ReferralOrderStatusOutcomeMessage.html)
+(the [completed Task](Task-CardiologyReferralCompleted.html) and the
+[outcome consultation note](Composition-CardiologyOutcomeNote.html)).
+
 ### Expected Actions
 
 - The Referral Initiator **SHALL** store the document, make it available to users with

@@ -64,6 +64,34 @@ LOINC 42349-1 (Reason for referral), used by C-CDA, could not be checked on tx.f
 
 Example: [Consultation Note - Interim](Composition-CardiologyInterimNote.html).
 
+### Example
+
+The status update and the clinic letter. 360X sends the document with the status update;
+in HL7 v2 it travels as an `MDM^T02` carrying the Referral ID in ORC-2 and TXA-14
+(placer order number), so the referrer can match it to the referral.
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260907160000+0100||OSU^O51^OSU_O51|MFT-MSG-779001|P|2.5.1|||AL|NE
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+ORC|SC|REF-2026-000123^P89020|||A||||20260907160000+0100
+```
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260907160000+0100||MDM^T02^MDM_T02|MFT-MSG-779002|P|2.5.1|||AL|NE
+EVN|T02|20260907160000+0100
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+PV1|1|O|^^^R0A||||||||||||||||OP2026090701^^^R0A^VN
+ORC|SC|REF-2026-000123^P89020
+OBR|1|REF-2026-000123^P89020||57133-1^Referral note^LN
+TXA|1|11488-4^Consult note^LN|AP|20260907160000+0100|7654321^Brown^^^^Dr^^^GMC|||||||DOC-55501^R0A||REF-2026-000123^P89020|||AU||AV
+OBX|1|ED|11488-4^Consult note^LN||^application^pdf^Base64^JVBERi0xLjQK...||||||F
+```
+
+The attendance is identified by its Visit Number in PV1-19 (type `VN`) - see
+[Patient Administration](PatientAdministration.html#identifiers). FHIR equivalent: a
+Referral Order Status (O51) message whose Task output is the
+[interim consultation note](Composition-CardiologyInterimNote.html).
+
 ### Expected Actions
 
 - The Referral Initiator **SHALL** extract the document and present the results to the

@@ -40,6 +40,8 @@ The 360X HL7 v2.5.1 messages, sent over MLLP (or HL7 over HTTP) through the Trus
 Integration Engine, using the [NW GMSA HL7 v2](https://nw-gmsa.github.io/en/hl7v2.html)
 conventions for MSH, PID and PV1.
 
+FHIR Message equivalents: [Referral Order (O19)](MessageDefinition-referral-order.html) and [Referral Order Status (O51)](MessageDefinition-referral-order-status.html); examples on [PCC-55](PCC-55.html#examples), [PCC-57](PCC-57.html#example) and [PCC-59](PCC-59.html#example).
+
 | 360X | Message | ORC-1 / ORC-5 or trigger |
 |---|---|---|
 | Referral Request [PCC-55] | `OMG^O19^OMG_O19` | NW / - |
@@ -95,6 +97,8 @@ Authorization: Bearer {accessToken}<br/>
 Content-Type: application/fhir+json
 </div>
 
+Message definitions: [Referral Order (O19)](MessageDefinition-referral-order.html) (focus `ServiceRequest`) and [Referral Order Status (O51)](MessageDefinition-referral-order-status.html) (focus `Task`) - the same FHIR Messages whether the HL7 v2 source is `OMG^O19` / `OSU^O51` or `REF_I12` / `RRI_I12`.
+
 | 360X | MessageHeader focus | Contents |
 |---|---|---|
 | Referral Request [PCC-55] | `ServiceRequest` ([Referral Request](StructureDefinition-ReferralRequest.html)) | Patient, requester, supporting information (document) |
@@ -103,7 +107,7 @@ Content-Type: application/fhir+json
 | Appointment, no-show [PCC-60], [PCC-61] | `Appointment` ([Referral Appointment](StructureDefinition-ReferralAppointment.html)) | Appointment, with `basedOn` the referral |
 {:.grid}
 
-`MessageHeader.eventCoding` codes for these events are not defined - **Open** (define a code system from the 360X transactions; map BaRS events to it where needed).
+`MessageHeader.eventCoding` is the HL7 v2 trigger event (v2-0003 `O19`, `O51`), as in the NW GMSA messages. Whether finer 360X events (accept, decline, interim, outcome) need their own codes, rather than the Task status, is **Open**; BaRS events would be mapped to these.
 
 ### FHIR RESTful Task
 

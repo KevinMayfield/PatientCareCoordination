@@ -144,6 +144,59 @@ reason. A new referral needs a **new** Referral ID (`ServiceRequest.replaces` ma
 the declined one). The Referral Recipient handles the patient information it received
 according to its policy for patients it will not treat.
 
+### Examples
+
+The Tameside cardiology referral, on the main HL7 v2 route (360X `OMG^O19` / `OSU^O51`)
+and as FHIR Messages ([Referral Order (O19)](MessageDefinition-referral-order.html),
+[Referral Order Status (O51)](MessageDefinition-referral-order-status.html)). The
+`REF_I12` alternative is on [Patient Referral [I12]](I12.html).
+
+#### Referral Request - OMG^O19
+
+The Referral ID is in ORC-2 and OBR-2 (namespace = the referrer's ODS code); the reason in
+OBR-31; the referral question in an OBX with OBX-11 `O` and OBX-29 `QST`; the expected date
+in TQ1-8.
+
+```
+MSH|^~\&|GPSYSTEM|P89020|EPR|R0A|20260904101500+0100||OMG^O19^OMG_O19|MSG000124|P|2.5.1|||AL|NE
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+ORC|NW|REF-2026-000123^P89020|||||||20260904101500+0100|||G1234567^Allen^^^^Dr^^^GMP
+TQ1|1|||||||20260911|A^ASAP^HL70485
+OBR|1|REF-2026-000123^P89020||57133-1^Referral note^LN||||||||||||G1234567^Allen^^^^Dr^^^GMP|||||||||||||||267036007^Dyspnea^SCT
+OBX|1|TX|QUESTION^Referral question^L||Determine the origin of Mr Tameside's shortness of breath. To be seen within a week.||||||O||||||||||||||||||QST
+NTE|1||BMI 30, non-smoker, no chest pain, family history of coronary artery disease.
+```
+
+FHIR Message: [Bundle Message - Referral Order (O19)](Bundle-ReferralOrderMessage.html)
+(focus [Referral Request](ServiceRequest-CardiologyReferral.html)).
+
+#### Referral Accept - OSU^O51
+
+ORC-1 `OK`, ORC-5 `IP`; ORC-12 (ordering provider) is not echoed back.
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260905093000+0100||OSU^O51^OSU_O51|MFT-MSG-778900|P|2.5.1|||AL|NE
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+ORC|OK|REF-2026-000123^P89020|||IP||||20260905093000+0100
+```
+
+FHIR Message: [Bundle Message - Referral Order Status (O51), accepted](Bundle-ReferralOrderStatusAcceptMessage.html)
+(focus [Referral Task - Accepted](Task-CardiologyReferralAccepted.html)).
+
+#### Referral Decline - OSU^O51
+
+ORC-1 `UA`, ORC-5 `CA`, reason in ORC-16 (at least the text in ORC-16.2). The same
+message is used for a later decline [PCC-56].
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260905093000+0100||OSU^O51^OSU_O51|MFT-MSG-778901|P|2.5.1|||AL|NE
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+ORC|UA|REF-2026-000123^P89020|||CA||||20260905093000+0100|||||||SERVICE-NOT-PROVIDED^Please refer to the rapid access chest pain clinic instead.^L
+```
+
+FHIR equivalent: [Referral Task - Declined](Task-CardiologyReferralDeclined.html) as the
+focus of a Referral Order Status (O51) message.
+
 ### More Information Requested (NHS)
 
 eRS allows a provider to return a referral to the referrer for more information, and

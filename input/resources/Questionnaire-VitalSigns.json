@@ -1,7 +1,7 @@
 {
   "resourceType": "Questionnaire",
   "id": "VitalSigns",
-  "url": "https://fhir.nwgenomics.nhs.uk/Referral360/Questionnaire/VitalSigns",
+  "url": "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/VitalSigns",
   "title": "Vital Signs",
   "status": "draft",
   "description": "Vital signs captured with a referral (for example baseline observations for a virtual ward or exercise referral) or during monitoring. Copied from the Virtually Healthcare IG (https://virtually-healthcare.github.io/Questionnaire-VitalSigns.html), structure and codes unchanged. Items carry SNOMED CT and LOINC codes so answers can be extracted as vital signs Observations.",

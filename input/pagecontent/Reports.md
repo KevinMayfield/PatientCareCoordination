@@ -35,7 +35,7 @@ UBRN if eRS was used):
 |---|---|
 | FHIR Document | `Composition.extension[basedOn]` ([event-basedOn](https://hl7.org/fhir/extensions/StructureDefinition-event-basedOn.html), as in HDR) |
 | FHIR DocumentReference | `DocumentReference.context.related` (the `ServiceRequest`) - **To confirm** against the Health Data API |
-| HL7 v2 `MDM^T02` | TXA-12 unique document number for the letter; referral in ORC-2 / OBR-2 if present, or TXA-22 - **To confirm** |
+| HL7 v2 `MDM^T02` | ORC-2 / OBR-2 (the v2.5.1 `MDM_T02` order group) and TXA-14 placer order number; TXA-12 is the document's own number - see the [PCC-57 example](PCC-57.html#example) |
 | HL7 v2 `ORU^R01` / `OSU^O51` (360X) | ORC-2 Referral ID |
 | Kettering XML | Not supported - **To confirm** |
 | GP Connect Send Document / Update Record | **To confirm** |

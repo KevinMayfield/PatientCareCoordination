@@ -17,7 +17,7 @@ outside `input/`. Dates are when the source was checked.
 | 8 | FHIR MessageHeader.eventCoding codes for the 360X events (align with BaRS?) | IG authors | Open |
 | 9 | HL7 v2 equivalent of "more information requested" (eRS / BaRS return to referrer) | IG authors | Open |
 | 10 | LOINC 42349-1 (Reason for referral) could not be checked on tx.fhir.org ($lookup error); 29299-5 used | IG authors | To confirm |
-| 11 | Where HL7 v2 MDM^T02 carries the referral ID (ORC-2 / OBR-2 in MDM, or TXA) | NW GMSA HL7 v2 authors | To confirm |
+| 11 | Where HL7 v2 MDM^T02 carries the referral ID - v2.5.1 MDM_T02 has an order group (ORC-2 / OBR-2) and TXA-14 placer order number; examples use both. Confirm against the NW GMSA MDM_T02 conventions | NW GMSA HL7 v2 authors | To confirm |
 | 12 | ORC-5 to Task.status is not one-to-one (IP covers accepted and in progress) | IG authors | Open |
 | 13 | NHS equivalent of the 360X newborn hearing screening use case (NHSP IT system) | NHS England screening | Open |
 | 14 | Advice and Guidance (eRS) as Communication / Task conversation | IG authors | Open |
