@@ -1,0 +1,43 @@
+{
+  "resourceType": "NamingSystem",
+  "id": "nhs-number-namingsystem",
+  "name": "NHS Number",
+  "status": "active",
+  "kind": "identifier",
+  "date": "2023-08-01",
+  "publisher": "HL7 UK",
+  "contact":  [
+    {
+      "name": "HL7 UK",
+      "telecom":  [
+        {
+          "system": "email",
+          "value": "ukcore@hl7.org.uk",
+          "use": "work",
+          "rank": 1
+        }
+      ]
+    }
+  ],
+  "responsible": "NHS England",
+  "description": "NHS Number allocated to the patient in England and Wales. For more details see: [NHS Data Model Dictionary](https://www.datadictionary.nhs.uk/attributes/nhs_number.html)",
+  "usage": "A unique patient identifier for everyone registered with the NHS in England and Wales.",
+  "uniqueId":  [
+    {
+      "type": "uri",
+      "value": "https://fhir.nhs.uk/Id/nhs-number",
+      "preferred": true
+    },
+    {
+      "type": "oid",
+      "value": "2.16.840.1.113883.2.1.4.1",
+      "preferred": false
+    },
+    {
+      "type": "other",
+      "value": "NHS",
+      "preferred": false,
+      "comment": "PID.3 (CX.4) HSCIC HL7 V2 ADT"
+    }
+  ]
+}

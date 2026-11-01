@@ -1,0 +1,116 @@
+# sushi-config.yaml is documented https://fshschool.org/docs/sushi/configuration/
+id: fhir.nwgenomics.nhs.uk.referral360
+canonical: https://fhir.nwgenomics.nhs.uk/Referral360
+version: 0.1.0
+name: Referral360
+title: Closed Loop Referral and Care Coordination (Proof of Concept)
+description: PROOF OF CONCEPT ONLY - not an authoritative source. General order (referral) and report (outcome) workflow patterns for NHS England, based on IHE 360X Closed Loop Referral, covering eRS, BaRS, Transfer of Care, MESH, GP Connect, IM1, EPS, HL7 v2, HL7 Europe Hospital Discharge Report and EU Health Data API, extended to virtual wards (hospital at home) and IHE Dynamic Care Planning
+releaseLabel: proof-of-concept
+status: draft
+experimental: true
+publisher:
+  - name: NHS North West Genomics
+  - url: https://www.nwgenomics.nhs.uk/contact-us
+license: CC-BY-4.0
+fhirVersion: 4.0.1
+jurisdiction: urn:iso:std:iso:3166#GB "United Kingdom of Great Britain and Northern Ireland"
+copyrightYear: 2026+
+
+dependencies:
+  hl7.fhir.eu.hdr: 1.0.0
+  # versions used by hl7.fhir.eu.hdr, declared so SUSHI can resolve them
+  hl7.fhir.eu.base: 2.0.1
+  hl7.fhir.eu.extensions.r4: 1.3.1
+  hl7.fhir.uv.ips: 2.0.1
+  hl7.fhir.uv.xver-r5.r4: 0.1.0
+
+FSHOnly: false
+parameters:
+  shownav: true
+  apply-contact: 'true'
+  apply-jurisdiction: 'true'
+  apply-publisher: 'true'
+  apply-version: 'true'
+  # SNOMED CT UK Edition for expansions/validation (same as the NW GMSA IG)
+  path-expansion-params: '../resources/Parameters-exp-params.json'
+
+pages:
+  index.md:
+    title: Home
+    generation: markdown
+  ClinicalProcess.md:
+    title: Clinical Process
+    generation: markdown
+  WorkflowPatterns.md:
+    title: Order and Report Workflow Pattern
+    generation: markdown
+  360X.md:
+    title: Closed Loop Referral (360X)
+    generation: markdown
+  NHSEngland.md:
+    title: NHS England Referral and Report Services
+    generation: markdown
+  Reports.md:
+    title: Referral Outcome Reports
+    generation: markdown
+  VirtualWards.md:
+    title: Virtual Wards (Hospital at Home)
+    generation: markdown
+  DCP.md:
+    title: Dynamic Care Planning (DCP)
+    generation: markdown
+  Transport.md:
+    title: Exchange Options
+    generation: markdown
+  PCC-55.md:
+    title: Referral Request [PCC-55]
+    generation: markdown
+  PCC-56.md:
+    title: Referral Decline [PCC-56]
+    generation: markdown
+  PCC-57.md:
+    title: Referral Outcome [PCC-57]
+    generation: markdown
+  PCC-58.md:
+    title: Referral Cancellation [PCC-58]
+    generation: markdown
+  PCC-59.md:
+    title: Interim Consultation Note [PCC-59]
+    generation: markdown
+  PCC-60.md:
+    title: Appointment Notification [PCC-60] and No-Show Notification [PCC-61]
+    generation: markdown
+  DataModel.md:
+    title: FHIR Resources
+    generation: markdown
+  PRSB.md:
+    title: PRSB Standards
+    generation: markdown
+  terminology.md:
+    title: Terminology
+    generation: markdown
+
+menu:
+  Home: index.html
+  Analysis and Design (Volume 1):
+    Clinical Process: ClinicalProcess.html
+    Order and Report Workflow Pattern: WorkflowPatterns.html
+    Closed Loop Referral (360X): 360X.html
+    NHS England Referral and Report Services: NHSEngland.html
+    Referral Outcome Reports: Reports.html
+    Virtual Wards (Hospital at Home): VirtualWards.html
+    Dynamic Care Planning (DCP): DCP.html
+  Interactions (Volume 2):
+    Exchange Options: Transport.html
+    Referral Request [PCC-55]: PCC-55.html
+    Referral Decline [PCC-56]: PCC-56.html
+    Referral Outcome [PCC-57]: PCC-57.html
+    Referral Cancellation [PCC-58]: PCC-58.html
+    Interim Consultation Note [PCC-59]: PCC-59.html
+    Appointment [PCC-60] / No-Show [PCC-61]: PCC-60.html
+  Data Models (Volume 3):
+    FHIR Resources: DataModel.html
+    Logical Model: StructureDefinition-Referral.html
+    PRSB Standards: PRSB.html
+    Terminology: terminology.html
+  Artifacts: artifacts.html

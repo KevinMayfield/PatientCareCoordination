@@ -1,0 +1,32 @@
+{
+  "resourceType": "NamingSystem",
+  "id": "ods-site-code-namingsystem",
+  "name": "ODS Organisation Site Code",
+  "status": "active",
+  "kind": "identifier",
+  "date": "2023-08-01",
+  "publisher": "HL7 UK",
+  "contact":  [
+    {
+      "name": "HL7 UK",
+      "telecom":  [
+        {
+          "system": "email",
+          "value": "ukcore@hl7.org.uk",
+          "use": "work",
+          "rank": 1
+        }
+      ]
+    }
+  ],
+  "responsible": "NHS England",
+  "description": "The identifier system for an Organisation site registered with the Organisation Data Service (ODS).",
+  "usage": "To be used to identify Organisation sites registered with the Organisation Data Service (ODS).",
+  "uniqueId":  [
+    {
+      "type": "uri",
+      "value": "https://fhir.nhs.uk/Id/ods-site-code",
+      "preferred": true
+    }
+  ]
+}

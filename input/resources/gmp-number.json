@@ -1,0 +1,31 @@
+{
+  "resourceType": "NamingSystem",
+  "id": "gmpnumber-namingsystem",
+  "name": "GMP Number",
+  "status": "active",
+  "kind": "identifier",
+  "date": "2023-08-01",
+  "publisher": "HL7 UK",
+  "contact":  [
+    {
+      "name": "HL7 UK",
+      "telecom":  [
+        {
+          "system": "email",
+          "value": "ukcore@hl7.org.uk",
+          "use": "work",
+          "rank": 1
+        }
+      ]
+    }
+  ],
+  "responsible": "NHS Prescription Services",
+  "description": "General Practitioner (GMP) number. For more details see: [NHS Data Model Dictionary](https://www.datadictionary.nhs.uk/attributes/general_medical_practitioner_ppd_code.html)",
+  "uniqueId":  [
+    {
+      "type": "uri",
+      "value": "https://fhir.hl7.org.uk/Id/gmp-number",
+      "preferred": true
+    }
+  ]
+}
