@@ -41,9 +41,6 @@ pages:
   ClinicalProcess.md:
     title: Clinical Process
     generation: markdown
-  WorkflowPatterns.md:
-    title: Order and Report Workflow Pattern
-    generation: markdown
   360X.md:
     title: Closed Loop Referral (360X)
     generation: markdown
@@ -104,6 +101,9 @@ pages:
   terminology.md:
     title: Terminology
     generation: markdown
+  WorkflowPatterns.md:
+    title: Order and Report Workflow Pattern
+    generation: markdown
   NHSEngland.md:
     title: NHS England Referral and Report Services
     generation: markdown
@@ -115,7 +115,6 @@ menu:
   Home: index.html
   Analysis and Design (Volume 1):
     Clinical Process: ClinicalProcess.html
-    Order and Report Workflow Pattern: WorkflowPatterns.html
     Closed Loop Referral (360X): 360X.html
     Referral Forms: ReferralForms.html
     Referral Outcome Reports: Reports.html
@@ -140,6 +139,7 @@ menu:
     PRSB Standards: PRSB.html
     Terminology: terminology.html
   Appendices:
+    Order and Report Workflow Pattern: WorkflowPatterns.html
     NHS England Referral and Report Services: NHSEngland.html
     NHS England Diagnostic Order Services: NHSEnglandDiagnostics.html
   Artifacts: artifacts.html
