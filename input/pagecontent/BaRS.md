@@ -271,7 +271,7 @@ the request itself (its code and timeframe), duplicating what `ServiceRequest.co
 **The CarePlan is unnecessary.** It only connects the Condition (why) to the Task (what);
 both belong on the ServiceRequest (`reasonCode` / `reasonReference`, `code`).
 
-#### Referral, Consultation Note or Patient Summary?
+#### Referral, Clinical Document or Patient Summary?
 
 Much of the confusion comes from putting the **referral** and the sender's
 **consultation** into one request. The Application 5 requirements ask the sender to
@@ -301,6 +301,22 @@ Suggested approach for this guide: the `ServiceRequest` carries the request (`co
 only where the receiver cannot query the record. Whether the clinical document or the
 patient summary should be the default for referrals to services without record access
 (such as community pharmacy) is **Open**.
+
+The same two documents appear at **both ends** of a referral - as its input and as its
+output:
+
+| Document | Input to the referral (`ServiceRequest.supportingInfo`) | Output of the referral (`Task.output`, [PCC-57](PCC-57.html)) |
+|---|---|---|
+| [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) (and outpatient letters with the HDR section codes) | The referrer's account of the episode that led to the referral, e.g. a discharge report when a hospital refers on to community services | The recipient's discharge report or clinic letter that closes the referral |
+| [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/) | The patient's background for the recipient | An updated summary, if the recipient keeps the patient's record |
+{:.grid}
+
+**BaRS and eRS cover only the input side.** Neither defines the outcome document, so
+both use clinical documents and patient summaries only as referral input, through
+`ServiceRequest.supportingInfo` (eRS attachments; BaRS resources in the message bundle).
+The output - the document that closes the loop - comes back by another route (Transfer
+of Care, MESH, GP Connect Send Document, HL7 v2 `MDM^T02`) and has to be linked to the
+referral by the receiver - see [Referral Outcome [PCC-57]](PCC-57.html).
 
 Keeping the referral separate from its supporting documents is also **future proof**.
 NHS England shared care records - and the Single Patient Record - are expected to hold

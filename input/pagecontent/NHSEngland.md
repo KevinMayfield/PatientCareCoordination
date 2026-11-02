@@ -76,6 +76,13 @@ Reference Number (UBRN)**.
 | Clinic outcome letter | Referral Outcome [PCC-57] | Not in eRS - sent by Transfer of Care, MESH or HL7 v2 |
 {:.grid}
 
+eRS covers the **input** side only: clinical information and patient summaries attached
+to the referral (`ServiceRequest.supportingInfo`). The same kinds of document - a
+discharge report ([HL7 Europe HDR](https://hl7.eu/fhir/hdr/)) or patient summary
+([HL7 Europe EPS](https://hl7.eu/fhir/eps/1.0.0-ballot/)) - are also the **output** of a
+referral, which eRS does not carry. BaRS is the same - see
+[BaRS](BaRS.html#referral-clinical-document-or-patient-summary).
+
 The eRS FHIR API is mainly STU3 (`ReferralRequest`); an R4 `ServiceRequest` API is in
 development, with the UBRN in `ServiceRequest.identifier` (system
 `https://fhir.nhs.uk/Id/UBRN`) - see the
