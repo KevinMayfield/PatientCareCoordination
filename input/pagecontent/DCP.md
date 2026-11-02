@@ -104,4 +104,5 @@ options for creating and polling Task resources.
 | Pregnancy | Maternity plan across GP, midwife and hospital (DCP pregnancy use case) |
 | Newborn hearing screening | Hearing plan of care updated by audiology (360X Use Case #2) |
 | Cancer | Treatment plan from the MDT - see [Cancer Pathology Report - Cancer Pathway](https://kevinmayfield.github.io/CancerPathologyReport/CancerPathway.html) |
+| Child protection | Plan owned by the local authority; only its existence, dates and owner are shared, as a flag (CP-IS) - see [Patient Flags](PatientFlags.html) |
 {:.grid}

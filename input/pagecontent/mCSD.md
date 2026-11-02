@@ -71,6 +71,90 @@ Directory lookups are usually made **before** the referral (choosing the service
 **when routing** (finding the endpoint). Many systems keep a local copy of ODS and their
 partners' services and refresh it (the Update Client).
 
+### Use Cases
+
+Messages and documents identify people and organisations by **code**, not by full
+resource (see [BaRS](BaRS.html)). The receiver looks the code up in a directory when it
+needs the details - to display the name, check the organisation is active, or find who to
+reply to. The examples use the [cardiology referral](ServiceRequest-CardiologyReferral.html)
+participants.
+
+| Code | Example | Identifies | Master record | mCSD query [ITI-90] | NHS England service today |
+|---|---|---|---|---|---|
+| ODS organisation code | `P89020`, `R0A` | Organisation (GP practice, trust) | ODS | `Organization?identifier=https://fhir.nhs.uk/Id/ods-organization-code|R0A` | [ODS](#organisation-data-service-ods) Organisation Data Terminology API - **live** |
+| ODS site code | `R0A01` (fictitious) | Site | ODS | `Location?identifier=https://fhir.nhs.uk/Id/ods-site-code|R0A01` | ODS Organisation Data Terminology API (sites are returned as `Organization`) |
+| GMP code (GP practitioner) | `G1234567` | A GP **at a practice** | ODS (GP practitioner data) | `PractitionerRole?practitioner.identifier=https://fhir.hl7.org.uk/Id/gmp-number|G1234567&_include=PractitionerRole:organization` | No FHIR API - ODS bulk download (Data Search and Export) |
+| GMC number | `7654321` | Doctor (registration) | General Medical Council | `Practitioner?identifier=https://fhir.hl7.org.uk/Id/gmc-number|7654321` | No NHS England search API |
+| SDS user ID | (Care ID) | NHS user (smartcard holder) | SDS | `Practitioner?identifier=https://fhir.nhs.uk/Id/sds-user-id|...` | [Healthcare Worker FHIR API](#spine-directory-service-sds) |
+{:.grid}
+
+#### Organisation from an ODS Code
+
+*A trust receives a Referral Request [PCC-55] with `MSH-4` / `ServiceRequest.requester`
+organisation `P89020`, and an outcome needs routing to the GP practice `P89020` taken
+from PDS.*
+
+<div class="alert alert-success" role="alert">
+GET [base]/Organization?identifier=https://fhir.nhs.uk/Id/ods-organization-code|P89020
+</div>
+
+- **NHS England:** the [Organisation Data Terminology FHIR API](https://digital.nhs.uk/developer/api-catalogue/organisation-data-terminology)
+  answers the same query (`identifier` "can also explicitly include the CodeSystem ... `ods-organization-code`"),
+  or `GET /Organization/P89020` (the resource id is the ODS code). It returns name,
+  address, active status, roles (e.g. NHS Trust, GP practice) and relationships
+  (`OrganizationAffiliation`, e.g. the practice's ICB).
+- **Check `active`.** A closed practice or merged trust is still returned - a referral or
+  outcome **SHOULD NOT** be routed to an inactive organisation.
+- **Endpoints are not in ODS.** Use the DoS Search API (`_revinclude=Endpoint`), SDS
+  (Spine / GP Connect) or MESH lookup to find how to send to it.
+- Cache: ODS changes slowly; a local copy refreshed by `lastChangeDate` is the Update
+  Client pattern [ITI-91].
+
+#### GP from a GMP Code
+
+*A GP referral (HL7 v2 `ORC-12` / `PV1-8` referring doctor, or a Kettering / Transfer
+of Care document) names the referrer as `G1234567`; the trust needs the GP's name and
+practice.*
+
+<div class="alert alert-success" role="alert">
+GET [base]/PractitionerRole?practitioner.identifier=https://fhir.hl7.org.uk/Id/gmp-number|G1234567&_include=PractitionerRole:practitioner&_include=PractitionerRole:organization
+</div>
+
+- **A GMP code identifies a GP at a practice**, not the person: "in the event of a
+  GENERAL MEDICAL PRACTITIONER running more than one practice, a spurious code will be
+  assigned to the Practitioner for each additional practice" (NHS Data Dictionary,
+  [GENERAL MEDICAL PRACTITIONER PPD CODE](https://archive.datadictionary.nhs.uk/DD%20Release%20June%202026/attributes/general_medical_practitioner_ppd_code.html)).
+  So the lookup is a `PractitionerRole` (practitioner + practice ODS code), as in
+  [Dr Allen at HT PRACTICE](PractitionerRole-GPAllenRole.html).
+- **NHS England:** GMP codes are published by ODS as a bulk report (Data Search and
+  Export, practitioner reports "egpcur" - **To confirm** report name and columns), not
+  through a FHIR API. The usual pattern is to load the report into a **local / regional
+  mCSD Directory** (Update Client) and query that.
+- The GMC number is the better identifier for the person; the GMP code is kept because
+  GP systems and HL7 v2 messages use it.
+
+#### Clinician from a GMC Number
+
+*A Referral Outcome [PCC-57] is authored by a consultant identified by GMC number
+`7654321`; the GP system wants the name, specialty and trust.*
+
+<div class="alert alert-success" role="alert">
+GET [base]/PractitionerRole?practitioner.identifier=https://fhir.hl7.org.uk/Id/gmc-number|7654321&_include=PractitionerRole:practitioner&_include=PractitionerRole:organization
+</div>
+
+- **No NHS England API searches by GMC number.** The [Healthcare Worker FHIR API](https://digital.nhs.uk/developer/api-catalogue/healthcare-worker-fhir)
+  returns professional registration IDs on a `Practitioner` found by SDS user ID - "we've
+  only included them in this API if the data is of sufficient quality" - and "cannot ... search by professional codes,
+  such as GMC or RNC code".
+- The master record for registration is the regulator (GMC, NMC, HCPC, GPhC); whether
+  any offers an API for NHS systems is **To confirm**.
+- The **role** (specialty, trust) is not in the GMC register. It comes from the employing
+  organisation - a trust or regional mCSD Directory built from the trust's staff master
+  (e.g. `MFN^M02`), or carried in the message as a `PractitionerRole` (practitioner GMC
+  number + organisation ODS code), as in [Dr Brown, Cardiology, MFT](PractitionerRole-CardiologistBrownRole.html).
+- Do not reject a message because a GMC number cannot be resolved; display the name
+  sent with it.
+
 ### HL7 v2
 
 HL7 v2 has no directory query in common use. Master file messages carry directory data

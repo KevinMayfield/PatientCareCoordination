@@ -55,6 +55,12 @@ outside `input/`. Dates are when the source was checked.
 | 47 | PDS change notifications through MNS - event types (death, change of GP, address) | NHS England MNS / PDS teams | To confirm |
 | 48 | National source for GP practitioner (GMP) codes and practitioner registration lookup (Healthcare Worker API cannot search by GMC) | NHS England | To confirm |
 | 49 | Is a BaRS sender required to trace the patient on PDS? | NHS England BaRS team | To confirm |
+| 50 | ODS Data Search and Export practitioner report for GMP codes ("egpcur") - report name, columns, and whether any ODS API exposes GP practitioners | NHS England ODS team | To confirm |
+| 51 | Do the professional regulators (GMC, NMC, HCPC, GPhC) offer an API for NHS systems to resolve registration numbers? | Regulators | To confirm |
+| 52 | CP-IS: is the reason for the plan (category of abuse) excluded? Pre-birth plan rules (mother's record, 28 days after EDD) - council sources only | NHS England Patient Flags team | To confirm |
+| 53 | R4 extension for Flag to reference its CarePlan (HL7 Europe flag extension, R6 Flag.supportingInfo) | IG authors, HL7 Europe | To confirm |
+| 54 | Reasonable Adjustment Flag and FGM-IS technology; NHS England plans for a FHIR Patient Flags API | NHS England Patient Flags team | To confirm |
+| 55 | Should scheduled care (Referral Recipients) check national flags at referral? CP-IS SMSP is unscheduled care only | IG authors, safeguarding leads | Open |
 | 43 | BaRS: later decline (PCC-56) and cancel confirmation (PCC-58) equivalents | NHS England BaRS team | To confirm |
 | 44 | Referral supporting information for receivers without record access (e.g. community pharmacy): consultation note, IPS patient summary, or both? (BaRS review, Application 5) | IG authors, PRSB | Open |
 | 45 | SNOMED CT 2140231000000104 "Referral to Community Pharmacy Pharmacy First Service" (BaRS Application 5 Task.code) - not in the tx.fhir.org UK Edition (2023-04-12) | IG authors | To confirm |

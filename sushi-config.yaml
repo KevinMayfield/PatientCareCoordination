@@ -65,6 +65,9 @@ pages:
   PDQm.md:
     title: Patient Identity (PDQm)
     generation: markdown
+  PatientFlags.md:
+    title: Patient Flags
+    generation: markdown
   Transport.md:
     title: Exchange Options
     generation: markdown
@@ -144,6 +147,7 @@ menu:
     Dynamic Care Planning (DCP): DCP.html
     Care Services Directory (mCSD): mCSD.html
     Patient Identity (PDQm): PDQm.html
+    Patient Flags: PatientFlags.html
   Interactions (Volume 2):
     Exchange Options: Transport.html
     Referral Request [PCC-55]: PCC-55.html

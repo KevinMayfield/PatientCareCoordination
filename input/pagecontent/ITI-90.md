@@ -42,6 +42,7 @@ sequenceDiagram
 | Services of a type near the patient | `GET [base]/HealthcareService?service-type={code}&location.near=...` (Location Distance Option) | DoS Search `$search-by-triage-code` (UEC); eRS A010 `$ers.searchHealthcareServicesForPatient` (**eRS only**) |
 | A service and its endpoints | `GET [base]/HealthcareService?_id={id}&_include=HealthcareService:endpoint` | DoS Search API `HealthcareService?_id=` |
 | Organisation and its endpoints | `GET [base]/Organization?identifier=...|P89020&_revinclude=Endpoint:organization` | DoS Search API `Organization?identifier=&_revinclude=Endpoint`; SDS FHIR API `Endpoint?organization=` (Spine); MESH endpoint lookup (**MESH only**) |
+| GP by GMP code (a GP at a practice) | `GET [base]/PractitionerRole?practitioner.identifier=https://fhir.hl7.org.uk/Id/gmp-number|G1234567&_include=PractitionerRole:organization` | None national in FHIR - ODS bulk report loaded into a local directory |
 | Practitioner by professional registration | `GET [base]/Practitioner?identifier=https://fhir.hl7.org.uk/Id/gmc-number|7654321` | None national (Healthcare Worker API cannot search by GMC) |
 | A user's roles | `GET [base]/PractitionerRole?practitioner.identifier=https://fhir.nhs.uk/Id/sds-user-id|...` | Healthcare Worker FHIR API `Practitioner?identifier=&_revinclude=PractitionerRole` |
 | Local copy of ODS | `GET [base]/Organization/_history?_since=2026-11-01` (ITI-91) | ODS `lastChangeDate` search; ORD API sync |
@@ -49,7 +50,8 @@ sequenceDiagram
 
 Search parameters follow FHIR R4 and mCSD; the NHS England APIs use their own subsets
 and headers (e.g. `referral-function`, `Version` in DoS Search) - check each
-specification. The GMC identifier system above is the one used in this guide's examples;
+specification. Worked examples by ODS, GMP and GMC code are in
+[mCSD - Use Cases](mCSD.html#use-cases). The GMC and GMP identifier systems above is the one used in this guide's examples;
 **To confirm** against the NHS England identifier systems.
 
 ### Example
