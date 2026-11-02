@@ -16,7 +16,7 @@ A **care assessment** - the person's needs, risks and what matters to them - com
 before a care and support plan is agreed. In the NHS this form is often called a
 "care plan"; it is not one. The completed form (`QuestionnaireResponse`) is the input to
 a [Care Plan](StructureDefinition-PatientCarePlan.html), which records who does what.
-See [Archetypes, Templates and Forms](Templates.html#care-assessment-and-care-plan).
+See [Composition, Archetypes and Templates](Templates.html#care-assessment-and-care-plan).
 
 Based on the PRSB [Hospital Referral for Assessment for Community Care and Support](https://theprsb.org/standards/hospitalrefferalforassessmenforcommunitycare)
 standard v1.1. Social context is captured with the

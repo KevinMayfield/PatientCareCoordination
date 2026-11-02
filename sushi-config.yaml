@@ -93,7 +93,7 @@ pages:
     title: Overview Model
     generation: markdown
   Templates.md:
-    title: Archetypes, Templates and Forms
+    title: Composition, Archetypes and Templates
     generation: markdown
   PatientAdministration.md:
     title: Patient Administration (Core NHS Resources)
@@ -146,7 +146,7 @@ menu:
     Patient Summary (logical): StructureDefinition-PatientSummary.html
     Care Plan and Execution (logical): StructureDefinition-CarePlanModel.html
     PRSB Standards: PRSB.html
-    Archetypes, Templates and Forms: Templates.html
+    Composition, Archetypes and Templates: Templates.html
     Terminology: terminology.html
   Appendices:
     Order and Report Workflow Pattern: WorkflowPatterns.html
