@@ -11,7 +11,9 @@ transactions (PCC TF-2 3.55 to 3.61), FHIR Workflow and HL7 v2 orders, with the 
 from [eRS](https://digital.nhs.uk/developer/api-catalogue/e-referral-service-fhir).
 It is the same for a referral to an outpatient clinic, a community service or a
 [virtual ward](VirtualWards.html). National services such as BaRS are mapped onto this
-model (see the [BaRS review](BaRS.html)), not the other way round.
+model (see the [BaRS review](BaRS.html)), not the other way round. The PRSB
+[Clinical Referral Information Standard](https://theprsb.org/standards/clinical-referral-information-standard/)
+v1.0 gives the clinical headings.
 
 The referral stays small: the clinical content is in separate documents referenced as
 supporting information - a [Discharge Report](StructureDefinition-DischargeReport.html)
@@ -143,3 +145,23 @@ Title:          "FHIR R4"
 * appointment.status -> "Appointment.status"
 * interimNote -> "Task.output (clinical document - Composition with HL7 Europe HDR section codes)"
 * outcome -> "Task.output (Discharge Report - HL7 Europe HDR, or clinic letter)"
+
+Mapping:        Referral-PRSB
+Source:         Referral
+Target:         "https://theprsb.org/standards/clinical-referral-information-standard/"
+Id:             prsb-cris
+Title:          "PRSB Clinical Referral Information Standard v1.0"
+* -> "Sections: GP Practice (M), Patient Demographics (M), Referral Details (M), Reason for referral (M), Allergies and adverse reactions (M), Person completing record (M); Individual requirements, Medications and medical devices, Safety Alerts, Person concerns, expectations and wishes, Legal Information, Information and advice given, Participation in research (R); Family History, Social Context, Examination Findings, Assessment Scales, Relevant clinical risk factors, Investigations and results, Distribution list (O). Referral Details sub-elements from the Core Information Standard v2.01. Mapping indicative - To confirm"
+* patient -> "Patient Demographics; GP Practice"
+* referrer -> "Referral Details: Referrer details; Person completing record"
+* recipient -> "Referral Details: Referral to"
+* serviceRequested -> "Referral Details: Referral to; Referral criteria"
+* priority -> "Referral Details: Clinical urgency of referral"
+* expectedBy -> "Referral Details: Clinical urgency of referral"
+* reasonForReferral -> "Reason for referral"
+* referralQuestion -> "Reason for referral"
+* clinicalDocument -> "Examination Findings; Investigations and results; Relevant clinical risk factors; Information and advice given"
+* patientSummary -> "Allergies and adverse reactions; Medications and medical devices; Safety Alerts; Legal Information; Individual requirements; Family History; Social Context"
+* forms -> "Assessment Scales"
+* observations -> "Examination Findings; Investigations and results"
+* dateOfReferral -> "Referral Details: Date"

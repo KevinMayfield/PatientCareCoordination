@@ -13,7 +13,8 @@ Based on the [HL7 Europe Patient Summary](https://hl7.eu/fhir/eps/1.0.0-ballot/)
 1.0.0-ballot) and the [International Patient Summary](https://hl7.org/fhir/uv/ips/)
 (IPS 2.0.1) sections, with the PRSB
 [Core Information Standard](https://theprsb.org/standards/core-information-standard/)
-headings (mapping **To confirm**). The **Mappings** tab shows each element in FHIR.
+v2.01 headings (mapping **To confirm**). The **Mappings** tab shows each element in
+FHIR and PRSB.
 """
 Characteristics: #can-be-target
 
@@ -70,3 +71,27 @@ Title:          "FHIR R4 (HL7 Europe EPS / IPS)"
 * advanceDirectives -> "section:sectionAdvanceDirectives (42348-3)"
 * alerts -> "section:sectionAlerts (104605-1)"
 * patientStory -> "section:sectionPatientStory (81338-6)"
+
+Mapping:        PatientSummary-PRSB
+Source:         PatientSummary
+Target:         "https://theprsb.org/standards/core-information-standard/"
+Id:             prsb-cis
+Title:          "PRSB Core Information Standard v2.01"
+* -> "Core Information Standard sections. Not in the IPS / EPS sections: Individual requirements, Legal information (other than advance decisions), Professional and personal contacts, Participation in research, Family history, Risks, Services and care, Equipment and adaptations - To confirm. Mapping indicative - To confirm"
+* patient -> "Person demographics; GP practice"
+* problems -> "Problem list"
+* allergies -> "Allergies and adverse reactions"
+* medications -> "Medications and medical devices"
+* immunizations -> "Vaccinations"
+* results -> "Investigation results"
+* proceduresHistory -> "Procedures and therapies"
+* medicalDevices -> "Medications and medical devices (medical devices); Equipment and adaptations"
+* pastProblems -> "Problem list (past problems)"
+* vitalSigns -> "Examination findings"
+* functionalStatus -> "Assessments"
+* socialHistory -> "Social context"
+* pregnancyHistory -> "Pregnancy status"
+* planOfCare -> "Plan and requested actions; Care and support plan"
+* advanceDirectives -> "Legal information; End of life care"
+* alerts -> "Alerts; Safeguarding"
+* patientStory -> "About me"

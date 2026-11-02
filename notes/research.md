@@ -68,6 +68,11 @@ outside `input/`. Dates are when the source was checked.
   service; federated XCA (ITI-38, ITI-39) and XCA-I (RAD-75) over SOAP, mTLS + XUA
   SAML; MHD endpoint planned; PDM as a document reference source. Not checked: which
   document metadata (order / accession number) can be searched.
+- 2026-11-02: PRSB section lists for logical model mappings - Clinical Referral
+  Information Standard v1.0 (page; Excel v1.2), Transfer of Care - Acute Inpatient
+  Discharge v2.1 (page, 22 sections), Outpatient Letter v2.2 (Excel, 27 sections), Core
+  Information Standard v2.01 (JSON). Since 1 January 2026 the referral standard is
+  "owned and managed by NHS England" (PRSB page).
 - 2026-11-02: HL7 Europe Patient Summary (EPS) - package hl7.fhir.eu.eps, 1.0.0-ballot
   (2026-06-06, STU 1 ballot), CI build 1.0.0-ci-build; scope: European patient summary
   aligned with eHN guidelines, links to IPS 2.0. Section list not checked.

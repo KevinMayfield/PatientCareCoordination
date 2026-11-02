@@ -12,9 +12,9 @@ same report is also an **input** to a later referral (`ServiceRequest.supporting
 Based on the [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/) (HDR)
 sections, which this guide uses as published, and the PRSB
 [Transfer of Care - Acute Inpatient Discharge](https://theprsb.org/standards/edischargesummary)
-and [Outpatient Letter](https://theprsb.org/standards/outpatientletterstandard) standards
-(heading mapping **To confirm**). The **Mappings** tab shows each element in FHIR (HDR)
-and HL7 v2.
+(v2.1) and [Outpatient Letter](https://theprsb.org/standards/outpatientletterstandard)
+(v2.2) standards (heading mapping **To confirm**). The **Mappings** tab shows each
+element in FHIR (HDR), HL7 v2 and the two PRSB standards.
 """
 Characteristics: #can-be-target
 
@@ -96,3 +96,52 @@ Title:          "HL7 v2.5.1 (MDM^T02)"
 * encounter -> "PV1-19 (CX.5 AN or VN)"
 * referral -> "TXA-14 Placer Order Number; ORC-2"
 * attachments -> "OBX-5 (type ED)"
+
+Mapping:        DischargeReport-PRSB-Discharge
+Source:         DischargeReport
+Target:         "https://theprsb.org/standards/edischargesummary"
+Id:             prsb-edischarge
+Title:          "PRSB Transfer of Care - Acute Inpatient Discharge v2.1"
+* -> "Discharge summary. Sections with no matching HDR section: Social context, Individual requirements, Participation in research, Legal information, Patient and carer concerns, expectations and wishes, Information and advice given (carried in narrative or the Patient Summary - To confirm). Mapping indicative - To confirm"
+* author -> "Person completing record (M)"
+* recipient -> "Distribution list (R)"
+* patient -> "Patient demographics (M); GP practice (M)"
+* encounter -> "Admission details (R); Discharge details (R)"
+* referral -> "Referrer details (R)"
+* alerts -> "Safety alerts (R)"
+* admissionEvaluation -> "Admission details (R) - reason for admission"
+* hospitalCourse -> "Clinical summary (M)"
+* diagnosticSummary -> "Diagnoses (M)"
+* significantProcedures -> "Procedures (O)"
+* significantResults -> "Investigation results (O)"
+* functionalStatus -> "Assessments (O)"
+* allergies -> "Allergies and adverse reactions (M)"
+* pharmacotherapy -> "Medications and Medical Devices (O) - discontinued"
+* dischargeMedications -> "Medications and Medical Devices (O)"
+* planOfCare -> "Plan and requested actions (R); Information and advice given (R)"
+* dischargeDetails -> "Discharge details (R)"
+* synthesis -> "Clinical summary (M)"
+
+Mapping:        DischargeReport-PRSB-Outpatient
+Source:         DischargeReport
+Target:         "https://theprsb.org/standards/outpatientletterstandard"
+Id:             prsb-outpatient
+Title:          "PRSB Outpatient Letter v2.2"
+* -> "Clinic letter. Sections with no matching HDR section: Individual requirements, Participation in research, Legal information, Social context, Family history, Clinical review of systems, Patient and carer concerns, expectations and wishes, Relevant clinical risk factors, Information and advice given (narrative or the Patient Summary - To confirm). Mapping indicative - To confirm"
+* author -> "Person completing record (M)"
+* recipient -> "Distribution list (R)"
+* patient -> "Patient demographics (M); GP practice (M)"
+* encounter -> "Attendance details (M)"
+* referral -> "Referrer details (R)"
+* alerts -> "Safety alerts (R)"
+* admissionEvaluation -> "History (R)"
+* hospitalCourse -> "Clinical summary (M)"
+* diagnosticSummary -> "Diagnoses (R); Problems and issues (R)"
+* significantProcedures -> "Procedures (R)"
+* significantResults -> "Investigation results (O)"
+* vitalSigns -> "Examination finding (O)"
+* functionalStatus -> "Assessment scales (O)"
+* allergies -> "Allergies and adverse reactions (M)"
+* dischargeMedications -> "Medications and Medical Devices (O)"
+* planOfCare -> "Plan and requested actions (R); Information and advice given (R)"
+* synthesis -> "Clinical summary (M)"
