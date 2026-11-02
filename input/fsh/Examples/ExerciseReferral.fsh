@@ -39,7 +39,7 @@ InstanceOf: Questionnaire
 Title: "Questionnaire - Exercise on referral: referrer's form"
 Description: "Illustrative referral form completed by the referring clinician when the referral is made (ask at order entry). Items with a LOINC code are also sent as Observations."
 Usage: #definition
-* url = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/ExerciseReferralForm"
+* url = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/ExerciseReferralForm"
 * name = "ExerciseReferralForm"
 * title = "Exercise on referral - referrer's form"
 * status = #draft
@@ -98,7 +98,7 @@ sections, cardiovascular, is shown); and the participant declaration. Item text 
 descriptive labels, **not** the official PAR-Q+ wording.
 """
 Usage: #definition
-* url = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
+* url = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
 * name = "ExercisePreParticipationForm"
 * title = "Physical activity readiness (PAR-Q+ structure, illustrative)"
 * status = #draft
@@ -298,7 +298,7 @@ InstanceOf: QuestionnaireResponse
 Title: "QuestionnaireResponse - Referrer's form (completed by the GP)"
 Description: "The exercise referral form completed by the GP when making the referral."
 Usage: #example
-* questionnaire = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/ExerciseReferralForm"
+* questionnaire = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/ExerciseReferralForm"
 * status = #completed
 * subject = Reference(Patient-Tameside)
 * authored = "2026-10-20T10:00:00+01:00"
@@ -370,14 +370,14 @@ Usage: #example
 * owner = Reference(ExerciseReferralService)
 * note.text = "Referral accepted. Please complete the pre-participation screening before we book your first session."
 * input.type = ReferralTaskParameter#questionnaire
-* input.valueCanonical = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
+* input.valueCanonical = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
 
 Instance: ExercisePreParticipationResponse
 InstanceOf: QuestionnaireResponse
 Title: "QuestionnaireResponse - Physical activity readiness (completed by the patient)"
 Description: "Hodor TAMESIDE's answers. He answers yes to a diagnosed heart condition and to prescribed medication, so completes the follow-up questions; coronary artery disease without regular activity in the last 2 months means he should get advice from a qualified exercise professional before becoming more active - which the programme provides."
 Usage: #example
-* questionnaire = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
+* questionnaire = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
 * status = #completed
 * subject = Reference(Patient-Tameside)
 * authored = "2026-10-22T19:30:00+01:00"
@@ -475,7 +475,7 @@ Usage: #example
 * requester = Reference(GPAllenRole)
 * owner = Reference(ExerciseReferralService)
 * input.type = ReferralTaskParameter#questionnaire
-* input.valueCanonical = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
+* input.valueCanonical = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/ExercisePreParticipationForm"
 * output[+].type = ReferralTaskParameter#questionnaire-response
 * output[=].valueReference = Reference(ExercisePreParticipationResponse)
 * output[+].type = ReferralTaskParameter#observation

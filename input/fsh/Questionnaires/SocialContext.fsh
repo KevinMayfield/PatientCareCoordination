@@ -23,7 +23,7 @@ v2.01 Social context section. Used as referral supporting information, for examp
 social prescribing, community, virtual ward and exercise referrals.
 """
 Usage: #definition
-* url = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/SocialContext"
+* url = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/SocialContext"
 * name = "SocialContext"
 * title = "Social Context"
 * status = #draft

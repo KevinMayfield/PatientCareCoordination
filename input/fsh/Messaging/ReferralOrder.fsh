@@ -12,7 +12,7 @@ InstanceOf: MessageDefinition
 Title: "Message Definition - Referral Order (O19)"
 Description: "FHIR Message equivalent of the IHE 360X HL7 v2.5.1 `OMG^O19^OMG_O19` referral order - Referral Request [PCC-55]. The focus is the Referral Request."
 Usage: #definition
-* url = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/MessageDefinition/referral-order"
+* url = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order"
 * name = "ReferralOrder"
 * title = "Referral Order (O19)"
 * status = #draft
@@ -28,12 +28,12 @@ message (accept or decline).
 """
 * focus[+]
   * code = #ServiceRequest
-  * profile = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/StructureDefinition/ReferralRequest"
+  * profile = "https://fhir.acmeexample.org.uk/PatientCareCoordination/StructureDefinition/ReferralRequest"
   * min = 1
   * max = "1"
 * responseRequired = #always
 * allowedResponse[+]
-  * message = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
+  * message = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
   * situation = "Accept (ORC-1 OK, ORC-5 IP) or decline (ORC-1 UA, ORC-5 CA) [PCC-55]."
 
 Instance: referral-order-status
@@ -41,7 +41,7 @@ InstanceOf: MessageDefinition
 Title: "Message Definition - Referral Order Status (O51)"
 Description: "FHIR Message equivalent of the IHE 360X HL7 v2.5.1 `OSU^O51^OSU_O51` order status update - accept, decline, interim note, outcome, cancel request and cancel confirmation [PCC-55] to [PCC-59]. The focus is the Referral Task."
 Usage: #definition
-* url = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
+* url = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
 * name = "ReferralOrderStatus"
 * title = "Referral Order Status (O51)"
 * status = #draft
@@ -66,7 +66,7 @@ The [Referral Task](StructureDefinition-ReferralTask.html) carries the status
 """
 * focus[+]
   * code = #Task
-  * profile = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/StructureDefinition/ReferralTask"
+  * profile = "https://fhir.acmeexample.org.uk/PatientCareCoordination/StructureDefinition/ReferralTask"
   * min = 1
   * max = "1"
 * responseRequired = #never
@@ -112,7 +112,7 @@ Usage: #inline
 * sender.identifier.value = "P89020"
 * source.endpoint = "https://fhir.example-practice.nhs.uk/R4"
 * focus = Reference(ServiceRequest/CardiologyReferral)
-* definition = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/MessageDefinition/referral-order"
+* definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order"
 
 // Example: accept
 
@@ -143,7 +143,7 @@ Usage: #inline
 * sender.identifier.value = "R0A"
 * source.endpoint = "https://fhir.mft.nhs.uk/R4"
 * focus = Reference(Task/CardiologyReferralAccepted)
-* definition = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
+* definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
 
 // Example: outcome
 
@@ -176,4 +176,4 @@ Usage: #inline
 * sender.identifier.value = "R0A"
 * source.endpoint = "https://fhir.mft.nhs.uk/R4"
 * focus = Reference(Task/CardiologyReferralCompleted)
-* definition = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
+* definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"

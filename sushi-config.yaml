@@ -1,6 +1,6 @@
 # sushi-config.yaml is documented https://fshschool.org/docs/sushi/configuration/
-id: fhir.nwgenomics.nhs.uk.patientcarecoordination
-canonical: https://fhir.nwgenomics.nhs.uk/PatientCareCoordination
+id: fhir.acmeexample.org.uk.patientcarecoordination
+canonical: https://fhir.acmeexample.org.uk/PatientCareCoordination
 version: 0.1.0
 name: PatientCareCoordination
 title: Care Coordination and 360 Referrals (Proof of Concept)
@@ -9,8 +9,8 @@ releaseLabel: proof-of-concept
 status: draft
 experimental: true
 publisher:
-  - name: NHS North West Genomics
-  - url: https://www.nwgenomics.nhs.uk/contact-us
+  - name: Kevin Mayfield
+  - url: https://github.com/KevinMayfield/PatientCareCoordination
 license: CC-BY-4.0
 fhirVersion: 4.0.1
 jurisdiction: urn:iso:std:iso:3166#GB "United Kingdom of Great Britain and Northern Ireland"

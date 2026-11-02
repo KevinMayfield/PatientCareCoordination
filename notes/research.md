@@ -56,7 +56,8 @@ outside `input/`. Dates are when the source was checked.
 | 48 | HL7 Europe HDR composition-eu-hdr slices `extension:basedOn` with the core R4 `event-basedOn` extension, whose context does not include Composition - the validator rejects it (Extension_EXTP_Context_Wrong). This guide links documents to the referral from the workflow instead (Task.output, TXA-14, DocumentReference.context.related). Raise with HL7 Europe | IG authors, HL7 Europe | Open |
 | 49 | PRSB template counts on Templates.md come from web page summaries for eDis, ECD, MHD, 111 and PCSP (Excel checked only for OPL, CP, HRAC, CRIS headings) - confirm against each standard's model | IG authors | To confirm |
 | 50 | Clinical Observations (NHS England, 2.0.0-Alpha) oxygen delivery route codes 9999017 (headbox) and 9999016 (high flow) are not SNOMED CT identifiers; Vital Signs offers only nasal cannula and mask | IG authors, NHS England | To confirm |
-| 17 | Publisher / canonical: copied the NHS North West Genomics publisher and `fhir.nwgenomics.nhs.uk` canonical from the sibling IGs - confirm this is right for a general referral guide | IG authors | To confirm |
+| 51 | IG Publisher link bug: Questionnaire item `definition` to a local profile element with a choice type renders as `StructureDefinition-Observation.html#Observation.value[x]`, but the profile page anchor is `Observation.value_x_` - 13 HTML_LINK_CHECK errors on the Vital Signs page (definitions kept on this guide's Observation profile). Report to the IG Publisher tools team (chat.fhir.org #tooling) | IG authors | Open |
+| 17 | Publisher / canonical: publisher changed to Kevin Mayfield; canonical `https://fhir.acmeexample.org.uk/PatientCareCoordination` and package id `fhir.acmeexample.org.uk.patientcarecoordination` (a fictitious example domain), replacing the NW Genomics ones copied from the sibling IGs (2026-11-02) | IG authors | Resolved |
 
 ## Sources Checked (2026-11-01)
 

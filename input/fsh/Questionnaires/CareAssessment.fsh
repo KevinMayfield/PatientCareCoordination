@@ -23,7 +23,7 @@ standard v1.1. Social context is captured with the
 [Social Context](Questionnaire-SocialContext.html) questionnaire.
 """
 Usage: #definition
-* url = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/CareAssessment"
+* url = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/CareAssessment"
 * name = "CareAssessment"
 * title = "Care Assessment"
 * status = #draft
@@ -147,7 +147,7 @@ InstanceOf: QuestionnaireResponse
 Title: "Care Assessment - completed before virtual ward discharge"
 Description: "Care assessment completed for Sansa MANCHESTER before discharge from the respiratory virtual ward. It is the input to the community support care plan."
 Usage: #example
-* questionnaire = "https://fhir.nwgenomics.nhs.uk/PatientCareCoordination/Questionnaire/CareAssessment"
+* questionnaire = "https://fhir.acmeexample.org.uk/PatientCareCoordination/Questionnaire/CareAssessment"
 * status = #completed
 * subject = Reference(Patient-Manchester)
 * authored = "2026-10-12T15:00:00+01:00"
