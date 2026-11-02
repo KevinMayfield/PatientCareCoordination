@@ -237,7 +237,8 @@ The FDP CDM objects that correspond to this guide's [logical models](DataModel.h
 | [Patient Administration](PatientAdministration.html) | [Encounter](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Encounter), [Admission](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Admission), [Ward Stay](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/WardStay), [Virtual Ward](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/VirtualWard), [Virtual Ward Stay](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/VirtualWardStay), [Location](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Location), [Site](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Site), [Care Service](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CareService) |
 {:.grid}
 
-Mapping by object name only - **To confirm** against the CDM properties and links.
+Mapping by object name only. For the profile and property level mapping, and the gaps
+found, see [FDP Canonical Data Model Mapping](FDPCanonicalDataModel.html).
 
 ### Repeating Sub-templates
 

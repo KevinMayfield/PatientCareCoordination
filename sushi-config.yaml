@@ -95,6 +95,9 @@ pages:
   Templates.md:
     title: Composition, Archetypes and Templates
     generation: markdown
+  FDPCanonicalDataModel.md:
+    title: FDP Canonical Data Model Mapping
+    generation: markdown
   PatientAdministration.md:
     title: Patient Administration (Core NHS Resources)
     generation: markdown
@@ -147,6 +150,7 @@ menu:
     Care Plan and Execution (logical): StructureDefinition-CarePlanModel.html
     PRSB Standards: PRSB.html
     Composition, Archetypes and Templates: Templates.html
+    FDP Canonical Data Model Mapping: FDPCanonicalDataModel.html
     Terminology: terminology.html
   Appendices:
     Order and Report Workflow Pattern: WorkflowPatterns.html
