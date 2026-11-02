@@ -157,6 +157,13 @@ organisation's ODS code) are **mandatory**, including in the status updates the 
 Recipient sends back. 360X leaves ORC-12 empty in status updates; filling both means
 every message identifies the referrer without a look-up, as in the NW GMSA `ORC`.
 
+When the `Task` is exchanged by messaging (Referral Order Status (O51)), both sides
+already know the patient from the referral, so the FHIR Message does **not** include a
+`Patient` resource: `Task.for` carries the NHS Number as `identifier` with the
+reference, and `Task.requester` and `Task.owner` carry the referrer's professional code
+and the recipient's service identifier. (The HL7 v2 `OSU^O51` still has its PID
+segment, which the message structure requires.)
+
 #### Referral Request - OMG^O19
 
 The Referral ID is in ORC-2 and OBR-2 (namespace = the referrer's ODS code); the reason in

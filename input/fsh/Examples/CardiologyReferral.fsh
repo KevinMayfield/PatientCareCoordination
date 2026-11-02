@@ -170,6 +170,8 @@ Usage: #example
 * basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
 * for = Reference(Patient-Tameside)
+* for.identifier.system = $nhs-number
+* for.identifier.value = "9737383397"
 * status = #accepted
 * businessStatus = ReferralWorkflowStatus#accepted
 * intent = #order
@@ -177,7 +179,13 @@ Usage: #example
 * authoredOn = "2026-09-04T10:15:00+01:00"
 * lastModified = "2026-09-05T09:30:00+01:00"
 * requester = Reference(GPAllenRole)
+* requester.identifier.system = $gmp-number
+* requester.identifier.value = "G1234567"
+* requester.display = "Dr Allen, HT PRACTICE (P89020)"
 * owner = Reference(CardiologyService)
+* owner.identifier.system = "http://fhir.nhs.net/Id/ers-service"
+* owner.identifier.value = "1234567"
+* owner.display = "General Cardiology Outpatients, Manchester University NHS Foundation Trust (R0A)"
 
 // Referral Decline [PCC-56] - alternative outcome
 
@@ -194,6 +202,8 @@ Usage: #example
 * basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
 * for = Reference(Patient-Tameside)
+* for.identifier.system = $nhs-number
+* for.identifier.value = "9737383397"
 * status = #rejected
 * businessStatus = ReferralWorkflowStatus#declined
 * statusReason = ReferralStatusReason#service-not-provided
@@ -203,7 +213,13 @@ Usage: #example
 * authoredOn = "2026-09-04T10:15:00+01:00"
 * lastModified = "2026-09-05T09:30:00+01:00"
 * requester = Reference(GPAllenRole)
+* requester.identifier.system = $gmp-number
+* requester.identifier.value = "G1234567"
+* requester.display = "Dr Allen, HT PRACTICE (P89020)"
 * owner = Reference(CardiologyService)
+* owner.identifier.system = "http://fhir.nhs.net/Id/ers-service"
+* owner.identifier.value = "1234567"
+* owner.display = "General Cardiology Outpatients, Manchester University NHS Foundation Trust (R0A)"
 
 Instance: CardiologyReferralDeclinedAfterNoShow
 InstanceOf: ReferralTask
@@ -218,6 +234,8 @@ Usage: #example
 * basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
 * for = Reference(Patient-Tameside)
+* for.identifier.system = $nhs-number
+* for.identifier.value = "9737383397"
 * status = #rejected
 * businessStatus = ReferralWorkflowStatus#declined
 * statusReason = ReferralStatusReason#no-show
@@ -227,7 +245,13 @@ Usage: #example
 * authoredOn = "2026-09-04T10:15:00+01:00"
 * lastModified = "2026-09-15T10:00:00+01:00"
 * requester = Reference(GPAllenRole)
+* requester.identifier.system = $gmp-number
+* requester.identifier.value = "G1234567"
+* requester.display = "Dr Allen, HT PRACTICE (P89020)"
 * owner = Reference(CardiologyService)
+* owner.identifier.system = "http://fhir.nhs.net/Id/ers-service"
+* owner.identifier.value = "1234567"
+* owner.display = "General Cardiology Outpatients, Manchester University NHS Foundation Trust (R0A)"
 
 // Appointment Notification [PCC-60]
 
@@ -323,6 +347,8 @@ Usage: #example
 * basedOn.identifier.assigner.identifier.value = "P89020"
 * focus = Reference(CardiologyReferral)
 * for = Reference(Patient-Tameside)
+* for.identifier.system = $nhs-number
+* for.identifier.value = "9737383397"
 * status = #completed
 * businessStatus = ReferralWorkflowStatus#completed
 * intent = #order
@@ -330,7 +356,13 @@ Usage: #example
 * authoredOn = "2026-09-04T10:15:00+01:00"
 * lastModified = "2026-09-24T11:00:00+01:00"
 * requester = Reference(GPAllenRole)
+* requester.identifier.system = $gmp-number
+* requester.identifier.value = "G1234567"
+* requester.display = "Dr Allen, HT PRACTICE (P89020)"
 * owner = Reference(CardiologyService)
+* owner.identifier.system = "http://fhir.nhs.net/Id/ers-service"
+* owner.identifier.value = "1234567"
+* owner.display = "General Cardiology Outpatients, Manchester University NHS Foundation Trust (R0A)"
 * output[+].type = ReferralTaskParameter#interim-report
 * output[=].valueReference = Reference(CardiologyInterimNote)
 * output[+].type = ReferralTaskParameter#outcome-report

@@ -55,6 +55,11 @@ The [Referral Task](StructureDefinition-ReferralTask.html) carries the status
 (`status`, `businessStatus`, `statusReason`); for an interim note [PCC-59] or outcome
 [PCC-57] the message also carries the clinical document referenced from `Task.output`.
 
+The message does **not** carry a `Patient` resource. Both sides of the exchange already
+know the patient from the referral, so `Task.for` identifies the patient by NHS Number
+(`for.identifier`), `Task.requester` the referrer (professional code) and `Task.owner`
+the Referral Recipient (service identifier), alongside the references.
+
 | 360X | ORC-1 / ORC-5 | Task.businessStatus |
 |---|---|---|
 | Accept [PCC-55] | OK / IP | accepted |
@@ -131,8 +136,6 @@ Usage: #example
 * entry[message].resource = ReferralOrderStatusAcceptHeader
 * entry[1].fullUrl = "https://fhir.example.nhs.uk/R4/Task/CardiologyReferralAccepted"
 * entry[1].resource = CardiologyReferralAccepted
-* entry[2].fullUrl = "https://fhir.example.nhs.uk/R4/Patient/Patient-Tameside"
-* entry[2].resource = Patient-Tameside
 
 Instance: ReferralOrderStatusAcceptHeader
 InstanceOf: MessageHeader
@@ -164,8 +167,6 @@ Usage: #example
 * entry[message].resource = ReferralOrderStatusDeclineHeader
 * entry[1].fullUrl = "https://fhir.example.nhs.uk/R4/Task/CardiologyReferralDeclined"
 * entry[1].resource = CardiologyReferralDeclined
-* entry[2].fullUrl = "https://fhir.example.nhs.uk/R4/Patient/Patient-Tameside"
-* entry[2].resource = Patient-Tameside
 
 Instance: ReferralOrderStatusDeclineHeader
 InstanceOf: MessageHeader
@@ -197,8 +198,6 @@ Usage: #example
 * entry[message].resource = ReferralOrderStatusLaterDeclineHeader
 * entry[1].fullUrl = "https://fhir.example.nhs.uk/R4/Task/CardiologyReferralDeclinedAfterNoShow"
 * entry[1].resource = CardiologyReferralDeclinedAfterNoShow
-* entry[2].fullUrl = "https://fhir.example.nhs.uk/R4/Patient/Patient-Tameside"
-* entry[2].resource = Patient-Tameside
 
 Instance: ReferralOrderStatusLaterDeclineHeader
 InstanceOf: MessageHeader
