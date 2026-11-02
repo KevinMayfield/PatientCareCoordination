@@ -50,9 +50,6 @@ pages:
   ReferralForms.md:
     title: Referral Forms
     generation: markdown
-  NHSEngland.md:
-    title: NHS England Referral and Report Services
-    generation: markdown
   Reports.md:
     title: Referral Outcome Reports
     generation: markdown
@@ -107,6 +104,12 @@ pages:
   terminology.md:
     title: Terminology
     generation: markdown
+  NHSEngland.md:
+    title: NHS England Referral and Report Services
+    generation: markdown
+  NHSEnglandDiagnostics.md:
+    title: NHS England Diagnostic Order Services
+    generation: markdown
 
 menu:
   Home: index.html
@@ -115,7 +118,6 @@ menu:
     Order and Report Workflow Pattern: WorkflowPatterns.html
     Closed Loop Referral (360X): 360X.html
     Referral Forms: ReferralForms.html
-    NHS England Referral and Report Services: NHSEngland.html
     Referral Outcome Reports: Reports.html
     EU Health Data API: HealthDataAPI.html
     Virtual Wards (Hospital at Home): VirtualWards.html
@@ -137,4 +139,7 @@ menu:
     Logical Model: StructureDefinition-Referral.html
     PRSB Standards: PRSB.html
     Terminology: terminology.html
+  Appendices:
+    NHS England Referral and Report Services: NHSEngland.html
+    NHS England Diagnostic Order Services: NHSEnglandDiagnostics.html
   Artifacts: artifacts.html

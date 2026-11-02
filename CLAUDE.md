@@ -35,7 +35,8 @@ NW GMSA IG (`../FHIRGenomics`).
 
 - Pages: `input/pagecontent/`, organised as IHE volumes - Volume 1 Analysis and
   Design, Volume 2 Interactions (one page per 360X transaction, PCC-60 also covers
-  PCC-61), Volume 3 Data Models.
+  PCC-61), Volume 3 Data Models, then Appendices (assessments of NHS England services:
+  `NHSEngland.md` referral services, `NHSEnglandDiagnostics.md` diagnostic orders).
 - FSH: `input/fsh/` - logical model `Referral.fsh` at the top level, `Profiles/`,
   `Terminology/`, `Examples/`, `Core/`, `DataTypes/`.
 - A new page must be added to both `pages:` and `menu:` in `sushi-config.yaml`.

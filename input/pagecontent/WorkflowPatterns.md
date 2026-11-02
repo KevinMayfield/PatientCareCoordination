@@ -144,8 +144,9 @@ Each NHS England service implements part of the pattern for one setting:
 | Pathology / imaging messaging | Yes (LAB-1, RAD-2) | Yes | Imaging only | Yes (LAB-3, RAD-128) | Yes (placer order number) |
 {:.grid}
 
-The [NHS England Referral and Report Services](NHSEngland.html) page assesses each of
-these against the 360X transactions. Where a national standard is narrower than the
+The [NHS England Referral and Report Services](NHSEngland.html) and
+[NHS England Diagnostic Order Services](NHSEnglandDiagnostics.html) appendices assess each
+of these against the 360X transactions. Where a national standard is narrower than the
 general pattern, or under-specifies its data or process, the **general standard takes
 precedence**: implementations follow IHE / HL7 / FHIR, and the national service is
 mapped to it, not the other way round. eRS and EPS are well engineered within their

@@ -80,9 +80,10 @@ flowchart LR
 
 | Volume | Pages |
 |---|---|
-| Analysis and Design (Volume 1) | [Clinical Process](ClinicalProcess.html), [Order and Report Workflow Pattern](WorkflowPatterns.html), [Closed Loop Referral (360X)](360X.html), [Referral Forms](ReferralForms.html), [NHS England Referral and Report Services](NHSEngland.html), [Referral Outcome Reports](Reports.html), [EU Health Data API](HealthDataAPI.html), [Virtual Wards (Hospital at Home)](VirtualWards.html), [Dynamic Care Planning (DCP)](DCP.html) |
+| Analysis and Design (Volume 1) | [Clinical Process](ClinicalProcess.html), [Order and Report Workflow Pattern](WorkflowPatterns.html), [Closed Loop Referral (360X)](360X.html), [Referral Forms](ReferralForms.html), [Referral Outcome Reports](Reports.html), [EU Health Data API](HealthDataAPI.html), [Virtual Wards (Hospital at Home)](VirtualWards.html), [Dynamic Care Planning (DCP)](DCP.html) |
 | Interactions (Volume 2) | [Exchange Options](Transport.html), [Referral Request [PCC-55]](PCC-55.html), [Patient Referral [I12]](I12.html), [Referral Decline [PCC-56]](PCC-56.html), [Referral Outcome [PCC-57]](PCC-57.html), [Referral Cancellation [PCC-58]](PCC-58.html), [Interim Consultation Note [PCC-59]](PCC-59.html), [Appointment [PCC-60] / No-Show [PCC-61]](PCC-60.html), [Query Existing Data [PCC-44]](QEDm.html), [Document Sharing [MHD]](MHD.html) |
 | Data Models (Volume 3) | [Patient Administration](PatientAdministration.html), [FHIR Resources](DataModel.html), [Referral logical model](StructureDefinition-Referral.html), [Terminology](terminology.html) |
+| Appendices | [NHS England Referral and Report Services](NHSEngland.html), [NHS England Diagnostic Order Services](NHSEnglandDiagnostics.html) |
 {:.grid}
 
 ### Related Guides
