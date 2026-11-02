@@ -89,11 +89,14 @@ pages:
   PCC-60.md:
     title: Appointment Notification [PCC-60] and No-Show Notification [PCC-61]
     generation: markdown
+  DataModel.md:
+    title: Overview Model
+    generation: markdown
+  Templates.md:
+    title: Templates and Forms
+    generation: markdown
   PatientAdministration.md:
     title: Patient Administration (Core NHS Resources)
-    generation: markdown
-  DataModel.md:
-    title: FHIR Resources
     generation: markdown
   PRSB.md:
     title: PRSB Standards
@@ -136,13 +139,14 @@ menu:
     Query Existing Data [PCC-44]: QEDm.html
     Document Sharing [MHD]: MHD.html
   Data Models (Volume 3):
+    Overview Model: DataModel.html
     Patient Administration: PatientAdministration.html
-    FHIR Resources: DataModel.html
     Clinical Referral (logical): StructureDefinition-Referral.html
     Discharge Report (logical): StructureDefinition-DischargeReport.html
     Patient Summary (logical): StructureDefinition-PatientSummary.html
     Care Plan and Execution (logical): StructureDefinition-CarePlanModel.html
     PRSB Standards: PRSB.html
+    Templates and Forms: Templates.html
     Terminology: terminology.html
   Appendices:
     Order and Report Workflow Pattern: WorkflowPatterns.html

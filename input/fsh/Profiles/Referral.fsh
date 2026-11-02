@@ -122,7 +122,7 @@ Description:    """
 `Referral Workflow` - the state of a referral, shared between the Referral Initiator
 and the Referral Recipient. FHIR equivalent of the 360X HL7 v2 `OSU^O51` order status
 updates (accept, decline, interim note, outcome, cancel) and of the `SIU` appointment
-and no-show notifications. See [FHIR Resources](DataModel.html#referral-status) for
+and no-show notifications. See [Overview Model](DataModel.html#referral-status) for
 the status mapping.
 """
 

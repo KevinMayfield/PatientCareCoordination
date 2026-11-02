@@ -148,3 +148,7 @@ flowchart LR
 Information Standard to the [Referral](StructureDefinition-Referral.html) logical model.
 An indicative heading mapping for discharge is on
 [Referral Outcome Reports](Reports.html#hl7-europe-hospital-discharge-report).
+
+The sections these standards share (demographics, allergies, social context, plan and
+requested actions and others) are listed as reusable templates on
+[Templates and Forms](Templates.html), with the forms (Questionnaires) built from them.
