@@ -77,8 +77,7 @@ erDiagram
 | [Referral Request](StructureDefinition-ReferralRequest.html) | ServiceRequest | The referral | PCC-55 `OMG^O19` |
 | [Referral Task](StructureDefinition-ReferralTask.html) | Task | Workflow state and status updates | PCC-55 to PCC-59 `OSU^O51` |
 | [Referral Appointment](StructureDefinition-ReferralAppointment.html) | Appointment | Appointments and no-shows | PCC-60, PCC-61 `SIU` |
-| [Consultation Note](StructureDefinition-ConsultationNote.html) | Composition | Interim note; outpatient outcome | PCC-59, PCC-57 (document) |
-| [Discharge Report](StructureDefinition-DischargeReport.html) / [Document](StructureDefinition-DischargeReportDocument.html) | HL7 Europe HDR Composition / Bundle | Outcome after an inpatient or virtual ward stay | PCC-57 (document) |
+| [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) (used as published) | Composition / Bundle (`composition-eu-hdr`, `bundle-eu-hdr`) | Outcome after an inpatient or virtual ward stay; section codes also used for outpatient letters | PCC-57, PCC-59 (document) |
 | [Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html) | HL7 Europe HDR Encounter | Virtual ward stay | - |
 | [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html) | HL7 Europe HDR CarePlan | Virtual ward treatment plan | - (DCP) |
 | `Questionnaire` / `QuestionnaireResponse` (core) | - | Referral forms, in `supportingInfo` or `Task.input` / `output` - see [Referral Forms](ReferralForms.html) | OBX (ask at order entry) |

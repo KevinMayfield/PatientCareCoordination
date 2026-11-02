@@ -157,6 +157,15 @@ supporting information: the reason (`ServiceRequest.reasonCode`), the findings
 says who is doing what, for an ongoing plan that several teams update - a different
 use. Receiving systems that file a BaRS CarePlan as a care plan would mislead users.
 
+<div class="alert alert-warning" role="alert">
+<b>A common mistake in the NHS.</b> In the NHS "care plan" is very often the name for a
+<b>care assessment</b> - a form completed about the patient (in FHIR, a
+<code>QuestionnaireResponse</code> or <code>ClinicalImpression</code>). In social care a care
+plan is much closer to the FHIR <code>CarePlan</code>: the agreed activities, who carries
+them out and when. Check which is meant before mapping a "care plan" to
+<code>CarePlan</code>.
+</div>
+
 ### 4. Patient Identification
 
 BaRS Application 1 guidance for `Patient.identifier`:
@@ -281,7 +290,7 @@ information can be:
 
 | Option | Contents | Fits when | FHIR Document |
 |---|---|---|---|
-| **Clinical document** for the episode | What happened at the consultation or stay that made the referral: findings, vital signs, new medicines and allergies, the referral reason | Always - it is the referrer's account of this episode | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) - this guide's [Discharge Report](StructureDefinition-DischargeReport.html), and the [Consultation Note](StructureDefinition-ConsultationNote.html) with the same structure for outpatient and primary care encounters (HDR itself allows only inpatient encounters); vital signs as `Observation` ([Vital Signs](Questionnaire-VitalSigns.html)) |
+| **Clinical document** for the episode | What happened at the consultation or stay that made the referral: findings, vital signs, new medicines and allergies, the referral reason | Always - it is the referrer's account of this episode | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) - for outpatient and primary care encounters a `Composition` with the HDR section codes (HDR itself allows only inpatient encounters); vital signs as `Observation` ([Vital Signs](Questionnaire-VitalSigns.html)) |
 | **Patient summary** | Problems, current medicines, allergies, vital signs, immunisations - the background, not the episode | The receiver has no access to the patient's record (e.g. a community pharmacy) | [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/), the European profile of the International Patient Summary (IPS). NHS England equivalents are GP Connect Access Record and the shared care records |
 | **Query the record** | Whatever the receiver needs, when it needs it | The receiver can query an API | Preferred - see [EU Health Data API](HealthDataAPI.html) and [Query Existing Data [PCC-44]](QEDm.html). BaRS itself asks only for what is "not available on existing records", which assumes the receiver can read them |
 {:.grid}
@@ -317,8 +326,8 @@ BaRS message bundle:
 | [111 Referral Standard](https://theprsb.org/standards/111referralstandard) | Application 1 (111 to emergency care) | Clinical document for the 111 assessment (HDR structure), referenced from `supportingInfo` |
 | [Community Pharmacy Standard](https://theprsb.org/standards/communitypharmacy/) | Application 5 (Pharmacy First) | Referral: clinical document for the GP consultation. Pharmacy consultation returned to the GP: clinical document [PCC-57] |
 | [Clinical Referral Information Standard](https://theprsb.org/standards/clinical-referral-information-standard/) | - | The referral letter (`ServiceRequest` + clinical document) |
-| [Outpatient Letter Standard](https://theprsb.org/standards/outpatientletterstandard) | - | [Consultation Note](StructureDefinition-ConsultationNote.html) |
-| [Transfer of Care - Acute Inpatient Discharge Standard](https://theprsb.org/standards/edischargesummary) and [Emergency Care Discharge Standard](https://theprsb.org/standards/emergencycaredischarge) | - | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) / [Discharge Report](StructureDefinition-DischargeReport.html) |
+| [Outpatient Letter Standard](https://theprsb.org/standards/outpatientletterstandard) | - | `Composition` with the HDR section codes |
+| [Transfer of Care - Acute Inpatient Discharge Standard](https://theprsb.org/standards/edischargesummary) and [Emergency Care Discharge Standard](https://theprsb.org/standards/emergencycaredischarge) | - | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
 | [Core Information Standard](https://theprsb.org/standards/core-information-standard/) | - | [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/) |
 {:.grid}
 
@@ -408,8 +417,7 @@ In summary, where BaRS is the route (for example NHS 111 to an emergency departm
   the requesting practitioner and organisation into a `PractitionerRole`;
 - keep a Referral ID and the sender's patient identifier (with type and assigning
   organisation) on both sides;
-- send the outcome as a clinical document ([HL7 Europe HDR](https://hl7.eu/fhir/hdr/):
-  [Discharge Report](StructureDefinition-DischargeReport.html), or the
-  [Consultation Note](StructureDefinition-ConsultationNote.html) for outpatient
-  encounters) where BaRS has no equivalent;
+- send the outcome as a clinical document ([HL7 Europe HDR](https://hl7.eu/fhir/hdr/),
+  or a `Composition` with the HDR section codes for outpatient encounters) where BaRS has
+  no equivalent;
 - do all of this in an [anti-corruption layer](#adopting-bars-an-anti-corruption-layer).

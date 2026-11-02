@@ -75,7 +75,7 @@ referral.
 order. This guide allows, in order of preference:
 
 1. A **FHIR Document** with the relevant record (problems, medications, allergies,
-   results) - HL7 Europe / IPS sections, as in the [Consultation Note](StructureDefinition-ConsultationNote.html)
+   results) - HL7 Europe / IPS sections, as in [HL7 Europe HDR](https://hl7.eu/fhir/hdr/)
 2. A **referral letter** as a `DocumentReference` with a PDF attachment (as eRS
    referral letters are today)
 3. A **`QuestionnaireResponse`** for the service's referral form (e.g. exercise

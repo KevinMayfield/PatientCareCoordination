@@ -46,8 +46,10 @@ sequenceDiagram
 
 #### Clinical Document
 
-A [Consultation Note](StructureDefinition-ConsultationNote.html) (LOINC 11488-4 Consult
-Note), referencing the referral, with sections as needed:
+A clinic letter as a FHIR Document: `Composition` (LOINC 11488-4 Consult Note) with the
+[HL7 Europe HDR](https://hl7.eu/fhir/hdr/) section codes, referencing the referral
+(`basedOn` extension), with sections as needed. HDR itself is for inpatient stays - see
+[Referral Outcome Reports](Reports.html):
 
 | Section | LOINC | Content |
 |---|---|---|
@@ -62,7 +64,7 @@ Note), referencing the referral, with sections as needed:
 LOINC 42349-1 (Reason for referral), used by C-CDA, could not be checked on tx.fhir.org;
 29299-5 (Reason for visit) is used instead - **To confirm**.
 
-Example: [Consultation Note - Interim](Composition-CardiologyInterimNote.html).
+Example: [Clinic Letter - Interim](Composition-CardiologyInterimNote.html).
 
 ### Example
 

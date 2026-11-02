@@ -80,7 +80,7 @@ flowchart LR
 
 | | Order | Workflow state | Report |
 |---|---|---|---|
-| Referral | `ServiceRequest` ([Referral Request](StructureDefinition-ReferralRequest.html)) | `Task` ([Referral Task](StructureDefinition-ReferralTask.html)) | `Composition` ([Consultation Note](StructureDefinition-ConsultationNote.html), [Discharge Report](StructureDefinition-DischargeReport.html)) |
+| Referral | `ServiceRequest` ([Referral Request](StructureDefinition-ReferralRequest.html)) | `Task` ([Referral Task](StructureDefinition-ReferralTask.html)) | `Composition` ([HL7 Europe HDR](https://hl7.eu/fhir/hdr/)) |
 | Laboratory | `ServiceRequest` | `Task` (optional) | `DiagnosticReport`, `Observation` |
 | Prescription | `MedicationRequest` | `Task` (optional) | `MedicationDispense` |
 | Imaging | `ServiceRequest` | `Task` (optional), `ImagingStudy` | `DiagnosticReport` |

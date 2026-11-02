@@ -71,7 +71,7 @@ not list - **To confirm**.
   share; an empty result does not mean the patient has none.
 - The Clinical Data Consumer **SHOULD** show the source and date of each item. With the
   QEDm **Provenance Option** a resource can be traced to the document it came from (IHE
-  mXDE), for example the medications in a [Discharge Report](StructureDefinition-DischargeReport.html).
+  mXDE), for example the medications in an [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) discharge report.
 - Data read through QEDm supports decisions; it is not filed into the consumer's record
   unless a clinician chooses to (reconciliation).
 

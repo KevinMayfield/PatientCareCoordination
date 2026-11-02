@@ -22,9 +22,10 @@ NW GMSA IG (`../FHIRGenomics`).
   virtual wards framework); use `ORU_R01` messaging, REST APIs, or CDA / FHIR Documents.
 - **HL7 v2 is the baseline; IHE XDS / XDM / XDR are optional.** Every
   interaction has an HL7 v2 equivalent (360X v2.5.1 messages).
-- Reports: HL7 Europe Hospital Discharge Report (`hl7.fhir.eu.hdr` 1.0.0) for
-  inpatient / virtual ward stays, the Consultation Note for outpatient outcomes
-  (HDR only allows inpatient encounters). Sharing: EU Health Data API.
+- Reports: HL7 Europe Hospital Discharge Report (`hl7.fhir.eu.hdr` 1.0.0) used as
+  published - no local document profiles. Outpatient letters are a plain `Composition`
+  with the HDR section codes (HDR only allows inpatient encounters). Patient summary:
+  HL7 Europe Patient Summary (EPS). Sharing: EU Health Data API.
 - Profiles are kept few. Identifier data types and Patient are copied from the
   NW GMSA IG (via `../Imaging`) - see the DUPLICATION comments. Core NHS patient
   administration profiles (`input/fsh/Core/PatientAdministration.fsh`) are copied from

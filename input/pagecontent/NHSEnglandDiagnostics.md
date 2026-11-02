@@ -125,7 +125,7 @@ microbiology).
 | Step | Pathology FHIR | 360X equivalent | FHIR (this guide) |
 |---|---|---|---|
 | Order | Not in scope - requests stay in local order comms | Referral Request [PCC-55] | - |
-| Report | FHIR Document Bundle (`England-Bundle-Lab-Pathology`, `Composition-eu-lab`, `DiagnosticReport-eu-lab`, result Observations, Specimen) sent to the Pathology FHIR API | Referral Outcome [PCC-57] | Same document approach as the [Discharge Report](StructureDefinition-DischargeReport.html) (HL7 Europe) |
+| Report | FHIR Document Bundle (`England-Bundle-Lab-Pathology`, `Composition-eu-lab`, `DiagnosticReport-eu-lab`, result Observations, Specimen) sent to the Pathology FHIR API | Referral Outcome [PCC-57] | Same document approach as [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
 | Interim | "The laboratory may issue one or more interim reports before sending a final report" | Interim Consultation Note [PCC-59] | `DiagnosticReport.status` - **To confirm** |
 | Correlation | "Test Request Summary" `ServiceRequest` returned with the report, carrying the requester's order ID (EDIFACT `ROI`) and the laboratory's in `ServiceRequest.identifier`; `DiagnosticReport.basedOn` - **To confirm** | Referral ID | `identifier:referralId` |
 | Transformation | `Provenance` (Test Reporter Design Pattern) records the organisation that converted the data to FHIR | - | - |

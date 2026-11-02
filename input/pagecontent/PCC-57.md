@@ -57,9 +57,9 @@ The referral `ServiceRequest.status` becomes `completed`.
 
 | Care delivered | Document | Profile | Transfer of Care equivalent |
 |---|---|---|---|
-| Outpatient / clinic | Consultation note (discharge letter) | [Consultation Note](StructureDefinition-ConsultationNote.html) (LOINC 11488-4) | Outpatient letter |
-| Inpatient stay | Hospital discharge report | [Discharge Report](StructureDefinition-DischargeReport.html) (HL7 Europe HDR) | eDischarge |
-| Virtual ward stay | Hospital discharge report | [Discharge Report](StructureDefinition-DischargeReport.html) | eDischarge - **To confirm** |
+| Outpatient / clinic | Consultation note (discharge letter) | Composition with the HDR section codes, LOINC 11488-4 - HDR is inpatient only (**Open**) | Outpatient letter |
+| Inpatient stay | Hospital discharge report | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) | eDischarge |
+| Virtual ward stay | Hospital discharge report | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) | eDischarge - **To confirm** |
 | Continued care | Care plan | HDR `CarePlan` / [Dynamic Care Planning](DCP.html) | - |
 {:.grid}
 
@@ -76,8 +76,8 @@ The referral `ServiceRequest.status` becomes `completed`.
 
 Examples:
 
-- Outpatient: [Consultation Note - Referral Outcome](Composition-CardiologyOutcomeNote.html), [Referral Task - Completed](Task-CardiologyReferralCompleted.html)
-- Virtual ward: [Discharge Report Document](Bundle-VirtualWardDischargeReport.html), [Referral Task - Virtual ward completed](Task-VirtualWardReferralCompleted.html)
+- Cardiology (after the catheterisation admission): [Hospital Discharge Report - Referral Outcome](Composition-CardiologyOutcomeNote.html), [Referral Task - Completed](Task-CardiologyReferralCompleted.html)
+- Virtual ward: [Hospital Discharge Report](Bundle-VirtualWardDischargeReport.html), [Referral Task - Virtual ward completed](Task-VirtualWardReferralCompleted.html)
 
 ### Example
 

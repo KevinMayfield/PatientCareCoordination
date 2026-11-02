@@ -157,7 +157,7 @@ fits this guide's [FHIR RESTful Task](Transport.html#fhir-restful-task) option:
 | `Task` - "to give the ability to accept or refuse, convey progress and link to results", even for directed referrals; several Tasks may solicit providers for one referral | [Referral Task](StructureDefinition-ReferralTask.html) - 360X is a directed referral (one recipient) |
 | Task status `requested`, `accepted`, `rejected` (with reason), `on-hold`, `cancelled`, `failed`, `completed` | Task `status` with the 360X `businessStatus` - see [Referral Status](DataModel.html#referral-status) |
 | Observations (exercise vital signs) pushed or queried | Progress observations in `Task.output` |
-| PA Intervention Report - a `DiagnosticReport` (PDF) in `Task.output` | Referral Outcome [PCC-57] - [Consultation Note](StructureDefinition-ConsultationNote.html) or [Discharge Report](StructureDefinition-DischargeReport.html) |
+| PA Intervention Report - a `DiagnosticReport` (PDF) in `Task.output` | Referral Outcome [PCC-57] - [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) or outpatient letter |
 | Subscription for new Tasks; email / SMS prompt for light participants | Event notification (FHIR Subscription, NHS MNS) |
 | Cancel by setting the Task to `cancelled`; changes to the referral as Task notes | Referral Cancellation [PCC-58] |
 {:.grid}

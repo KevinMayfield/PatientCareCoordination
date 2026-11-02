@@ -192,6 +192,6 @@ Example: [Schedule](Schedule-CardiologyClinicSchedule.html), [Slot](Slot-Cardiol
 | Appointment [PCC-60] | Schedule, Slot, Appointment |
 | Attendance | [Visit](StructureDefinition-Visit.html) (Visit Number), `basedOn` the referral |
 | Admission | [Hospital Spell](StructureDefinition-HospitalSpell.html) (Account Number); [virtual ward](VirtualWards.html) stay |
-| Interim note [PCC-59] | [Consultation Note](StructureDefinition-ConsultationNote.html) `encounter` = the Visit |
-| Outcome [PCC-57] | Consultation Note `encounter` = the Visit or Hospital Spell; [Discharge Report](StructureDefinition-DischargeReport.html) for a spell |
+| Interim note [PCC-59] | Outpatient letter `Composition.encounter` = the Visit |
+| Outcome [PCC-57] | Outpatient letter `encounter` = the Visit; [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) `encounter` = the Hospital Spell |
 {:.grid}

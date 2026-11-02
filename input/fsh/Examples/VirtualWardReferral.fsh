@@ -214,8 +214,8 @@ Usage: #example
 // Referral Outcome [PCC-57] - Hospital Discharge Report
 
 Instance: VirtualWardDischargeReport
-InstanceOf: DischargeReportDocument
-Title: "Discharge Report Document - Respiratory virtual ward"
+InstanceOf: http://hl7.eu/fhir/hdr/StructureDefinition/bundle-eu-hdr
+Title: "Hospital Discharge Report - Respiratory virtual ward"
 Description: "Referral Outcome [PCC-57]: HL7 Europe Hospital Discharge Report sent to the GP when the patient leaves the virtual ward."
 Usage: #example
 * language = #en-GB
@@ -231,7 +231,7 @@ Usage: #example
 * entry[encounter].resource = VirtualWardStayInline
 
 Instance: VirtualWardDischargeComposition
-InstanceOf: DischargeReport
+InstanceOf: http://hl7.eu/fhir/hdr/StructureDefinition/composition-eu-hdr
 Usage: #inline
 * extension[basedOn].valueReference.identifier.type = $v2-0203#PLAC
 * extension[basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"

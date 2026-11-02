@@ -101,7 +101,7 @@ and referrals into community pharmacy.
 | Referral request (`servicerequest-request`, `new`) | Referral Request [PCC-55] | [Referral Request](StructureDefinition-ReferralRequest.html) |
 | Interim validation response - accepted or rejected (Application 4) | Accept / Decline [PCC-55] | [Referral Task](StructureDefinition-ReferralTask.html) |
 | Referral update with `ServiceRequest.status` `revoked` | Cancellation [PCC-58] | Referral Task |
-| Full validation response (Application 4) | Referral Outcome [PCC-57] (status only, no clinical document) | Referral Task; [Consultation Note](StructureDefinition-ConsultationNote.html) / [Discharge Report](StructureDefinition-DischargeReport.html) |
+| Full validation response (Application 4) | Referral Outcome [PCC-57] (status only, no clinical document) | Referral Task; [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
 | Booking request (get slots, book, update, cancel) | Appointment Notification [PCC-60] | [Referral Appointment](StructureDefinition-ReferralAppointment.html) |
 | Did-not-attend response | No-Show [PCC-61] | Referral Task |
 | Get referrals / bookings for a patient | Not in 360X (query) | Search `ServiceRequest`, `Appointment` (REST) |
@@ -131,8 +131,8 @@ ITK3 FHIR (STU3) messages over MESH.
 
 | Transfer of Care document | 360X | This guide |
 |---|---|---|
-| eDischarge (inpatient) | Referral Outcome [PCC-57] | [Discharge Report](StructureDefinition-DischargeReport.html) (HL7 Europe HDR) |
-| Outpatient letter | Interim Consultation Note [PCC-59] or Referral Outcome [PCC-57] | [Consultation Note](StructureDefinition-ConsultationNote.html) |
+| eDischarge (inpatient) | Referral Outcome [PCC-57] | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
+| Outpatient letter | Interim Consultation Note [PCC-59] or Referral Outcome [PCC-57] | `Composition` with the HDR section codes |
 | Emergency care discharge | Referral Outcome [PCC-57] (for referrals to ED) | HDR - **Open** (HDR assumes an inpatient encounter) |
 | Mental health discharge | Referral Outcome [PCC-57] | HDR - **To confirm** |
 {:.grid}
@@ -204,8 +204,8 @@ Points for the closed loop:
 | Access Record: Structured bundle | Clinical information for `ServiceRequest.supportingInfo`, or read on demand |
 | Access Document `DocumentReference` | Referral letter (`supportingInfo`), consultation notes |
 | Appointment Management `Appointment` | [Referral Appointment](StructureDefinition-ReferralAppointment.html) |
-| Send Document payload | [Consultation Note](StructureDefinition-ConsultationNote.html) or [Discharge Report](StructureDefinition-DischargeReport.html), rendered as PDF |
-| Update Record structured message | [Consultation Note](StructureDefinition-ConsultationNote.html) with coded entries - **To confirm** mapping |
+| Send Document payload | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) or outpatient letter, rendered as PDF |
+| Update Record structured message | Outpatient letter (HDR section codes) with coded entries - **To confirm** mapping |
 {:.grid}
 
 GP Connect APIs are mostly FHIR STU3 and are reached through the Spine Secure Proxy;

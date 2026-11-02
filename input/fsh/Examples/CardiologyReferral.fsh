@@ -233,16 +233,16 @@ Usage: #example
 // Interim Consultation Note [PCC-59]
 
 Instance: CardiologyInterimNote
-InstanceOf: ConsultationNote
-Title: "Consultation Note - Interim (cardiology clinic)"
-Description: "Interim Consultation Note [PCC-59]: after the first clinic, answers the referral question and gives the date of the cardiac catheterisation."
+InstanceOf: Composition
+Title: "Clinic Letter - Interim (cardiology clinic)"
+Description: "Interim Consultation Note [PCC-59]: after the first clinic, answers the referral question and gives the date of the cardiac catheterisation. An outpatient letter, so not an HL7 Europe HDR (inpatient encounters only); it uses the HDR section codes."
 Usage: #example
-* extension[basedOn].valueReference = Reference(CardiologyReferral)
-* extension[basedOn].valueReference.identifier.type = $v2-0203#PLAC
-* extension[basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
-* extension[basedOn].valueReference.identifier.value = "REF-2026-000123"
-* extension[basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
-* extension[basedOn].valueReference.identifier.assigner.identifier.value = "P89020"
+* extension[$event-basedOn].valueReference = Reference(CardiologyReferral)
+* extension[$event-basedOn].valueReference.identifier.type = $v2-0203#PLAC
+* extension[$event-basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
+* extension[$event-basedOn].valueReference.identifier.value = "REF-2026-000123"
+* extension[$event-basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
+* extension[$event-basedOn].valueReference.identifier.assigner.identifier.value = "P89020"
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-55501"
 * status = #final
@@ -253,25 +253,25 @@ Usage: #example
 * author = Reference(CardiologistBrownRole)
 * title = "Cardiology clinic letter"
 * custodian = Reference(R0A)
-* section[reasonForReferral].title = "Reason for referral"
-* section[reasonForReferral].code = $loinc#29299-5 "Reason for visit Narrative"
-* section[reasonForReferral].text.status = #generated
-* section[reasonForReferral].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Shortness of breath. Determine the origin.</div>"
-* section[assessment].title = "Assessment"
-* section[assessment].code = $loinc#51848-0 "Evaluation Note"
-* section[assessment].text.status = #generated
-* section[assessment].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Findings consistent with coronary artery disease.</div>"
-* section[planOfCare].title = "Plan"
-* section[planOfCare].code = $loinc#18776-5 "Plan of Care Note"
-* section[planOfCare].text.status = #generated
-* section[planOfCare].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cardiac catheterisation booked for 21 September 2026.</div>"
+* section[+].title = "Reason for referral"
+* section[=].code = $loinc#29299-5 "Reason for visit Narrative"
+* section[=].text.status = #generated
+* section[=].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Shortness of breath. Determine the origin.</div>"
+* section[+].title = "Assessment"
+* section[=].code = $loinc#67781-5 "Summarization of encounter note"
+* section[=].text.status = #generated
+* section[=].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Findings consistent with coronary artery disease.</div>"
+* section[+].title = "Plan"
+* section[=].code = $loinc#18776-5 "Plan of Care Note"
+* section[=].text.status = #generated
+* section[=].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cardiac catheterisation booked for 21 September 2026.</div>"
 
 // Referral Outcome [PCC-57]
 
 Instance: CardiologyOutcomeNote
-InstanceOf: ConsultationNote
-Title: "Consultation Note - Referral Outcome (final)"
-Description: "Referral Outcome [PCC-57]: the final consultation note after the catheterisation, with the suggested plan of care. The patient is discharged back to the GP."
+InstanceOf: http://hl7.eu/fhir/hdr/StructureDefinition/composition-eu-hdr
+Title: "Hospital Discharge Report - Referral Outcome (final)"
+Description: "Referral Outcome [PCC-57]: the HL7 Europe Hospital Discharge Report after the cardiac catheterisation admission, with the suggested plan of care. The patient is discharged back to the GP."
 Usage: #example
 * extension[basedOn].valueReference = Reference(CardiologyReferral)
 * extension[basedOn].valueReference.identifier.type = $v2-0203#PLAC
@@ -282,21 +282,21 @@ Usage: #example
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-55777"
 * status = #final
-* type = $loinc#11488-4 "Consult Note"
+* type = $loinc#34105-7 "Hospital Discharge Summary"
 * subject = Reference(Patient-Tameside)
 * encounter = Reference(CardiacCatheterisationSpell)
 * date = "2026-09-24T11:00:00+01:00"
 * author = Reference(CardiologistBrownRole)
-* title = "Cardiology discharge letter"
+* title = "Cardiology discharge report"
 * custodian = Reference(R0A)
-* section[assessment].title = "Assessment"
-* section[assessment].code = $loinc#51848-0 "Evaluation Note"
-* section[assessment].text.status = #generated
-* section[assessment].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cardiac catheterisation on 21 September 2026 confirmed coronary artery disease.</div>"
-* section[planOfCare].title = "Plan"
-* section[planOfCare].code = $loinc#18776-5 "Plan of Care Note"
-* section[planOfCare].text.status = #generated
-* section[planOfCare].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Medical management. GP to review lipids and blood pressure in 3 months. Discharged from cardiology.</div>"
+* section[sectionHospitalCourse].title = "Hospital course"
+* section[sectionHospitalCourse].code = $loinc#8648-8
+* section[sectionHospitalCourse].text.status = #generated
+* section[sectionHospitalCourse].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cardiac catheterisation on 21 September 2026 confirmed coronary artery disease.</div>"
+* section[sectionPlanOfCare].title = "Plan of care"
+* section[sectionPlanOfCare].code = $loinc#18776-5
+* section[sectionPlanOfCare].text.status = #generated
+* section[sectionPlanOfCare].text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Medical management. GP to review lipids and blood pressure in 3 months. Discharged from cardiology.</div>"
 
 Instance: CardiologyReferralCompleted
 InstanceOf: ReferralTask

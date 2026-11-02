@@ -21,9 +21,9 @@ the EU Health Data API.
 
 | Situation | 360X transaction | Report | Profile |
 |---|---|---|---|
-| Outpatient clinic, results so far | Interim Consultation Note [PCC-59] | Clinic letter | [Consultation Note](StructureDefinition-ConsultationNote.html) |
-| Outpatient care finished, patient discharged to the referrer | Referral Outcome [PCC-57] | Clinic (discharge) letter | [Consultation Note](StructureDefinition-ConsultationNote.html) |
-| Inpatient or virtual ward stay ended | Referral Outcome [PCC-57] | Discharge summary | [Discharge Report](StructureDefinition-DischargeReport.html) (HL7 Europe HDR) |
+| Outpatient clinic, results so far | Interim Consultation Note [PCC-59] | Clinic letter | Composition with the HDR section codes (HDR is inpatient only - **Open**) |
+| Outpatient care finished, patient discharged to the referrer | Referral Outcome [PCC-57] | Clinic (discharge) letter | Composition with the HDR section codes (HDR is inpatient only - **Open**) |
+| Inpatient or virtual ward stay ended | Referral Outcome [PCC-57] | Discharge summary | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
 | Continued care (no end of care) | Referral Outcome [PCC-57] | Care plan | `CarePlan` - see [Dynamic Care Planning](DCP.html) |
 | Test or examination | LAB-3, RAD-128 | Diagnostic report | See [Cancer Pathology Report](https://kevinmayfield.github.io/CancerPathologyReport/) and [Enterprise Imaging](https://kevinmayfield.github.io/Imaging/) |
 {:.grid}
@@ -69,14 +69,15 @@ Transfer of Care eDischarge document.
 {:.grid}
 
 The heading mapping is indicative only - **To confirm** against the PRSB eDischarge
-standard. This guide's [Discharge Report](StructureDefinition-DischargeReport.html)
-derives from HDR and adds one rule: `basedOn` **SHALL** reference the referral.
+standard. This guide uses HDR as published, with one rule: the Composition's `basedOn`
+extension **SHALL** reference the referral.
 
 **HDR is for inpatient stays.** HDR's `Encounter` only allows inpatient classes
 (`IMP`, `ACUTE`, `NONAC`, `OBSENC`, `SS`) and its `Composition.type` is fixed to
 LOINC 34105-7 (Hospital Discharge Summary). It does not fit an outpatient clinic
-letter, so this guide uses a separate [Consultation Note](StructureDefinition-ConsultationNote.html)
-(LOINC 11488-4) with HDR-style sections. A virtual ward stay is treated as an
+letter. For outpatient letters this guide uses a plain `Composition` (LOINC 11488-4
+Consult Note) with the HDR section codes - whether HDR should be relaxed for outpatient
+encounters is **Open**. A virtual ward stay is treated as an
 inpatient stay so it can use HDR - see [Virtual Wards](VirtualWards.html).
 
 Example: [Virtual ward discharge report](Bundle-VirtualWardDischargeReport.html).

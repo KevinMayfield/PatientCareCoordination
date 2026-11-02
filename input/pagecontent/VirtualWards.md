@@ -64,9 +64,9 @@ sequenceDiagram
 | Admit | The stay starts; the patient's home is the location | HL7 v2 ADT A01 / A04 - **To confirm** which event trusts use | [Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html) |
 | Plan | Monitoring, visits, medication and escalation plan, shared with the care team | [Dynamic Care Planning](DCP.html) | [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html) |
 | Monitor | Readings from the patient or devices; at least daily review | Device / remote monitoring platform; FHIR `Observation` | Vital signs `Observation` |
-| Update the referrer | Optional interim note (e.g. escalation, change of plan) | [PCC-59](PCC-59.html) | [Consultation Note](StructureDefinition-ConsultationNote.html) |
+| Update the referrer | Optional interim note (e.g. escalation, change of plan) | [PCC-59](PCC-59.html) | Clinical document (HDR section codes) |
 | Prescribe | Medicines for the patient at home | [EPS](NHSEngland.html#electronic-prescription-service-eps) (secondary / community care) - **To confirm** current practice | `MedicationRequest` |
-| Discharge | The stay ends; discharge report to the referrer and GP, medicines to the GP and community pharmacy | [PCC-57](PCC-57.html), HL7 v2 ADT A03 | [Discharge Report](StructureDefinition-DischargeReport.html) |
+| Discharge | The stay ends; discharge report to the referrer and GP, medicines to the GP and community pharmacy | [PCC-57](PCC-57.html), HL7 v2 ADT A03 | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
 {:.grid}
 
 ### Modelling the Stay
@@ -106,7 +106,7 @@ The general conventions are used instead:
 | Need | General pattern | Standard |
 |---|---|---|
 | Send results and observations to the GP or another provider | Results messaging - the receiver's system files them | HL7 v2 `ORU^R01` (as for pathology and imaging); FHIR Message |
-| Send the discharge report, clinic letter or interim note | Clinical documents | FHIR Document (HL7 Europe HDR, [Consultation Note](StructureDefinition-ConsultationNote.html)) or CDA; HL7 v2 `MDM^T02` |
+| Send the discharge report, clinic letter or interim note | Clinical documents | FHIR Document ([HL7 Europe HDR](https://hl7.eu/fhir/hdr/)) or CDA; HL7 v2 `MDM^T02` |
 | Read another provider's record (e.g. the GP record when triaging) | REST query APIs | FHIR REST / IHE QEDm, IHE MHD, EU Health Data API; nationally GP Connect Access Record |
 | Workflow between providers (accept, decline, outcome) | Order status messages or shared `Task` | 360X `OSU^O51`; FHIR `Task` (REST) |
 | A plan the whole care team works to | A shared care plan held by a Care Plan Service, which contributors update through its API - not by writing into each other's EPRs | IHE [Dynamic Care Planning](DCP.html) |
