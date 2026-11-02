@@ -141,6 +141,42 @@ site code; wards and clinics are `partOf` the site. Follows the
 * partOf MS
 * partOf only Reference(Location)
 
+// New in this guide: no NW GMSA or Interweave HealthcareService profile. Follows the
+// IHE mCSD HealthcareService (https://profiles.ihe.net/ITI/mCSD/) and the NHS England
+// directories (DoS Search API, eRS) - see input/pagecontent/mCSD.md.
+Profile:        HealthcareService
+Parent:         http://hl7.org/fhir/StructureDefinition/HealthcareService
+Id:             HealthcareService
+Title:          "HealthcareService"
+Description:    """
+`Care Directory` - a service that patients can be referred to (the Referral Recipient),
+provided by an organisation (ODS) at one or more locations. The master record is held in
+a directory: the NHS England [Directory of Services](mCSD.html#directory-of-services),
+the [eRS](mCSD.html#e-referral-service-ers) service catalogue, or a regional / local
+directory. Follows [IHE mCSD](https://profiles.ihe.net/ITI/mCSD/) HealthcareService.
+"""
+
+* identifier MS
+* identifier ^short = "Directory service ID, e.g. eRS service ID or DoS service ID (systems To confirm)"
+* active MS
+* providedBy 1..1 MS
+* providedBy only Reference(Organization)
+* providedBy.identifier only OrganisationCode
+* category MS
+* type MS
+* type ^short = "What the service does, e.g. SNOMED CT procedure or regime / therapy"
+* specialty MS
+* specialty from Specialty (extensible)
+* location MS
+* location only Reference(Location)
+* name MS
+* telecom MS
+* coverageArea MS
+* referralMethod MS
+* appointmentRequired MS
+* endpoint MS
+* endpoint ^short = "Where referrals (PCC-55) are sent - see Find Matching Care Services [ITI-90]"
+
 // Clinical registration
 
 Profile:        Encounter

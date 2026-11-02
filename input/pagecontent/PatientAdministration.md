@@ -25,7 +25,7 @@ definitions from the [NW GMSA IG](https://nw-gmsa.github.io/en/artifacts.html) a
 | FHIR category | Resources | Profiles in this guide | Source |
 |---|---|---|---|
 | Individuals | Patient, RelatedPerson, Practitioner, PractitionerRole | [Patient](StructureDefinition-Patient.html), [RelatedPerson](StructureDefinition-RelatedPerson.html), [Practitioner](StructureDefinition-Practitioner.html), [PractitionerRole](StructureDefinition-PractitionerRole.html) | NW GMSA (on HL7 Europe Base) |
-| Entities | Organization, Location, HealthcareService | [Organization](StructureDefinition-Organization.html), [Location](StructureDefinition-Location.html); HealthcareService unprofiled | NW GMSA; Interweave |
+| Entities | Organization, Location, HealthcareService | [Organization](StructureDefinition-Organization.html), [Location](StructureDefinition-Location.html), [HealthcareService](StructureDefinition-HealthcareService.html) | NW GMSA; Interweave; IHE mCSD (HealthcareService) |
 | Clinical registration | Encounter, EpisodeOfCare, (Account) | [Encounter](StructureDefinition-Encounter.html) (base), [Hospital Spell](StructureDefinition-HospitalSpell.html), [Visit](StructureDefinition-Visit.html), [Episode Of Care](StructureDefinition-EpisodeOfCare.html); Account not used | NW GMSA; Interweave |
 | Scheduling | Schedule, Slot, Appointment, AppointmentResponse | [Schedule](StructureDefinition-Schedule.html), [Slot](StructureDefinition-Slot.html), [Referral Appointment](StructureDefinition-ReferralAppointment.html) | Interweave; this guide |
 {:.grid}

@@ -4,6 +4,19 @@
 must not be used for implementation or clinical purposes.
 </div>
 
+### Master Record
+
+| Element | Master record | NHS England API |
+|---|---|---|
+| Practitioner's role in an organisation (role profile, national RBAC role, ODS code) | Spine Directory Service (SDS) | [Healthcare Worker FHIR API](https://digital.nhs.uk/developer/api-catalogue/healthcare-worker-fhir) `_revinclude=PractitionerRole` (identifier `https://fhir.nhs.uk/Id/sds-role-profile-id`); CIS2 user info for the signed-in user |
+| eRS user business functions | eRS | [eRS FHIR API](https://digital.nhs.uk/developer/api-catalogue/e-referral-service-fhir) A030 `GET /R4/PractitionerRole` (**eRS only**) |
+| `organization` (ODS code) | ODS | See [Organization](StructureDefinition-Organization.html) |
+{:.grid}
+
+SDS role profiles describe access rights rather than clinical roles; `code` and
+`specialty` in referrals are clinical. See
+[Care Services Directory (mCSD)](mCSD.html#spine-directory-service-sds).
+
 ### FDP Canonical Data Model
 
 Equivalent [FDP Canonical Data Model](https://cdm.solutionexchange.federateddataplatform.nhs.uk/)

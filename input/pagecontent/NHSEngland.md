@@ -311,8 +311,8 @@ suppliers" push status to patients "via the NHS App".
 
 | Service | Use in the closed loop |
 |---|---|
-| PDS (Personal Demographics Service) | Trace the NHS Number before referring (the shared patient identifier) |
-| ODS / Directory of Services / Service Finder | Find the Referral Recipient (`Organization`, `HealthcareService`) |
+| PDS (Personal Demographics Service) | Trace the NHS Number before referring (the shared patient identifier) - IHE PDQm, see [Patient Identity (PDQm)](PDQm.html) |
+| ODS / Directory of Services / SDS / Service Finder | Find the Referral Recipient (`Organization`, `HealthcareService`) and its endpoint - IHE mCSD, see [Care Services Directory (mCSD)](mCSD.html) |
 | NRL (National Record Locator) | Register a referral outcome document so others can find it (Document Sharing) |
 | MNS (Multicast Notification Service) | Notify subscribers of events, for example a new document or an encounter - **To confirm** referral events |
 {:.grid}

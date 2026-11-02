@@ -115,7 +115,7 @@ erDiagram
 | `Questionnaire` / `QuestionnaireResponse` (core) | - | Referral forms, in `supportingInfo` or `Task.input` / `output` - see [Referral Forms](ReferralForms.html) | OBX (ask at order entry) |
 | [Observation](StructureDefinition-Observation.html) | Observation | Clinical observations, e.g. vital signs; target of the [Vital Signs](Questionnaire-VitalSigns.html) item definitions | OBX |
 | [Patient](StructureDefinition-Patient.html) | HL7 Europe Patient | Patient (NW GMSA conventions) | PID |
-| Core NHS patient administration - Organization, Practitioner, PractitionerRole, RelatedPerson, Location, Encounter, Hospital Spell, Visit, Episode Of Care, Schedule, Slot | NW GMSA / Interweave | See [Patient Administration](PatientAdministration.html) | PID, PV1, SCH |
+| Core NHS patient administration - Organization, Practitioner, PractitionerRole, RelatedPerson, Location, HealthcareService, Encounter, Hospital Spell, Visit, Episode Of Care, Schedule, Slot | NW GMSA / Interweave | See [Patient Administration](PatientAdministration.html) | PID, PV1, SCH |
 {:.grid}
 
 Identifier profiles: [Referral Identifier](StructureDefinition-ReferralIdentifier.html)

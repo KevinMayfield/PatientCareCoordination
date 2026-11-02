@@ -59,6 +59,12 @@ pages:
   DCP.md:
     title: Dynamic Care Planning (DCP)
     generation: markdown
+  mCSD.md:
+    title: Care Services Directory (mCSD)
+    generation: markdown
+  PDQm.md:
+    title: Patient Identity (PDQm)
+    generation: markdown
   Transport.md:
     title: Exchange Options
     generation: markdown
@@ -67,6 +73,12 @@ pages:
     generation: markdown
   MHD.md:
     title: Document Sharing [MHD]
+    generation: markdown
+  ITI-90.md:
+    title: Find Matching Care Services [ITI-90]
+    generation: markdown
+  ITI-78.md:
+    title: Patient Demographics Query [ITI-78] and Match [ITI-119]
     generation: markdown
   PCC-55.md:
     title: Referral Request [PCC-55]
@@ -130,6 +142,8 @@ menu:
     EU Health Data API: HealthDataAPI.html
     Virtual Wards (Hospital at Home): VirtualWards.html
     Dynamic Care Planning (DCP): DCP.html
+    Care Services Directory (mCSD): mCSD.html
+    Patient Identity (PDQm): PDQm.html
   Interactions (Volume 2):
     Exchange Options: Transport.html
     Referral Request [PCC-55]: PCC-55.html
@@ -141,6 +155,8 @@ menu:
     Appointment [PCC-60] / No-Show [PCC-61]: PCC-60.html
     Query Existing Data [PCC-44]: QEDm.html
     Document Sharing [MHD]: MHD.html
+    Find Matching Care Services [ITI-90]: ITI-90.html
+    Patient Demographics [ITI-78] / [ITI-119]: ITI-78.html
   Data Models (Volume 3):
     Overview Model: DataModel.html
     Patient Administration: PatientAdministration.html

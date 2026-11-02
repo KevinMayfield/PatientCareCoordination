@@ -105,7 +105,7 @@ InstanceOf: HealthcareService
 Title: "HealthcareService - MFT General Cardiology Outpatients"
 Description: "The service referred to. In eRS this is an eRS service with an eRS service ID."
 Usage: #example
-* identifier.system = "https://fhir.nhs.uk/Id/ers-service"
+* identifier.system = "http://fhir.nhs.net/Id/ers-service"
 * identifier.value = "1234567"
 * providedBy = Reference(R0A)
 * name = "General Cardiology Outpatients"

@@ -23,7 +23,7 @@ interactions are the **workflow** side.
 - [EU Health Data API](https://hl7.eu/fhir/health-data-api/1.0.0-ballot/en/) - 1.0.0-ballot (2026-03-13)
 - [IHE ITI Mobile access to Health Documents (MHD)](https://profiles.ihe.net/ITI/MHD/index.html) - 4.2.5 - see [Document Sharing [MHD]](MHD.html)
 - [IHE PCC Query for Existing Data for Mobile (QEDm)](https://profiles.ihe.net/PCC/QEDm/index.html) - 3.0.0 (2024-12-12) - see [Query Existing Data [PCC-44]](QEDm.html)
-- [HL7 International Patient Access (IPA)](https://hl7.org/fhir/uv/ipa/), [IHE PDQm](https://profiles.ihe.net/ITI/PDQm/index.html)
+- [HL7 International Patient Access (IPA)](https://hl7.org/fhir/uv/ipa/), [IHE PDQm](https://profiles.ihe.net/ITI/PDQm/index.html) - see [Patient Identity (PDQm)](PDQm.html)
 - [NW GMSA - Health Data API](https://nw-gmsa.github.io/en/HIE.html), [Resource Access](https://nw-gmsa.github.io/en/QEDm.html), [Document Exchange](https://nw-gmsa.github.io/en/MHD.html)
 - GOV.UK [Health Bill: single patient record fact sheet](https://www.gov.uk/government/publications/health-bill-single-patient-record-fact-sheet/health-bill-single-patient-record-fact-sheet) (published 19 May 2026)
 
@@ -118,7 +118,7 @@ records. This guide's position:
 |---|---|
 | Document Access Provider | Shared care records; NRL (pointer only - the registry, not the repository) |
 | Resource Access Provider | Shared care records with FHIR APIs; GP Connect Access Record: Structured (GP record only); the SPR (planned) |
-| Patient identity (PDQm) | PDS |
+| Patient identity ([PDQm](PDQm.html)) | PDS |
 | Notification | NHS MNS |
 {:.grid}
 

@@ -48,6 +48,13 @@ outside `input/`. Dates are when the source was checked.
 | 40 | PAR-Q+ in a FHIR Questionnaire needs written permission from the PAR-Q+ Collaboration (eparmedx@gmail.com); the example is structure-only | IG authors | Open |
 | 41 | Should the Referral Order (O19) FHIR message carry a Task (status requested, focus the ServiceRequest) and use the Task as its focus, so every 360X message focuses on the Task? (BaRS review, point 2) | IG authors | Open |
 | 42 | BaRS: does any Application carry a referral business identifier (ServiceRequest.identifier)? Correlation found only via MessageHeader.response.identifier (original Bundle.id) and the Journey ID (EpisodeOfCare reference) | NHS England BaRS team | To confirm |
+| 43 | DoS Search API HealthcareService search (by ODS code, service ID, triage code) - "published but not yet available"; will DoS hold planned-care and community services, and does DoS Ingest cover them? | NHS England DoS team | To confirm |
+| 44 | BaRS Endpoint Catalogue: which directory supplies the target service ID per use case (DoS, other), and is the catalogue queryable? | NHS England BaRS team | To confirm |
+| 45 | Service identifier systems: eRS API examples use `http://fhir.nhs.net/Id/ers-service`; DoS Search uses the resource id. Slice HealthcareService.identifier? | IG authors, NHS England | To confirm |
+| 46 | Does NHS England plan PDQm conformance for PDS (identifier search, `$match`)? A facade maps `_exact-match` / scores today | NHS England PDS team | To confirm |
+| 47 | PDS change notifications through MNS - event types (death, change of GP, address) | NHS England MNS / PDS teams | To confirm |
+| 48 | National source for GP practitioner (GMP) codes and practitioner registration lookup (Healthcare Worker API cannot search by GMC) | NHS England | To confirm |
+| 49 | Is a BaRS sender required to trace the patient on PDS? | NHS England BaRS team | To confirm |
 | 43 | BaRS: later decline (PCC-56) and cancel confirmation (PCC-58) equivalents | NHS England BaRS team | To confirm |
 | 44 | Referral supporting information for receivers without record access (e.g. community pharmacy): consultation note, IPS patient summary, or both? (BaRS review, Application 5) | IG authors, PRSB | Open |
 | 45 | SNOMED CT 2140231000000104 "Referral to Community Pharmacy Pharmacy First Service" (BaRS Application 5 Task.code) - not in the tx.fhir.org UK Edition (2023-04-12) | IG authors | To confirm |
@@ -154,3 +161,26 @@ outside `input/`. Dates are when the source was checked.
   of prescriptions electronic; does not say dispense information returns to the prescriber.
   IHE MPD 1.0.0-comment-2 (FHIR R5): PHARM-5, PHARM-7, PHARM-8, PHARM-9.
 - IM1 pairing page: foundation suppliers Optum (EMIS Web) and TPP (SystmOne); no mention of FHIR.
+
+## mCSD and PDQm (checked 2026-11-02)
+
+- IHE mCSD 4.0.0 (2025-05-21): ITI-90, ITI-91, ITI-130; Directory, Query Client, Update Client,
+  Data Source; options Location Distance, Update, Feed.
+- IHE PDQm 3.2.0 (2025-11-04): ITI-78 (Supplier R), ITI-119 $match (O); Patient Search and
+  Match Operation options.
+- PDS FHIR API OpenAPI 1.3.568-alpha: GET /Patient (no `identifier` param; `_fuzzy-match`,
+  `_exact-match`, `_max-results`), GET /Patient/{id}; application-restricted = single match;
+  scores 1.0 exact. Demographics Batch Service deprecated, retired end 2026 (PDS MESH).
+- SDS FHIR API 1.0.485-alpha ("in production, beta"): /Device, /Endpoint only. SDS LDAP API
+  deprecated, retired by 30 Sept 2028. Healthcare Worker API (beta): GET /Practitioner by
+  sds-user-id, _revinclude PractitionerRole; no GMC search.
+- Organisation Data Terminology API 0.1: Organization, OrganizationAffiliation, lastChangeDate.
+  ORD API: full dataset, < 5 req/s.
+- DoS Search API 1.0.0 (FHIR R4): Organization?identifier&_revinclude=Endpoint live;
+  HealthcareService search and $search-by-triage-code published not available; Endpoint
+  connectionType itk / email / telno / http, NHS 111 ITK CDA payload types. UEC DoS REST and
+  EPS DoS deprecated 31 May 2026. Directory of Healthcare Services (Service Search) v3.
+- eRS FHIR API 1.58.0: A010 $ers.searchHealthcareServicesForPatient (STU3), A033 / A035
+  HealthcareService (R4), A030 PractitionerRole.
+- MESH API: GET /messageexchange/endpointlookup/{ods_code}/{workflow_id}.
+- BaRS Endpoint Catalogue: NHSDigital-FHIR-BookingAndReferrals PR #527.

@@ -40,7 +40,7 @@ sequenceDiagram
 
 ### Find the Patient
 
-The patient is found first by NHS Number (IHE PDQm / Health Data API `Patient` search):
+The patient is found first by NHS Number ([IHE PDQm](PDQm.html) [ITI-78](ITI-78.html) / Health Data API `Patient` search):
 
 <div class="alert alert-success" role="alert">
 GET [base]/Patient?identifier=https://fhir.nhs.uk/Id/nhs-number|9876543210
