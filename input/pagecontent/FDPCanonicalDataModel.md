@@ -86,7 +86,7 @@ slots and sessions, professional registration (body and entry ID), related perso
 | `ServiceRequest.note` | `referralNotes` | Good |
 | `ServiceRequest.basedOn`, `replaces` | - (`pathwayId` links to the RTT pathway) | Gap 11 |
 | `ServiceRequest.occurrence[x]` | `dueDate`, `earliestDueDate`, `daysToBookWithin` | Good |
-| `Task.businessStatus` | `status` (17 values), `isPatientBookable`, `didNotProceed` | **Gap 1** - no history |
+| `Task.businessStatus` | `status` ([17 values](#referral-status-values)), `isPatientBookable`, `didNotProceed` | **Gap 1** - no history |
 | `Task.statusReason` | `referralRejectionReasonCode`, `latestTriageOutcome` | Partial - rejection only |
 | `Task.lastModified` | `latestTriageOutcomeTimestamp`, `referralRejectionTimestamp`, `dateReferralAccepted` | Partial - event dates, not a state history |
 | `Task.owner` | - | **Gap 1** |
@@ -135,13 +135,66 @@ slots and sessions, professional registration (body and entry ID), related perso
 | `CarePlan.careTeam` | - ([Team](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CdmTeam) is not linked) | Gap 6 |
 {:.grid}
 
+### Referral Status Values
+
+The 17 allowed values of CDM `Referral.status` compared with this guide's
+[referral workflow statuses](CodeSystem-referral-workflow-status.html)
+(`Task.businessStatus`, from the 360X state transitions). Checked 2026-11-02; the CDM
+gives no definitions for the values, so the mapping is by name - **To confirm**.
+
+| CDM `Referral.status` | Workflow status (this guide) | Notes |
+|---|---|---|
+| Requested | `requested` | Match |
+| Referral | `requested` | **To confirm** - meaning not defined |
+| Awaiting triage | `requested` | Received, not yet triaged (`Task.status` received) |
+| Accepted | `accepted` | Match |
+| Open | `accepted` | **To confirm** - an open referral after acceptance |
+| Waiting | `accepted` | **To confirm** - on a waiting list, not yet booked |
+| Due | `accepted` | Not a state: derived from `dueDate` (booking deadline) |
+| Past due | `accepted` | Not a state: derived from `dueDate` |
+| Call letter sent | `accepted` / `appointment-booked` | **To confirm** - an invitation to book, or a booked appointment |
+| Deferred | - | No equivalent; FHIR `Task.status` on-hold |
+| Rejected | `declined` | Match; reason in `referralRejectionReasonCode` |
+| Redirect | `declined` + new referral (`ServiceRequest.replaces`) | 360X has no redirect; the redirected referral is a new order |
+| Complete | `completed` | Match only if the outcome report has been sent [PCC-57] |
+| Closed | `completed` or `cancelled` | **To confirm** - ambiguous |
+| Removed | `cancelled` | **To confirm** - removed from the waiting list, or entered in error (`Referral.removed`) |
+| No referral status | - | Data quality value, not a state |
+| NULL | - | Data quality value, not a state |
+{:.grid}
+
+This guide's statuses with no CDM status value:
+
+| Workflow status | Where the CDM holds it, if anywhere |
+|---|---|
+| `information-requested` | - (eRS "return to referrer"; triage outcome text at best) |
+| `appointment-booked`, `appointment-rescheduled`, `appointment-cancelled` | [Appointment](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Appointment) `bookingStatus`, `dateTimeBooked`, `dateTimeCancelled` |
+| `no-show` | Appointment `attendanceStatus`, `dnaCount`; Referral `didNotProceed` |
+| `interim-report` | - |
+| `cancel-requested` | - (no initiator-side states) |
+| `cancelled` | Removed / Closed - **To confirm** |
+{:.grid}
+
+Findings:
+
+- The CDM status list mixes three kinds of value: **workflow states** (Requested,
+  Accepted, Rejected, Complete), **derived timing flags** (Due, Past due) and **data
+  quality values** (No referral status, NULL). Only the first belongs in a workflow
+  status; the others should be derived or validated.
+- The CDM values are the **Referral Recipient's** view. States driven by the Referral
+  Initiator (cancel requested) or by the closing report (completed with outcome,
+  interim report) are missing - gap 1 and gap 2 above.
+- Redirect and Deferred are real NHS operations missing from 360X. Redirect maps to a
+  decline plus a new referral; Deferred could use `Task.status` on-hold - **Open**
+  whether to add either to the workflow statuses.
+
 ### Open Questions
 
 - Which CDM property carries the Hospital Provider Spell Number and the Visit Number
   (`admissionExternalId`, `appointmentExternalId`, `cdsUniqueId`) - **To confirm**.
 - Whether `Referral.sourceUniqueId` is the Referral Initiator's (placer) ID or the
   receiving system's ID - **To confirm**.
-- The 17 allowed values of `Referral.status` were not checked against the
-  [referral workflow statuses](CodeSystem-referral-workflow-status.html) - **Open**.
+- Definitions of the CDM `Referral.status` values (Referral, Open, Waiting, Closed,
+  Removed, Call letter sent) - **To confirm**; see [Referral Status Values](#referral-status-values).
 - Whether [Task](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/RttTask)
   (`RttTask`) is a work-list item or could hold referral fulfilment - **To confirm**.
