@@ -205,6 +205,30 @@ Usage: #example
 * requester = Reference(GPAllenRole)
 * owner = Reference(CardiologyService)
 
+Instance: CardiologyReferralDeclinedAfterNoShow
+InstanceOf: ReferralTask
+Title: "Referral Task - Declined after acceptance (did not attend)"
+Description: "Referral Decline [PCC-56]: the alternative path where the referral was accepted and an appointment booked, the patient did not attend, and the service declines the referral and discharges the patient back to the GP (HL7 v2 OSU^O51, ORC-1 UA, ORC-5 CA, reason in ORC-16)."
+Usage: #example
+* basedOn = Reference(CardiologyReferral)
+* basedOn.identifier.type = $v2-0203#PLAC
+* basedOn.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
+* basedOn.identifier.value = "REF-2026-000123"
+* basedOn.identifier.assigner.identifier.system = $ods-code
+* basedOn.identifier.assigner.identifier.value = "P89020"
+* focus = Reference(CardiologyReferral)
+* for = Reference(Patient-Tameside)
+* status = #rejected
+* businessStatus = ReferralWorkflowStatus#declined
+* statusReason = ReferralStatusReason#no-show
+* statusReason.text = "Patient did not attend on 7 September 2026 and did not respond to the offer to rebook. Discharged to GP care."
+* intent = #order
+* code = http://hl7.org/fhir/CodeSystem/task-code#fulfill
+* authoredOn = "2026-09-04T10:15:00+01:00"
+* lastModified = "2026-09-15T10:00:00+01:00"
+* requester = Reference(GPAllenRole)
+* owner = Reference(CardiologyService)
+
 // Appointment Notification [PCC-60]
 
 Instance: CardiologyAppointment

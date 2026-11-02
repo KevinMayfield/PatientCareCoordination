@@ -70,6 +70,7 @@ outside `input/`. Dates are when the source was checked.
 | 49 | PRSB template counts on Templates.md come from web page summaries for eDis, ECD, MHD, 111 and PCSP (Excel checked only for OPL, CP, HRAC, CRIS headings) - confirm against each standard's model | IG authors | To confirm |
 | 50 | Clinical Observations (NHS England, 2.0.0-Alpha) oxygen delivery route codes 9999017 (headbox) and 9999016 (high flow) are not SNOMED CT identifiers; Vital Signs offers only nasal cannula and mask | IG authors, NHS England | To confirm |
 | 51 | IG Publisher link bug: Questionnaire item `definition` to a local profile element with a choice type renders as `StructureDefinition-Observation.html#Observation.value[x]`, but the profile page anchor is `Observation.value_x_` - 13 HTML_LINK_CHECK errors on the Vital Signs page (definitions kept on this guide's Observation profile). Report to the IG Publisher tools team (chat.fhir.org #tooling) | IG authors | Open |
+| 52 | BALP: which GP system audit requirement applies (mandatory, not exposed via API) and how exposing audit through ITI-81 would be commissioned; who runs an Audit Record Repository in a care coordination ecosystem | IG authors, NHS England | Open |
 | 17 | Publisher / canonical: publisher changed to Kevin Mayfield; canonical `https://fhir.acmeexample.org.uk/PatientCareCoordination` and package id `fhir.acmeexample.org.uk.patientcarecoordination` (a fictitious example domain), replacing the NW Genomics ones copied from the sibling IGs (2026-11-02) | IG authors | Resolved |
 | 52 | Discharge disposition: `HospitalSpell.hospitalization.dischargeDisposition` is now bound to discharge **destination** (UK Core `UKCore-DischargeDestination`, as UK Core Encounter 2.5.0) with discharge method in a local `DischargeMethod` extension mirroring `Extension-UKCore-DischargeMethod`. The NW GMSA source binds discharge **method** to `dischargeDisposition` - raise with NW GMSA; decide whether to use the UK Core extension directly | IG authors | Open |
 
@@ -85,6 +86,10 @@ outside `input/`. Dates are when the source was checked.
   service; federated XCA (ITI-38, ITI-39) and XCA-I (RAD-75) over SOAP, mTLS + XUA
   SAML; MHD endpoint planned; PDM as a document reference source. Not checked: which
   document metadata (order / accession number) can be searched.
+- 2026-11-02: IHE ITI BALP 1.1.4 (2025-10-31) - AuditEvent patterns (Create, Read,
+  Update, Delete, Query with / without Patient; Privacy Disclosure at Source /
+  Recipient; OAuth and SAML access token use; Authorization Permit by Consent); ATNA
+  ITI-20 (FHIR feed option) and ITI-81 links checked.
 - 2026-11-02: NHS FDP Canonical Data Model v1.0.0
   (cdm.solutionexchange.federateddataplatform.nhs.uk) - single-page app; 142 objects
   listed on /1.0.0/specification, object pages /1.0.0/object/<ApiName>. Community Care

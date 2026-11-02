@@ -39,7 +39,7 @@ sequenceDiagram
 | Order control | ORC-1 `CA` | [Referral Task](StructureDefinition-ReferralTask.html) `businessStatus` `cancel-requested` (Task `status` unchanged) |
 | Referral ID | ORC-2 | `basedOn.identifier`, `focus` |
 | Order status | ORC-5 `CA` | - |
-| Ordering provider | ORC-12 - the referrer; someone else with authority may cancel | `Task.requester` unchanged; who cancelled in `Provenance` |
+| Ordering provider and facility | ORC-12 and ORC-21 (required) - the referrer; someone else with authority may cancel | `Task.requester` unchanged; who cancelled in `Provenance` |
 | Reason | ORC-16 (at least text) | `statusReason`, e.g. `no-longer-required` |
 {:.grid}
 
@@ -54,7 +54,7 @@ the Task can be cancelled.
 | Order control | ORC-1 `CR` | Task `status` `cancelled` |
 | Referral ID | ORC-2 | `basedOn.identifier`, `focus` |
 | Order status | ORC-5 `CA` | `businessStatus` `cancelled` |
-| Ordering provider | ORC-12 **empty** | - |
+| Ordering provider and facility | ORC-12 and ORC-21 - the referrer, **required** in this guide (360X leaves ORC-12 empty) | - |
 {:.grid}
 
 ### Expected Actions

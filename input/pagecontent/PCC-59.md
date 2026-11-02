@@ -39,7 +39,7 @@ sequenceDiagram
 | Order control | ORC-1 `SC` | `status` `in-progress` |
 | Referral ID | ORC-2 | `basedOn.identifier`, `focus` |
 | Order status | ORC-5 `A` (some, but not all, results available) | `businessStatus` `interim-report` |
-| Ordering provider | ORC-12 **empty** | - |
+| Ordering provider and facility | ORC-12 and ORC-21 - the referrer, **required** in this guide (360X leaves ORC-12 empty) | `Task.requester` (unchanged) |
 | Document | In the package; OBX ED / RP or `MDM^T02` | `output` - added to any earlier outputs |
 {:.grid}
 
@@ -74,7 +74,7 @@ in HL7 v2 it travels as an `MDM^T02` carrying the Referral ID in ORC-2 and TXA-1
 ```
 MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260907160000+0100||OSU^O51^OSU_O51|MFT-MSG-779001|P|2.5.1|||AL|NE
 PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
-ORC|SC|REF-2026-000123^P89020|||A||||20260907160000+0100
+ORC|SC|REF-2026-000123^P89020|||A||||20260907160000+0100|||G1234567^Allen^^^^Dr^^^GMP|||||||||HT PRACTICE^^P89020^^^ODS
 ```
 
 ```
@@ -82,7 +82,7 @@ MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260907160000+0100||MDM^T02^MDM_T02|MFT-MSG-77
 EVN|T02|20260907160000+0100
 PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
 PV1|1|O|^^^R0A||||||||||||||||OP2026090701^^^R0A^VN
-ORC|SC|REF-2026-000123^P89020
+ORC|SC|REF-2026-000123^P89020||||||||||G1234567^Allen^^^^Dr^^^GMP|||||||||HT PRACTICE^^P89020^^^ODS
 OBR|1|REF-2026-000123^P89020||57133-1^Referral note^LN
 TXA|1|11488-4^Consult note^LN|AP|20260907160000+0100|7654321^Brown^^^^Dr^^^GMC|||||||DOC-55501^R0A||REF-2026-000123^P89020|||AU||AV
 OBX|1|ED|11488-4^Consult note^LN||^application^pdf^Base64^JVBERi0xLjQK...||||||F

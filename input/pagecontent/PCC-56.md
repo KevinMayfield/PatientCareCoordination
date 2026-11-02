@@ -31,7 +31,7 @@ sequenceDiagram
 
 ### Content
 
-The message is the same as the Referral Decline in [PCC-55](PCC-55.html#referral-decline):
+The message is the same as the Referral Decline in [PCC-55](PCC-55.html#referral-decline---osuo51):
 
 | Data item | 360X HL7 v2 | FHIR ([Referral Task](StructureDefinition-ReferralTask.html)) |
 |---|---|---|
@@ -45,6 +45,26 @@ A clinical document is not required. If the patient was seen before the decline,
 Referral Recipient **SHOULD** send what it found as an
 [Interim Consultation Note [PCC-59]](PCC-59.html) or use a
 [Referral Outcome [PCC-57]](PCC-57.html) instead.
+
+### Example
+
+The Tameside cardiology referral was accepted [PCC-55] and an appointment booked for
+7 September 2026 [PCC-60]. The patient did not attend and did not respond to the offer
+to rebook, so cardiology declines the referral and discharges the patient back to the
+GP. The HL7 v2 message is the same `OSU^O51` as the first-response decline on
+[PCC-55](PCC-55.html#referral-decline---osuo51); only the timing and reason differ.
+
+```
+MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260915100000+0100||OSU^O51^OSU_O51|MFT-MSG-779100|P|2.5.1|||AL|NE
+PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
+ORC|UA|REF-2026-000123^P89020|||CA||||20260915100000+0100|||G1234567^Allen^^^^Dr^^^GMP||||NO-SHOW^Patient did not attend on 7 September 2026 and did not respond to the offer to rebook. Discharged to GP care.^L|||||HT PRACTICE^^P89020^^^ODS
+```
+
+FHIR Message: [Bundle Message - Referral Order Status (O51), declined after acceptance](Bundle-ReferralOrderStatusLaterDeclineMessage.html)
+(focus [Referral Task - Declined after acceptance](Task-CardiologyReferralDeclinedAfterNoShow.html):
+`status` `rejected`, `businessStatus` `declined`, `statusReason` `no-show` with the text).
+If the appointment no-show itself is sent first, it is a [No-Show Notification [PCC-61]](PCC-60.html#no-show-notification-pcc-61)
+(`SIU^S26`).
 
 ### Expected Actions
 

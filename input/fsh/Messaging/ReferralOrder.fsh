@@ -182,6 +182,39 @@ Usage: #inline
 * focus = Reference(Task/CardiologyReferralDeclined)
 * definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
 
+// Example: later decline [PCC-56]
+
+Instance: ReferralOrderStatusLaterDeclineMessage
+InstanceOf: BundleMessage
+Title: "Bundle Message - Referral Order Status (O51), declined after acceptance"
+Description: "FHIR Message equivalent of the example HL7 v2 OSU^O51 on Referral Decline [PCC-56]: the accepted referral is declined after the patient did not attend (ORC-1 UA, ORC-5 CA, reason in ORC-16)."
+Usage: #example
+* identifier.system = "https://fhir.mft.nhs.uk/Id/message"
+* identifier.value = "MFT-MSG-779100"
+* type = #message
+* timestamp = "2026-09-15T10:00:00+01:00"
+* entry[message].fullUrl = "https://fhir.example.nhs.uk/R4/MessageHeader/ReferralOrderStatusLaterDeclineHeader"
+* entry[message].resource = ReferralOrderStatusLaterDeclineHeader
+* entry[1].fullUrl = "https://fhir.example.nhs.uk/R4/Task/CardiologyReferralDeclinedAfterNoShow"
+* entry[1].resource = CardiologyReferralDeclinedAfterNoShow
+* entry[2].fullUrl = "https://fhir.example.nhs.uk/R4/Patient/Patient-Tameside"
+* entry[2].resource = Patient-Tameside
+
+Instance: ReferralOrderStatusLaterDeclineHeader
+InstanceOf: MessageHeader
+Usage: #inline
+* id = "ReferralOrderStatusLaterDeclineHeader"
+* meta.lastUpdated = "2026-09-15T10:00:00+01:00"
+* eventCoding = $v2-0003#O51
+* destination.endpoint = "https://fhir.example-practice.nhs.uk/R4/$process-message"
+* destination.receiver.identifier.system = $ods-code
+* destination.receiver.identifier.value = "P89020"
+* sender.identifier.system = $ods-code
+* sender.identifier.value = "R0A"
+* source.endpoint = "https://fhir.mft.nhs.uk/R4"
+* focus = Reference(Task/CardiologyReferralDeclinedAfterNoShow)
+* definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
+
 // Example: outcome
 
 Instance: ReferralOrderStatusOutcomeMessage

@@ -47,7 +47,8 @@ sequenceDiagram
 | Referral ID | ORC-2 and OBR-2 | R | `identifier:referralId` ([Referral Identifier](StructureDefinition-ReferralIdentifier.html)) | `<referral ID>^^<assigning authority>`; in the NHS the assigning authority is the ODS code |
 | UBRN | Not in 360X | if eRS | `identifier:ubrn` | eRS referrals only |
 | Patient | PID-3, PID-5, PID-7, PID-8, PID-11 | R | `subject` ([Patient](StructureDefinition-Patient.html)) | NHS Number (traced) and local identifier |
-| Ordering provider | ORC-12 and OBR-16 | R | `requester` | GMP / GMC or other professional number; 360X uses NPI |
+| Ordering provider | ORC-12 and OBR-16 | R | `requester` (PractitionerRole - practitioner) | GMP / GMC or other professional number; 360X uses NPI |
+| Ordering facility | ORC-21 | R (this guide) | `requester` (PractitionerRole - organization) | ODS code (XON.3, assigning authority `ODS`); not required by 360X |
 | Service referred to | OBR-4 | R | `code` | 360X default LOINC 57133-1 Referral note; in the NHS, the specialty / service - SNOMED CT referral procedure (e.g. 183519002 Referral to cardiology service) |
 | Referred-to service | MSH-5 / MSH-6 | - | `performer` | `HealthcareService` (eRS service ID, Directory of Services ID) or `Organization` |
 | Reason for referral | OBR-31 (repeats) | R | `reasonCode`, `reasonReference` | SNOMED CT preferred, else text in OBR-31.2 |
@@ -115,7 +116,7 @@ patient identifier and Referral ID from the request in every later message.
 | Order control | ORC-1 `OK` | `status` `accepted` (or `in-progress` once care starts) |
 | Referral ID | ORC-2 | `basedOn.identifier`, `focus` |
 | Order status | ORC-5 `IP` | `businessStatus` `accepted` |
-| Ordering provider | ORC-12 **empty** (not echoed) | `requester` (unchanged) |
+| Ordering provider and facility | ORC-12 (ordering provider) and ORC-21 (ordering facility, ODS code) - the referrer, **required** in this guide (360X leaves ORC-12 empty) | `Task.requester` (unchanged) |
 | Responsible service | MSH-3 / MSH-4 | `owner` |
 {:.grid}
 
@@ -131,7 +132,7 @@ Recipient has taken responsibility for the requested service.
 | Order control | ORC-1 `UA` | `status` `rejected` |
 | Referral ID | ORC-2 | `basedOn.identifier`, `focus` |
 | Order status | ORC-5 `CA` | `businessStatus` `declined` |
-| Ordering provider | ORC-12 **empty** | `requester` (unchanged) |
+| Ordering provider and facility | ORC-12 (ordering provider) and ORC-21 (ordering facility, ODS code) - the referrer, **required** in this guide (360X leaves ORC-12 empty) | `Task.requester` (unchanged) |
 | Reason | ORC-16 (required; at least text in ORC-16.2) | `statusReason` ([Referral Status Reason](ValueSet-referral-status-reason-vs.html), example) |
 {:.grid}
 
@@ -150,6 +151,12 @@ and as FHIR Messages ([Referral Order (O19)](MessageDefinition-referral-order.ht
 [Referral Order Status (O51)](MessageDefinition-referral-order-status.html)). The
 `REF_I12` alternative is on [Patient Referral [I12]](I12.html).
 
+In every `ORC` in this guide, **ORC-12** (ordering provider - the referring clinician,
+with professional identifier) and **ORC-21** (ordering facility - the referring
+organisation's ODS code) are **mandatory**, including in the status updates the Referral
+Recipient sends back. 360X leaves ORC-12 empty in status updates; filling both means
+every message identifies the referrer without a look-up, as in the NW GMSA `ORC`.
+
 #### Referral Request - OMG^O19
 
 The Referral ID is in ORC-2 and OBR-2 (namespace = the referrer's ODS code); the reason in
@@ -159,7 +166,7 @@ in TQ1-8.
 ```
 MSH|^~\&|GPSYSTEM|P89020|EPR|R0A|20260904101500+0100||OMG^O19^OMG_O19|MSG000124|P|2.5.1|||AL|NE
 PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
-ORC|NW|REF-2026-000123^P89020|||||||20260904101500+0100|||G1234567^Allen^^^^Dr^^^GMP
+ORC|NW|REF-2026-000123^P89020|||||||20260904101500+0100|||G1234567^Allen^^^^Dr^^^GMP|||||||||HT PRACTICE^^P89020^^^ODS
 TQ1|1|||||||20260911|A^ASAP^HL70485
 OBR|1|REF-2026-000123^P89020||57133-1^Referral note^LN||||||||||||G1234567^Allen^^^^Dr^^^GMP|||||||||||||||267036007^Dyspnea^SCT
 OBX|1|TX|QUESTION^Referral question^L||Determine the origin of Mr Tameside's shortness of breath. To be seen within a week.||||||O||||||||||||||||||QST
@@ -171,12 +178,12 @@ FHIR Message: [Bundle Message - Referral Order (O19)](Bundle-ReferralOrderMessag
 
 #### Referral Accept - OSU^O51
 
-ORC-1 `OK`, ORC-5 `IP`; ORC-12 (ordering provider) is not echoed back.
+ORC-1 `OK`, ORC-5 `IP`; ORC-12 and ORC-21 repeat the referrer.
 
 ```
 MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260905093000+0100||OSU^O51^OSU_O51|MFT-MSG-778900|P|2.5.1|||AL|NE
 PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
-ORC|OK|REF-2026-000123^P89020|||IP||||20260905093000+0100
+ORC|OK|REF-2026-000123^P89020|||IP||||20260905093000+0100|||G1234567^Allen^^^^Dr^^^GMP|||||||||HT PRACTICE^^P89020^^^ODS
 ```
 
 FHIR Message: [Bundle Message - Referral Order Status (O51), accepted](Bundle-ReferralOrderStatusAcceptMessage.html)
@@ -190,7 +197,7 @@ message is used for a later decline [PCC-56].
 ```
 MSH|^~\&|EPR|R0A|GPSYSTEM|P89020|20260905093000+0100||OSU^O51^OSU_O51|MFT-MSG-778901|P|2.5.1|||AL|NE
 PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stockport Road^^Tameside^^OL7 0NS
-ORC|UA|REF-2026-000123^P89020|||CA||||20260905093000+0100|||||||SERVICE-NOT-PROVIDED^Please refer to the rapid access chest pain clinic instead.^L
+ORC|UA|REF-2026-000123^P89020|||CA||||20260905093000+0100|||G1234567^Allen^^^^Dr^^^GMP||||SERVICE-NOT-PROVIDED^Please refer to the rapid access chest pain clinic instead.^L|||||HT PRACTICE^^P89020^^^ODS
 ```
 
 FHIR Message: [Bundle Message - Referral Order Status (O51), declined](Bundle-ReferralOrderStatusDeclineMessage.html)

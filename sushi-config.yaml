@@ -77,6 +77,9 @@ pages:
   MHD.md:
     title: Document Sharing [MHD]
     generation: markdown
+  BALP.md:
+    title: Audit [BALP]
+    generation: markdown
   ITI-90.md:
     title: Find Matching Care Services [ITI-90]
     generation: markdown
@@ -159,6 +162,7 @@ menu:
     Appointment [PCC-60] / No-Show [PCC-61]: PCC-60.html
     Query Existing Data [PCC-44]: QEDm.html
     Document Sharing [MHD]: MHD.html
+    Audit [BALP]: BALP.html
     Find Matching Care Services [ITI-90]: ITI-90.html
     Patient Demographics [ITI-78] / [ITI-119]: ITI-78.html
   Data Models (Volume 3):
