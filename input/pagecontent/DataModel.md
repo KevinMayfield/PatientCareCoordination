@@ -151,6 +151,8 @@ The 360X HL7 v2 status codes, the [Referral Workflow Status](CodeSystem-referral
 | Referral Request [PCC-55] | NW / - | `requested` | `requested` | `active` | - |
 | More information (NHS) | - | `information-requested` | `on-hold` | `active` | - |
 | Referral Accept [PCC-55] | OK / IP | `accepted` | `accepted` | `active` | - |
+| Deferred (NHS) | OH / HD (indicative) | `deferred` | `on-hold` | `active` | `cancelled` (if any) |
+| Redirected (NHS) | RU / RP (indicative) | `redirected` | `rejected` | `revoked` (replaced by the new referral) | `cancelled` (if any) |
 | Referral Decline [PCC-55, PCC-56] | UA / CA | `declined` | `rejected` | `revoked` | `cancelled` (if any) |
 | Appointment [PCC-60] | S12, S13 | `appointment-booked`, `appointment-rescheduled` | `in-progress` | `active` | `booked` |
 | Appointment cancelled [PCC-60] | S15 | `appointment-cancelled` | `in-progress` | `active` | `cancelled` |

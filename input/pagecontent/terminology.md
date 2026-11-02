@@ -12,7 +12,7 @@ SNOMED CT codes are from the UK Edition; expansions use the UK Edition
 
 | Artefact | Binding | Notes |
 |---|---|---|
-| [Referral Workflow Status](CodeSystem-referral-workflow-status.html) / [value set](ValueSet-referral-workflow-status-vs.html) | `Task.businessStatus` (required) | The 360X states, plus `information-requested` for eRS / BaRS |
+| [Referral Workflow Status](CodeSystem-referral-workflow-status.html) / [value set](ValueSet-referral-workflow-status-vs.html) | `Task.businessStatus` (required) | The 360X states, plus `information-requested` (eRS / BaRS return to referrer), `deferred` and `redirected` (provisional) |
 | [Referral Status Reason](CodeSystem-referral-status-reason.html) / [value set](ValueSet-referral-status-reason-vs.html) | `Task.statusReason` (example) | Example only - **To confirm** eRS / BaRS reject reasons |
 | [Referral Category](ValueSet-referral-category.html) | `ServiceRequest.category` (extensible) | SNOMED CT referral, virtual ward, hospital at home |
 | [Referral Service Type](ValueSet-referral-service-type.html) | `ServiceRequest.code` (extensible) | SNOMED CT descendants of 3457005 Patient referral |

@@ -10,13 +10,19 @@ Description: """
 Business status of a referral, from the IHE 360X state transitions (PCC TF-1 X.4.1).
 Carried in `Task.businessStatus`; the matching `Task.status` and HL7 v2 ORC-1 / ORC-5
 values are on the [Overview Model](DataModel.html#referral-status) page.
-`information-requested` is not in 360X - it covers the eRS "return to referrer" step.
+`information-requested`, `deferred` and `redirected` are not in 360X. `information-requested`
+covers the eRS "return to referrer" step. `deferred` and `redirected` are **provisional**:
+they follow the HL7 v2 order control codes for a held order (ORC-1 OH) and a replaced
+order (ORC-1 RU) and the FHIR Task `on-hold` state; the NHS processes behind them are
+**To confirm** against eRS and provider practice.
 """
 * ^experimental = true
 * ^caseSensitive = true
 * #requested "Referral requested" "The Referral Initiator has sent the referral request [PCC-55]."
 * #information-requested "More information requested" "The Referral Recipient has asked for more information or a completed form (Task.input) before deciding or starting (eRS return to referrer, HL7 Physical Activity IG; not in 360X)."
 * #accepted "Referral accepted" "The Referral Recipient has accepted the referral [PCC-55] (ORC-1 OK, ORC-5 IP)."
+* #deferred "Referral deferred" "The Referral Recipient has put the referral on hold, for example at the patient's request or until it is clinically appropriate; it resumes as accepted (not in 360X; HL7 v2 ORC-1 OH, ORC-5 HD - indicative)."
+* #redirected "Referral redirected" "The Referral Recipient has not taken the referral on and has redirected it to another service. Ends this referral; the referral to the other service is a new referral (new Referral ID, ServiceRequest.replaces) (not in 360X; HL7 v2 ORC-1 RU, ORC-5 RP - indicative)."
 * #declined "Referral declined" "The Referral Recipient has declined the referral, initially [PCC-55] or after acceptance [PCC-56] (ORC-1 UA, ORC-5 CA)."
 * #appointment-booked "Appointment booked" "An appointment has been booked [PCC-60] (SIU^S12)."
 * #appointment-rescheduled "Appointment rescheduled" "An appointment has been rescheduled [PCC-60] (SIU^S13)."

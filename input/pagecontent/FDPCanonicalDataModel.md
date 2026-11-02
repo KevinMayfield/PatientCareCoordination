@@ -11,7 +11,10 @@ and care coordination but are missing from the CDM or not represented well.
 
 The CDM is a **persistence model** (the archetype layer - see
 [Composition, Archetypes and Templates](Templates.html)): objects as they are stored for
-operational products such as the Unified Pathway Manager. This guide is an **exchange
+operational products such as the Unified Pathway Manager. It is **downstream** of the
+source systems and exchange standards: its data is derived from PAS, eRS and other
+feeds. It is used here as evidence of what NHS operations record, **not** as a source
+for this guide's design - the guide follows IHE 360X, HL7 v2 and FHIR. This guide is an **exchange
 model** between organisations. Some differences are expected; the gaps below are those
 that matter when a referral, its workflow state and its outcome must be held and shared.
 
@@ -153,9 +156,9 @@ gives no definitions for the values, so the mapping is by name - **To confirm**.
 | Due | `accepted` | Not a state: derived from `dueDate` (booking deadline) |
 | Past due | `accepted` | Not a state: derived from `dueDate` |
 | Call letter sent | `accepted` / `appointment-booked` | **To confirm** - an invitation to book, or a booked appointment |
-| Deferred | - | No equivalent; FHIR `Task.status` on-hold |
+| Deferred | `deferred` (provisional) | Match; `Task.status` on-hold |
 | Rejected | `declined` | Match; reason in `referralRejectionReasonCode` |
-| Redirect | `declined` + new referral (`ServiceRequest.replaces`) | 360X has no redirect; the redirected referral is a new order |
+| Redirect | `redirected` (provisional) | Match; the referral to the other service is a new referral (`ServiceRequest.replaces`) |
 | Complete | `completed` | Match only if the outcome report has been sent [PCC-57] |
 | Closed | `completed` or `cancelled` | **To confirm** - ambiguous |
 | Removed | `cancelled` | **To confirm** - removed from the waiting list, or entered in error (`Referral.removed`) |
@@ -184,9 +187,10 @@ Findings:
 - The CDM values are the **Referral Recipient's** view. States driven by the Referral
   Initiator (cancel requested) or by the closing report (completed with outcome,
   interim report) are missing - gap 1 and gap 2 above.
-- Redirect and Deferred are real NHS operations missing from 360X. Redirect maps to a
-  decline plus a new referral; Deferred could use `Task.status` on-hold - **Open**
-  whether to add either to the workflow statuses.
+- Redirect and Deferred point to NHS operations missing from 360X. Provisional
+  `redirected` and `deferred` workflow statuses are based on HL7 v2 (ORC-1 `RU`, `OH`)
+  and FHIR Task, not on the CDM (see [State Transitions](360X.html#state-transitions)) -
+  the processes are **To confirm** against eRS and provider practice.
 
 ### Open Questions
 

@@ -59,6 +59,8 @@ The [Referral Task](StructureDefinition-ReferralTask.html) carries the status
 |---|---|---|
 | Accept [PCC-55] | OK / IP | accepted |
 | Decline [PCC-55, PCC-56] | UA / CA | declined |
+| Deferred (NHS, indicative) | OH / HD | deferred |
+| Redirected (NHS, indicative) | RU / RP | redirected |
 | Interim Consultation Note [PCC-59] | SC / A | interim-report |
 | Referral Outcome [PCC-57] | SC / CM | completed |
 | Cancel Request [PCC-58] | CA / CA | cancel-requested |
