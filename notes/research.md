@@ -55,6 +55,7 @@ outside `input/`. Dates are when the source was checked.
 | 47 | Outpatient letters: HDR allows only inpatient encounters and fixes Composition.type to 34105-7; outpatient letters use a plain Composition with HDR section codes. Ask HL7 Europe whether HDR (or a sibling) will cover outpatient / ambulatory encounters | IG authors, HL7 Europe | Open |
 | 48 | HL7 Europe HDR composition-eu-hdr slices `extension:basedOn` with the core R4 `event-basedOn` extension, whose context does not include Composition - the validator rejects it (Extension_EXTP_Context_Wrong). This guide links documents to the referral from the workflow instead (Task.output, TXA-14, DocumentReference.context.related). Raise with HL7 Europe | IG authors, HL7 Europe | Open |
 | 49 | PRSB template counts on Templates.md come from web page summaries for eDis, ECD, MHD, 111 and PCSP (Excel checked only for OPL, CP, HRAC, CRIS headings) - confirm against each standard's model | IG authors | To confirm |
+| 50 | Clinical Observations (NHS England, 2.0.0-Alpha) oxygen delivery route codes 9999017 (headbox) and 9999016 (high flow) are not SNOMED CT identifiers; Vital Signs offers only nasal cannula and mask | IG authors, NHS England | To confirm |
 | 17 | Publisher / canonical: copied the NHS North West Genomics publisher and `fhir.nwgenomics.nhs.uk` canonical from the sibling IGs - confirm this is right for a general referral guide | IG authors | To confirm |
 
 ## Sources Checked (2026-11-01)

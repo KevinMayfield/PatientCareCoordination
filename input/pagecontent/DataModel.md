@@ -113,6 +113,7 @@ erDiagram
 | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) (used as published) | Composition / Bundle (`composition-eu-hdr`, `bundle-eu-hdr`) | Outcome after an inpatient or virtual ward stay; section codes also used for outpatient letters | PCC-57, PCC-59 (document) |
 | [Care Plan](StructureDefinition-PatientCarePlan.html) | HL7 Europe HDR CarePlan | Care plan for any episode (e.g. a virtual ward treatment plan); activities reference referrals and tasks | - (DCP) |
 | `Questionnaire` / `QuestionnaireResponse` (core) | - | Referral forms, in `supportingInfo` or `Task.input` / `output` - see [Referral Forms](ReferralForms.html) | OBX (ask at order entry) |
+| [Observation](StructureDefinition-Observation.html) | Observation | Clinical observations, e.g. vital signs; target of the [Vital Signs](Questionnaire-VitalSigns.html) item definitions | OBX |
 | [Patient](StructureDefinition-Patient.html) | HL7 Europe Patient | Patient (NW GMSA conventions) | PID |
 | Core NHS patient administration - Organization, Practitioner, PractitionerRole, RelatedPerson, Location, Encounter, Hospital Spell, Visit, Episode Of Care, Schedule, Slot | NW GMSA / Interweave | See [Patient Administration](PatientAdministration.html) | PID, PV1, SCH |
 {:.grid}
