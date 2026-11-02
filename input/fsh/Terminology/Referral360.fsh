@@ -1,4 +1,4 @@
-    Alias: $sct = http://snomed.info/sct
+Alias: $sct = http://snomed.info/sct
 Alias: $loinc = http://loinc.org
 
 // Referral workflow status - the 360X state transitions (PCC TF-1 X.4.1)
