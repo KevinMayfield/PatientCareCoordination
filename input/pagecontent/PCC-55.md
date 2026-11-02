@@ -193,8 +193,9 @@ PID|1||9737383397^^^NHS^NH~B6789012^^^R0A^MR||TAMESIDE^Hodor||19600727|M|||Stock
 ORC|UA|REF-2026-000123^P89020|||CA||||20260905093000+0100|||||||SERVICE-NOT-PROVIDED^Please refer to the rapid access chest pain clinic instead.^L
 ```
 
-FHIR equivalent: [Referral Task - Declined](Task-CardiologyReferralDeclined.html) as the
-focus of a Referral Order Status (O51) message.
+FHIR Message: [Bundle Message - Referral Order Status (O51), declined](Bundle-ReferralOrderStatusDeclineMessage.html)
+(focus [Referral Task - Declined](Task-CardiologyReferralDeclined.html), with
+`statusReason` for ORC-16).
 
 ### More Information Requested (NHS)
 

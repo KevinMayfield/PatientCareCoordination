@@ -131,6 +131,8 @@ Usage: #example
 * entry[message].resource = ReferralOrderStatusAcceptHeader
 * entry[1].fullUrl = "https://fhir.example.nhs.uk/R4/Task/CardiologyReferralAccepted"
 * entry[1].resource = CardiologyReferralAccepted
+* entry[2].fullUrl = "https://fhir.example.nhs.uk/R4/Patient/Patient-Tameside"
+* entry[2].resource = Patient-Tameside
 
 Instance: ReferralOrderStatusAcceptHeader
 InstanceOf: MessageHeader
@@ -145,6 +147,39 @@ Usage: #inline
 * sender.identifier.value = "R0A"
 * source.endpoint = "https://fhir.mft.nhs.uk/R4"
 * focus = Reference(Task/CardiologyReferralAccepted)
+* definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
+
+// Example: decline
+
+Instance: ReferralOrderStatusDeclineMessage
+InstanceOf: BundleMessage
+Title: "Bundle Message - Referral Order Status (O51), declined"
+Description: "FHIR Message equivalent of the example HL7 v2 OSU^O51 decline (ORC-1 UA, ORC-5 CA, reason in ORC-16) on Referral Request [PCC-55]. The same message is used for a later decline [PCC-56]."
+Usage: #example
+* identifier.system = "https://fhir.mft.nhs.uk/Id/message"
+* identifier.value = "MFT-MSG-778901"
+* type = #message
+* timestamp = "2026-09-05T09:30:00+01:00"
+* entry[message].fullUrl = "https://fhir.example.nhs.uk/R4/MessageHeader/ReferralOrderStatusDeclineHeader"
+* entry[message].resource = ReferralOrderStatusDeclineHeader
+* entry[1].fullUrl = "https://fhir.example.nhs.uk/R4/Task/CardiologyReferralDeclined"
+* entry[1].resource = CardiologyReferralDeclined
+* entry[2].fullUrl = "https://fhir.example.nhs.uk/R4/Patient/Patient-Tameside"
+* entry[2].resource = Patient-Tameside
+
+Instance: ReferralOrderStatusDeclineHeader
+InstanceOf: MessageHeader
+Usage: #inline
+* id = "ReferralOrderStatusDeclineHeader"
+* meta.lastUpdated = "2026-09-05T09:30:00+01:00"
+* eventCoding = $v2-0003#O51
+* destination.endpoint = "https://fhir.example-practice.nhs.uk/R4/$process-message"
+* destination.receiver.identifier.system = $ods-code
+* destination.receiver.identifier.value = "P89020"
+* sender.identifier.system = $ods-code
+* sender.identifier.value = "R0A"
+* source.endpoint = "https://fhir.mft.nhs.uk/R4"
+* focus = Reference(Task/CardiologyReferralDeclined)
 * definition = "https://fhir.acmeexample.org.uk/PatientCareCoordination/MessageDefinition/referral-order-status"
 
 // Example: outcome
