@@ -71,6 +71,11 @@ outside `input/`. Dates are when the source was checked.
   service; federated XCA (ITI-38, ITI-39) and XCA-I (RAD-75) over SOAP, mTLS + XUA
   SAML; MHD endpoint planned; PDM as a document reference source. Not checked: which
   document metadata (order / accession number) can be searched.
+- 2026-11-02: NHS FDP Canonical Data Model v1.0.0
+  (cdm.solutionexchange.federateddataplatform.nhs.uk) - single-page app; 142 objects
+  listed on /1.0.0/specification, object pages /1.0.0/object/<ApiName>. Community Care
+  Plan description read in browser; other objects matched to PRSB sections by name
+  only. No medication object in v1.0.0.
 - 2026-11-02: PRSB templates review (Templates.md): section lists for Emergency Care
   Discharge v2.2, Mental Health Inpatient Discharge v2.1, 111 Referral v1.0 and
   Personalised Care and Support Plan v2.0 (web pages); Community Pharmacy v3.01.3 and

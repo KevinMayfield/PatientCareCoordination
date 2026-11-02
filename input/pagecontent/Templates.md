@@ -4,11 +4,21 @@
 must not be used for implementation or clinical purposes.
 </div>
 
+Clinical information is built in three layers:
+
+| Layer | What it is | Example | Sources used here |
+|---|---|---|---|
+| **Archetype** | The definition of one clinical concept, independent of where it is used | An allergy, a blood pressure, a referral, a care plan | NHS England [FDP Canonical Data Model](https://cdm.solutionexchange.federateddataplatform.nhs.uk/) (CDM) objects; FHIR resources |
+| **Template** | A reusable set of archetypes for a purpose - a section of a document or record | PRSB "Allergies and adverse reactions", "Social context" | PRSB standards; HL7 Europe HDR / EPS sections |
+| **Form** | A template captured as questions answered at one time | Social Context, Vital Signs, Care Assessment | `Questionnaire` / `QuestionnaireResponse` |
+{:.grid}
+
 PRSB standards are built from the same **sections** used again and again - patient
 demographics, allergies, social context, plan and requested actions. Each section is a
 reusable **template**. Some map directly to FHIR resources; others are captured as
-**forms** (`Questionnaire` / `QuestionnaireResponse`). This page lists the repeating
-templates found in ten PRSB standards, and the forms in this guide.
+**forms**. This page lists the repeating templates found in ten PRSB standards, the
+matching NHS FDP Canonical Data Model objects (the archetypes) and the forms in this
+guide.
 
 ### References
 
@@ -26,6 +36,10 @@ templates found in ten PRSB standards, and the forms in this guide.
 | PCSP | [Personalised Care and Support Plan](https://theprsb.org/standards/personalisedcareandsupportplan) | v2.0 | Web page |
 {:.grid}
 
+Archetypes: [NHS FDP Canonical Data Model](https://cdm.solutionexchange.federateddataplatform.nhs.uk/)
+v1.0.0 ([Full Specification](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/specification),
+142 objects; [NHS England - Canonical Data Model](https://digital.nhs.uk/data-and-information/nhs-data-architecture/canonical-data-model-cdm)).
+
 Checked 2026-11-02. Section names vary slightly between standards (for example
 "Patient demographics" and "Person demographics"); they are grouped below. The CIS
 defines almost all of them, so it is not counted.
@@ -34,35 +48,35 @@ defines almost all of them, so it is not counted.
 
 Sections that appear in three or more of the nine other standards:
 
-| Template (PRSB section) | Count | Standards | FHIR | Form in this guide |
-|---|---|---|---|---|
-| Person / patient demographics | 9 | all | `Patient` | - |
-| GP practice | 9 | all | `Patient.generalPractitioner` (ODS code) | - |
-| Referral / referrer details | 8 | CRIS, eDis, OPL, ECD, MHD, 111, CP, HRAC | [Clinical Referral](StructureDefinition-Referral.html) - `ServiceRequest` | - |
-| Allergies and adverse reactions | 8 | CRIS, eDis, OPL, ECD, MHD, 111, CP, HRAC | `AllergyIntolerance` | - |
-| Medications and medical devices | 8 | CRIS, eDis, OPL, ECD, MHD, 111, CP, HRAC | `MedicationStatement`, `MedicationRequest`, `DeviceUseStatement` | - |
-| Plan and requested actions | 7 | eDis, OPL, ECD, MHD, 111, CP, HRAC | Document plan of care section; `CarePlan`; `ServiceRequest` | - |
-| Social context | 7 | CRIS, eDis, OPL, MHD, 111, CP, HRAC | `Observation` (social history) | [Social Context](Questionnaire-SocialContext.html) |
-| Clinical summary / narrative | 7 | eDis, OPL, ECD, MHD, 111, CP, HRAC | Document narrative section | - |
-| Diagnoses / problems | 7 | eDis, OPL, ECD, MHD, 111, CP, HRAC | `Condition` | - |
-| Individual requirements | 6 | CRIS, eDis, OPL, MHD, 111, HRAC | `Flag`, `Observation` - **To confirm** | [Care Assessment](Questionnaire-CareAssessment.html) (group) |
-| Legal information | 6 | CRIS, eDis, OPL, MHD, CP, HRAC | `Consent`, `DocumentReference` (advance decisions) | Candidate |
-| Information and advice given | 6 | CRIS, eDis, OPL, ECD, MHD, CP | Document section; `Communication` | - |
-| Person and carer concerns, expectations and wishes | 6 | CRIS, eDis, OPL, MHD, 111, HRAC | `Observation`, `Goal` | [Care Assessment](Questionnaire-CareAssessment.html) (item) |
-| Person completing record | 5 | CRIS, eDis, OPL, ECD, MHD (and inside every HRAC and CP entry) | `Composition.author`, `QuestionnaireResponse.author`, `Provenance` | Not an item - see [below](#repeating-sub-templates) |
-| Distribution list | 5 | CRIS, eDis, OPL, ECD, MHD | HDR `informationRecipient` extension | - |
-| Procedures | 5 | eDis, OPL, ECD, MHD, CP | `Procedure` | - |
-| Investigation results | 5 | CRIS, eDis, OPL, MHD, CP | `Observation`, `DiagnosticReport` | - |
-| Assessments / assessment scales | 5 | CRIS, eDis, OPL, MHD, CP | `QuestionnaireResponse`, scored `Observation` | Per instrument, e.g. the [exercise referral forms](ReferralForms.html) |
-| Discharge details | 5 | eDis, ECD, MHD, CP, HRAC | `Encounter` ([Hospital Spell](StructureDefinition-HospitalSpell.html)) | - |
-| Admission details | 4 | eDis, MHD, CP, HRAC | `Encounter` ([Hospital Spell](StructureDefinition-HospitalSpell.html)) | - |
-| Safety alerts | 4 | CRIS, eDis, OPL, MHD | `Flag` | - |
-| Safeguarding | 4 | ECD, 111, CP, HRAC | `Flag`, `Condition` | - |
-| Family history | 4 | CRIS, OPL, MHD, CP | `FamilyMemberHistory` | - |
-| Participation in research | 4 | CRIS, eDis, OPL, MHD | `ResearchSubject` | - |
-| Examination findings | 3 | CRIS, OPL, CP | `Observation` (vital signs) | [Vital Signs](Questionnaire-VitalSigns.html) |
-| Risks | 3 | ECD, 111, HRAC | `RiskAssessment`, `Flag` | [Care Assessment](Questionnaire-CareAssessment.html) (group) |
-| Presenting complaints or issues | 3 | ECD, 111, CP | `Condition` (category presenting complaint) | - |
+| Template (PRSB section) | Count | Standards | FHIR | Form in this guide | FDP CDM object (archetype) |
+|---|---|---|---|---|---|
+| Person / patient demographics | 9 | all | `Patient` | - | [Patient](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Patient), [Patient Name History](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientNameHistory), [Patient Address History](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientAddressHistory), [Patient Identifier History](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientIdentifierHistory) |
+| GP practice | 9 | all | `Patient.generalPractitioner` (ODS code) | - | [GP Practice Registration](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/GpPracticeRegistration) |
+| Referral / referrer details | 8 | CRIS, eDis, OPL, ECD, MHD, 111, CP, HRAC | [Clinical Referral](StructureDefinition-Referral.html) - `ServiceRequest` | - | [Referral](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Referral), [UEC Referral](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/UecReferral), [eRS Service](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ErsService) |
+| Allergies and adverse reactions | 8 | CRIS, eDis, OPL, ECD, MHD, 111, CP, HRAC | `AllergyIntolerance` | - | [Patient Allergy](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientAllergy) |
+| Medications and medical devices | 8 | CRIS, eDis, OPL, ECD, MHD, 111, CP, HRAC | `MedicationStatement`, `MedicationRequest`, `DeviceUseStatement` | - | - (none in v1.0.0) |
+| Plan and requested actions | 7 | eDis, OPL, ECD, MHD, 111, CP, HRAC | Document plan of care section; `CarePlan`; `ServiceRequest` | - | [Community Care Plan](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CommunityCarePlan) |
+| Social context | 7 | CRIS, eDis, OPL, MHD, 111, CP, HRAC | `Observation` (social history) | [Social Context](Questionnaire-SocialContext.html) | [Social And Personal Circumstance](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/SocialAndPersonalCircumstance) |
+| Clinical summary / narrative | 7 | eDis, OPL, ECD, MHD, 111, CP, HRAC | Document narrative section | - | [Clinical Note](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ClinicalNote), [Clinic Letter](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ClinicLetter) |
+| Diagnoses / problems | 7 | eDis, OPL, ECD, MHD, 111, CP, HRAC | `Condition` | - | [Patient Diagnosis](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientDiagnosis), [Comorbidity](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Comorbidity) |
+| Individual requirements | 6 | CRIS, eDis, OPL, MHD, 111, HRAC | `Flag`, `Observation` - **To confirm** | [Care Assessment](Questionnaire-CareAssessment.html) (group) | [Disability](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Disability), [Special Educational Need](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/SpecialEducationalNeed) |
+| Legal information | 6 | CRIS, eDis, OPL, MHD, CP, HRAC | `Consent`, `DocumentReference` (advance decisions) | Candidate | [Mental Health Act Legal Status](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/MentalHealthActLegalStatus) |
+| Information and advice given | 6 | CRIS, eDis, OPL, ECD, MHD, CP | Document section; `Communication` | - | - |
+| Person and carer concerns, expectations and wishes | 6 | CRIS, eDis, OPL, MHD, 111, HRAC | `Observation`, `Goal` | [Care Assessment](Questionnaire-CareAssessment.html) (item) | - |
+| Person completing record | 5 | CRIS, eDis, OPL, ECD, MHD (and inside every HRAC and CP entry) | `Composition.author`, `QuestionnaireResponse.author`, `Provenance` | Not an item - see [below](#repeating-sub-templates) | [Care Professional](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CareProfessional) |
+| Distribution list | 5 | CRIS, eDis, OPL, ECD, MHD | HDR `informationRecipient` extension | - | - |
+| Procedures | 5 | eDis, OPL, ECD, MHD, CP | `Procedure` | - | [Procedure](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Procedure) |
+| Investigation results | 5 | CRIS, eDis, OPL, MHD, CP | `Observation`, `DiagnosticReport` | - | [Test Result](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/TestResult), [Radiology Exam](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/RadiologyExam), [Histology](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Histology) |
+| Assessments / assessment scales | 5 | CRIS, eDis, OPL, MHD, CP | `QuestionnaireResponse`, scored `Observation` | Per instrument, e.g. the [exercise referral forms](ReferralForms.html) | [Scored Assessment](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ScoredAssessment) |
+| Discharge details | 5 | eDis, ECD, MHD, CP, HRAC | `Encounter` ([Hospital Spell](StructureDefinition-HospitalSpell.html)) | - | [Admission](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Admission), [Ward Stay](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/WardStay) |
+| Admission details | 4 | eDis, MHD, CP, HRAC | `Encounter` ([Hospital Spell](StructureDefinition-HospitalSpell.html)) | - | [Admission](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Admission), [Encounter](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Encounter) |
+| Safety alerts | 4 | CRIS, eDis, OPL, MHD | `Flag` | - | [Patient Alert](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientAlert) |
+| Safeguarding | 4 | ECD, 111, CP, HRAC | `Flag`, `Condition` | - | [Safeguarding Vulnerability Factor](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/SafeguardingVulnerabilityFactor), [Child Protection Plan](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ChildProtectionPlan) |
+| Family history | 4 | CRIS, OPL, MHD, CP | `FamilyMemberHistory` | - | - |
+| Participation in research | 4 | CRIS, eDis, OPL, MHD | `ResearchSubject` | - | - |
+| Examination findings | 3 | CRIS, OPL, CP | `Observation` (vital signs) | [Vital Signs](Questionnaire-VitalSigns.html) | [Observation](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Observation), [Finding](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Finding) |
+| Risks | 3 | ECD, 111, HRAC | `RiskAssessment`, `Flag` | [Care Assessment](Questionnaire-CareAssessment.html) (group) | - |
+| Presenting complaints or issues | 3 | ECD, 111, CP | `Condition` (category presenting complaint) | - | - |
 {:.grid}
 
 Less common: About me (HRAC, PCSP), contingency and additional support plans (HRAC,
@@ -70,11 +84,29 @@ PCSP), professional and personal contacts (HRAC, PCSP), attendance details (OPL,
 Only in HRAC: care needs summary, assessed level of care, primary support reason - the
 **care assessment**. Only in PCSP: the care and support plan itself.
 
+CDM objects are matched by name to the PRSB sections - **To confirm** against each
+object's properties. Version 1.0.0 has no medication object.
+
 **Templates or forms?** A template whose content is a clinical fact with its own FHIR
 resource (an allergy, a medicine, a diagnosis) is exchanged as that resource, inside a
 document (HDR, EPS) or by API. A form is used where the content is a set of questions
 answered at one time - social context, vital signs, an assessment. The answers can then
 be extracted into resources (SDC extraction) where that is useful.
+
+### Canonical Data Model and This Guide's Models
+
+The FDP CDM objects that correspond to this guide's [logical models](DataModel.html#information-models):
+
+| Logical model | FDP CDM objects |
+|---|---|
+| [Clinical Referral](StructureDefinition-Referral.html) | [Referral](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Referral), [UEC Referral](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/UecReferral), [Transfer Of Care Request](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/TransferOfCareRequest), [Booking Request](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/BookingRequest), [eRS Service](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ErsService), [Appointment](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Appointment), [Clinic Slot](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ClinicSlot) |
+| [Discharge Report](StructureDefinition-DischargeReport.html) | [Clinic Letter](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ClinicLetter), [Clinical Note](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ClinicalNote), [Admission](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Admission), [Outpatient Activity](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/OutpatientActivity), [UEC Attendance](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/UecAttendance) |
+| [Patient Summary](StructureDefinition-PatientSummary.html) | [Patient](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Patient), [Patient Allergy](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientAllergy), [Patient Diagnosis](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientDiagnosis), [Procedure](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Procedure), [Test Result](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/TestResult), [Observation](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Observation), [Patient Alert](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/PatientAlert), [Pregnancy](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Pregnancy), [Social And Personal Circumstance](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/SocialAndPersonalCircumstance) |
+| [Care Plan and Execution](StructureDefinition-CarePlanModel.html) | [Community Care Plan](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CommunityCarePlan), [Child Protection Plan](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ChildProtectionPlan), [Team](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CdmTeam), [Assigned Care Professional](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/AssignedCareProfessional) |
+| [Patient Administration](PatientAdministration.html) | [Encounter](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Encounter), [Admission](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Admission), [Ward Stay](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/WardStay), [Virtual Ward](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/VirtualWard), [Virtual Ward Stay](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/VirtualWardStay), [Location](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Location), [Site](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/Site), [Care Service](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CareService) |
+{:.grid}
+
+Mapping by object name only - **To confirm** against the CDM properties and links.
 
 ### Repeating Sub-templates
 
@@ -118,6 +150,11 @@ different things:
 | PRSB | HRAC (care needs summary, assessed level of care, risks) | PCSP (care and support plan, contingency plans) |
 | Changes | A new assessment each time | Updated as activities progress; shared through [DCP](DCP.html) |
 {:.grid}
+
+In the FDP CDM the same split exists: [Community Care Plan](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/CommunityCarePlan)
+is "a record of planned treatment or healthcare for a patient in the community setting"
+(after the NHS Data Dictionary Care Plan), while assessments are
+[Scored Assessment](https://cdm.solutionexchange.federateddataplatform.nhs.uk/1.0.0/object/ScoredAssessment) records.
 
 Social care uses "care plan" in the FHIR sense; the confusion is mostly in the NHS,
 where a "care plan" received from another organisation (for example the BaRS `CarePlan`

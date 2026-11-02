@@ -151,4 +151,4 @@ An indicative heading mapping for discharge is on
 
 The sections these standards share (demographics, allergies, social context, plan and
 requested actions and others) are listed as reusable templates on
-[Templates and Forms](Templates.html), with the forms (Questionnaires) built from them.
+[Archetypes, Templates and Forms](Templates.html), with the forms (Questionnaires) built from them.
