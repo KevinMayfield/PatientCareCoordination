@@ -20,6 +20,7 @@ of a step - not that it defines the step.
 ### References
 
 - [Genomic Order Management Service (FHIR) API](https://digital.nhs.uk/developer/api-catalogue/genomic-order-management-service-fhir) (OpenAPI 3.0.6-beta, checked 2026-11-02) and [FHIR Genomics Implementation Guide](https://simplifier.net/guide/fhir-genomics-implementation-guide/Home)
+- [MNS - Genomic Order Management Event](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/genomic-order-event) (`genomic-order-event-1`, private beta, last edited 18 August 2026, checked 2026-11-02)
 - [Pathology FHIR Implementation Guide 0.5.1](https://simplifier.net/guide/pathology-fhir-implementation-guide?version=0.5.1) (released 09/09/2026, checked 2026-11-02)
 - [NW GMSA - Laboratory Testing Workflow](https://nw-gmsa.github.io/en/LTW.html) - GOMS in the regional order workflow
 - [National Imaging Registry (NIR) API](https://digital.nhs.uk/developer/api-catalogue/national-imaging-registry-api) (0.43.0, checked 2026-11-02) and [NIR service](https://digital.nhs.uk/services/national-imaging-registry)
@@ -68,6 +69,36 @@ interpretation reports"; laboratories "provide status updates on test progress" 
 | Correlation | `ServiceRequest` (and `RequestGroup` for test packages) identifiers | Referral ID | `identifier:referralId` |
 {:.grid}
 
+#### Genomic Order Event (MNS)
+
+GOMS publishes `genomic-order-event-1` through the
+[Multicast Notification Service](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service/genomic-order-event)
+(private beta). It is how the requester and the laboratory learn that something has
+changed, without polling:
+
+| Published when | 360X equivalent |
+|---|---|
+| Order (`ServiceRequest`) created or updated - information, status or ownership | Referral Request [PCC-55], Cancellation [PCC-58] |
+| Workflow task (`Task`) created or updated - status, ownership or assignment | Accept / Decline [PCC-55, PCC-56], Interim [PCC-59]; send away |
+| Report (`DiagnosticReport`) created or updated | Interim Consultation Note [PCC-59], Referral Outcome [PCC-57] |
+| Sample (`Specimen`) status update | - (laboratory specimen tracking) |
+| Consent change | - |
+{:.grid}
+
+- **Notify, then read.** The notification "does not include" the order, report or
+  workflow data: the subscriber reads it from the GOMS FHIR API. The FHIR form is a
+  `history` Bundle holding a `Parameters` resource with `focus` (the changed resource),
+  `timestamp`, `event-number`, `event-type` and `subject` (the order,
+  `https://fhir.nhs.uk/Id/GMSOrder`); a CloudEvents form is for internal subscribers only.
+- **Subscription filters** by resource type, status (including `taskStatus`,
+  `taskBusinessStatus`, `taskCode`) and organisation (requester, performer, Task owner
+  ODS codes), so a laboratory or requester receives only its own orders. Delivery is by
+  MESH or AWS SQS.
+- This is the FHIR **Subscription** notify-then-fetch pattern (an `id-only` style
+  notification). The Bundle shape looks like the R5 Subscriptions backport
+  notification - **To confirm** conformance. It plays the role of the push messages in
+  360X: the event says "status changed", the API gives the state.
+
 Assessment against the general standards:
 
 - **Aligned with FHIR Workflow.** `ServiceRequest` + `Task` + `DiagnosticReport` is the
@@ -75,7 +106,8 @@ Assessment against the general standards:
   (LAB-1 order, LAB-3 result). It is a good model for referrals to diagnostic services.
 - **Central store, not point to point.** Both the placer and the filler write to one
   national record (the Unified Genomic Record), so status and reports are read
-  (`GET` / MNS notification) rather than pushed as in 360X. A trust integration engine
+  (`GET` after an [MNS genomic order event](#genomic-order-event-mns)) rather than pushed
+  as in 360X. A trust integration engine
   converts GOMS orders to the HL7 v2 the local LIMS expects - see
   [NW GMSA LTW](https://nw-gmsa.github.io/en/LTW.html).
 - Transactions, not FHIR Messages: the update is a REST transaction Bundle, so the

@@ -60,6 +60,12 @@ outside `input/`. Dates are when the source was checked.
   service; federated XCA (ITI-38, ITI-39) and XCA-I (RAD-75) over SOAP, mTLS + XUA
   SAML; MHD endpoint planned; PDM as a document reference source. Not checked: which
   document metadata (order / accession number) can be searched.
+- 2026-11-02: MNS Genomic Order Management Event (genomic-order-event-1), private beta,
+  last edited 18 August 2026. Triggers: ServiceRequest, Task, DiagnosticReport created /
+  updated; Specimen status; consent. Notification only (read from GOMS); FHIR history
+  Bundle with Parameters (focus, timestamp, event-number); filters by status, business
+  status, task code, requester / performer / owner ODS; MESH or AWS SQS. R5
+  Subscriptions backport conformance not checked.
 - 2026-11-02: Pathology FHIR IG 0.5.1 (Simplifier, released 09/09/2026). Reporting
   only, replaces PMIP EDIFACT NHS003 over MESH; Bundle type document; HL7 Europe Lab
   Report profiles; ServiceRequest "Test Request Summary" with EDIFACT E152 (ROI) / E153
