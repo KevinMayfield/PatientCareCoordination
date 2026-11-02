@@ -1,7 +1,8 @@
 // DUPLICATION: copied from the NW GMSA FHIR IG (https://nw-gmsa.github.io/en/,
 // source ../FHIRGenomics/input/fsh/Patient.fsh, via the copy in ../Imaging, 2026-11-01) - the NW core Patient.
 // Changes from the source: the UK Core EthnicCategory extension is removed (no UK
-// Core dependency). Keep in step with the source - see notes/research.md.
+// Core dependency); generalPractitioner is constrained to the GP practice Organization
+// (ODS code). Keep in step with the source - see notes/research.md.
 
 Profile: Patient
 Parent: http://hl7.eu/fhir/base/StructureDefinition/patient-eu-core
@@ -47,3 +48,10 @@ Description: """
 * name.family
 * name.given
 * deceasedDateTime
+
+* generalPractitioner MS
+* generalPractitioner only Reference(Organization)
+* generalPractitioner ^short = "The registered GP practice - an Organization whose master record is in ODS"
+* generalPractitioner.identifier 1..1 MS
+* generalPractitioner.identifier.system = $ods-code
+* generalPractitioner.identifier ^short = "GP practice ODS code"

@@ -34,6 +34,7 @@ Usage: #example
 * address.line = "Oxford Rd"
 * address.city = "MANCHESTER"
 * address.postalCode = "M13 9PL"
+* generalPractitioner.type = #Organization
 * generalPractitioner.identifier.system = $ods-code
 * generalPractitioner.identifier.value = "P84673"
 * generalPractitioner.display = "ANCOATS URBAN VILLAGE MEDICAL PRACTICE"

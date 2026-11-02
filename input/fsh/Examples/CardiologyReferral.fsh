@@ -35,6 +35,7 @@ Usage: #example
 * address.line = "Stockport Road"
 * address.city = "Tameside"
 * address.postalCode = "OL7 0NS"
+* generalPractitioner.type = #Organization
 * generalPractitioner.identifier.system = $ods-code
 * generalPractitioner.identifier.value = "P89020"
 * generalPractitioner.display = "HT PRACTICE"
