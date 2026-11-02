@@ -35,25 +35,30 @@ both data and process and is mapped onto the general pattern, not used as a mode
 - [IM1 pairing integration](https://digital.nhs.uk/services/gp-it-futures-systems/im1-pairing-integration)
 - [Electronic Prescription Service (EPS)](https://digital.nhs.uk/services/electronic-prescription-service), [EPS FHIR API](https://digital.nhs.uk/developer/api-catalogue/electronic-prescription-service-fhir) and [Prescription Status Update API](https://digital.nhs.uk/developer/api-catalogue/prescription-status-update-fhir) (checked 2026-11-01)
 - [IHE Pharmacy Medication Prescription and Delivery (MPD)](https://profiles.ihe.net/PHARM/MPD/index.html)
+- [Genomic Order Management Service (FHIR) API](https://digital.nhs.uk/developer/api-catalogue/genomic-order-management-service-fhir) (OpenAPI 3.0.6-beta, checked 2026-11-02) and [FHIR Genomics Implementation Guide](https://simplifier.net/guide/fhir-genomics-implementation-guide/Home)
+- [Pathology FHIR Implementation Guide 0.5.1](https://simplifier.net/guide/pathology-fhir-implementation-guide?version=0.5.1) (released 09/09/2026, checked 2026-11-02)
+- [NW GMSA - Laboratory Testing Workflow](https://nw-gmsa.github.io/en/LTW.html) - GOMS in the regional order workflow
 
 ### Coverage of the Closed Loop
 
-| 360X transaction | eRS | BaRS | Transfer of Care | MESH + Kettering XML | GP Connect | IM1 | HL7 v2 (trust) |
-|---|---|---|---|---|---|---|---|
-| Referral Request [PCC-55] | Yes - referral with attachments, UBRN | Yes - referral `ServiceRequest` | - | - | Clinical information: Access Record, Access Document (read by the Referral Recipient) | Read GP record (supplier API) | `REF_I12`, `OMG^O19` (rare) |
-| Accept / Decline [PCC-55] | Yes - triage, accept, reject / return to referrer | Yes - response message - **To confirm** | - | - | - | - | `RRI_I12` (rare) |
-| Referral Decline [PCC-56] | Partly - **To confirm** | **To confirm** | - | - | - | - | - |
-| Referral Outcome [PCC-57] | No | No - not defined | Yes - discharge summary, outpatient letter, ED attendance, mental health discharge | Yes - letters as documents | Send Document (to GP); Update Record (structured, community pharmacy) | Enter data into the GP record (supplier API) | `MDM^T02`, `ORU^R01` |
-| Referral Cancellation [PCC-58] | Yes - cancel referral | Yes - cancel - **To confirm** | - | - | - | - | - |
-| Interim Consultation Note [PCC-59] | No | No | Yes - outpatient letter | Yes - clinic letters | Send Document | Enter data (supplier API) | `MDM^T02` |
-| Appointment [PCC-60] | Yes - booking | Yes - booking | - | - | Appointment Management (GP appointments) | Supplier API - **To confirm** | `SIU^S12` |
-| No-Show [PCC-61] | Partly (DNA recorded by provider) - **To confirm** | **To confirm** | - | DNA letter | **To confirm** | - | `SIU^S26` |
-| Link outcome to referral | No | No - not defined | No - **To confirm** | No | **To confirm** | Supplier-specific | Only if the placer order number is kept |
+| 360X transaction | eRS | BaRS | Transfer of Care | MESH + Kettering XML | GP Connect | IM1 | HL7 v2 (trust) | GOMS (genomic tests) | Pathology FHIR |
+|---|---|---|---|---|---|---|---|---|---|
+| Referral Request [PCC-55] | Yes - referral with attachments, UBRN | Yes - referral `ServiceRequest` | - | - | Clinical information: Access Record, Access Document (read by the Referral Recipient) | Read GP record (supplier API) | `REF_I12`, `OMG^O19` (rare) | Yes - `POST` transaction Bundle (`ServiceRequest`, `Task`, ...); test from the Genomic Test Directory | No - requests stay in local order comms |
+| Accept / Decline [PCC-55] | Yes - triage, accept, reject / return to referrer | Yes - response message - **To confirm** | - | - | - | - | `RRI_I12` (rare) | `Task` `status` / `businessStatus` - **To confirm** codes | No |
+| Referral Decline [PCC-56] | Partly - **To confirm** | **To confirm** | - | - | - | - | - | **To confirm** | No |
+| Referral Outcome [PCC-57] | No | No - not defined | Yes - discharge summary, outpatient letter, ED attendance, mental health discharge | Yes - letters as documents | Send Document (to GP); Update Record (structured, community pharmacy) | Enter data into the GP record (supplier API) | `MDM^T02`, `ORU^R01` | Yes - laboratory uploads the `DiagnosticReport`; requester searches or is notified (MNS) | Yes - FHIR Document Bundle (`DiagnosticReport-eu-lab`) to the Pathology FHIR API |
+| Referral Cancellation [PCC-58] | Yes - cancel referral | Yes - cancel - **To confirm** | - | - | - | - | - | **To confirm** | No |
+| Interim Consultation Note [PCC-59] | No | No | Yes - outpatient letter | Yes - clinic letters | Send Document | Enter data (supplier API) | `MDM^T02` | Task status updates on test progress | Interim reports are in the business process - **To confirm** `DiagnosticReport.status` |
+| Appointment [PCC-60] | Yes - booking | Yes - booking | - | - | Appointment Management (GP appointments) | Supplier API - **To confirm** | `SIU^S12` |- | - |
+| No-Show [PCC-61] | Partly (DNA recorded by provider) - **To confirm** | **To confirm** | - | DNA letter | **To confirm** | - | `SIU^S26` |- | - |
+| Link outcome to referral | No | No - not defined | No - **To confirm** | No | **To confirm** | Supplier-specific | Only if the placer order number is kept | Yes - `DiagnosticReport.basedOn` the `ServiceRequest` (search `based-on`) | Yes - the report returns the `ServiceRequest` with the requester's and laboratory's order identifiers |
 {:.grid}
 
 The most common gap is the last row: the clinic letter or discharge summary that
 comes back to the GP does not identify the referral it answers, so the referrer's
-system cannot close the loop automatically.
+system cannot close the loop automatically. The two test ordering services, GOMS and
+Pathology FHIR, do link the report to the request: they follow the laboratory order and
+report pattern (IHE LTW) that 360X reuses for referrals.
 
 ### e-Referral Service (eRS)
 
@@ -294,6 +299,63 @@ The EPS FHIR API (R4) and the older HL7 v3 messages carry the prescription, canc
 release, return and dispense notification - **To confirm** message and operation names
 against the specification. The Prescription Status Update API lets "dispensing
 suppliers" push status to patients "via the NHS App".
+
+### Genomic Order Management Service (GOMS)
+
+GOMS is "the national service used to send electronic orders from NHS organisations to
+Genomic Services". It covers "genomics test ordering and reporting": clinicians "create
+requests for genomics tests", "track status updates to tests" and "retrieve
+interpretation reports"; laboratories "provide status updates on test progress" and
+"upload interpretation reports" (API specification 3.0.6-beta, **in development**).
+
+| Step | GOMS | 360X equivalent | FHIR (this guide) |
+|---|---|---|---|
+| Order | `POST /FHIR/R4` transaction Bundle - "register a new test or update tests or add reports" | Referral Request [PCC-55] | [Referral Request](StructureDefinition-ReferralRequest.html) |
+| Status | Laboratory updates the `Task` (`status`, genomic `business-status`); requester searches `Task` or subscribes through MNS | Accept / Decline [PCC-55], Interim [PCC-59] | [Referral Task](StructureDefinition-ReferralTask.html) `businessStatus` |
+| Send away | Laboratories "manage send aways" and "reassign tasks" - **To confirm** how | Referral forwarded - not in 360X | `Task.owner` |
+| Report | Laboratory uploads the `DiagnosticReport`; requester searches by patient or `based-on` | Referral Outcome [PCC-57] | `DiagnosticReport` / outcome document |
+| Correlation | `ServiceRequest` (and `RequestGroup` for test packages) identifiers | Referral ID | `identifier:referralId` |
+{:.grid}
+
+Assessment against the general standards:
+
+- **Aligned with FHIR Workflow.** `ServiceRequest` + `Task` + `DiagnosticReport` is the
+  same model as this guide's Referral Request and Referral Task, and matches IHE LTW
+  (LAB-1 order, LAB-3 result). It is a good model for referrals to diagnostic services.
+- **Central store, not point to point.** Both the placer and the filler write to one
+  national record (the Unified Genomic Record), so status and reports are read
+  (`GET` / MNS notification) rather than pushed as in 360X. A trust integration engine
+  converts GOMS orders to the HL7 v2 the local LIMS expects - see
+  [NW GMSA LTW](https://nw-gmsa.github.io/en/LTW.html).
+- Transactions, not FHIR Messages: the update is a REST transaction Bundle, so the
+  event is implied by the resources - **To confirm** how cancellation and declined
+  tests are represented (Task status values).
+
+### Pathology FHIR
+
+The [Pathology FHIR Implementation Guide](https://simplifier.net/guide/pathology-fhir-implementation-guide?version=0.5.1)
+(0.5.1, under active development) replaces PMIP EDIFACT (NHS003) pathology reports,
+which today go from laboratory middleware to the GP system over MESH. It covers
+reporting only, initially for tests requested by GP practices (blood sciences and
+microbiology).
+
+| Step | Pathology FHIR | 360X equivalent | FHIR (this guide) |
+|---|---|---|---|
+| Order | Not in scope - requests stay in local order comms | Referral Request [PCC-55] | - |
+| Report | FHIR Document Bundle (`England-Bundle-Lab-Pathology`, `Composition-eu-lab`, `DiagnosticReport-eu-lab`, result Observations, Specimen) sent to the Pathology FHIR API | Referral Outcome [PCC-57] | Same document approach as the [Discharge Report](StructureDefinition-DischargeReport.html) (HL7 Europe) |
+| Interim | "The laboratory may issue one or more interim reports before sending a final report" | Interim Consultation Note [PCC-59] | `DiagnosticReport.status` - **To confirm** |
+| Correlation | "Test Request Summary" `ServiceRequest` returned with the report, carrying the requester's order ID (EDIFACT `ROI`) and the laboratory's in `ServiceRequest.identifier`; `DiagnosticReport.basedOn` - **To confirm** | Referral ID | `identifier:referralId` |
+| Transformation | `Provenance` (Test Reporter Design Pattern) records the organisation that converted the data to FHIR | - | - |
+{:.grid}
+
+Assessment against the general standards:
+
+- **Aligned.** It is built on the HL7 Europe Laboratory Report guide - the same family
+  as the HL7 Europe HDR used for reports here - and uses a FHIR Document, which is this
+  guide's report pattern.
+- **Closes the report half of the loop only.** There is no order status (accept,
+  decline, cancel); the report carries the request identifiers so the GP system can
+  match it. Error handling and the Acknowledgement Framework are "TBC".
 
 ### Other National Services
 

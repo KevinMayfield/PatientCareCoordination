@@ -50,6 +50,16 @@ outside `input/`. Dates are when the source was checked.
 
 ## Sources Checked (2026-11-01)
 
+- 2026-11-02: Genomic Order Management Service (FHIR) API, OpenAPI 3.0.6-beta
+  (digital.nhs.uk/restapi/oas/genomic-order-management-service). REST, FHIR R4;
+  `POST /FHIR/R4` transaction Bundle; searches on ServiceRequest, RequestGroup, Task
+  (business-status, code), DiagnosticReport (based-on), Specimen; MNS for events.
+  Business status codes and cancellation not checked (Genomics IG on Simplifier).
+- 2026-11-02: Pathology FHIR IG 0.5.1 (Simplifier, released 09/09/2026). Reporting
+  only, replaces PMIP EDIFACT NHS003 over MESH; Bundle type document; HL7 Europe Lab
+  Report profiles; ServiceRequest "Test Request Summary" with EDIFACT E152 (ROI) / E153
+  in ServiceRequest.identifier; Error Handling and Acknowledgement Framework TBC.
+  DiagnosticReport.basedOn listed in the mapping without a source - to confirm.
 - IHE PCC 360X Rev. 1.2 Trial Implementation, 2021-04-14 (116 pages). Transactions
   PCC-55 to PCC-61; HL7 v2.5.1 OMG^O19, OSU^O51, SIU^S12/S13/S15/S26; ORC-1/ORC-5
   values per transaction taken from Vol 2 tables.
