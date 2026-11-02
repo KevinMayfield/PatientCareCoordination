@@ -173,7 +173,10 @@ Usage: #example
 * period.start = "2026-10-06T11:00:00+01:00"
 * period.end = "2026-10-13T10:00:00+01:00"
 * hospitalization.admitSource = VirtualWardAdmissionRoute#step-up "Step-up"
-* hospitalization.dischargeDisposition.text = "Discharged to GP care"
+* hospitalization.dischargeDisposition = https://fhir.hl7.org.uk/CodeSystem/UKCore-DischargeDestinationEngland#19
+* hospitalization.dischargeDisposition.text = "Usual place of residence - care returned to the GP"
+* extension[dischargeMethod].valueCodeableConcept = https://fhir.hl7.org.uk/CodeSystem/UKCore-DischargeMethodEngland#1
+* extension[dischargeMethod].valueCodeableConcept.text = "Discharged on clinical advice"
 * location.location = Reference(PatientManchesterHome)
 * reasonReference = Reference(ConditionCOPDExacerbation)
 * serviceProvider = Reference(R0A)

@@ -144,7 +144,9 @@ HL7 v2 mapping (indicative, from the NW GMSA PV1 and HL7 v2-to-FHIR):
 | PV1-3 Assigned Patient Location | `location.location` ([Location](StructureDefinition-Location.html)) | |
 | PV1-7 / PV1-8 / PV1-9 / PV1-17 Attending / Referring / Consulting / Admitting Doctor | `participant` (`ATND`, `REF`, `CON`, `ADM`) | |
 | PV1-10 Hospital Service | `serviceType` | |
-| PV1-14 Admit Source, PV1-36 Discharge Disposition | `hospitalization.admitSource`, `dischargeDisposition` | |
+| PV1-14 Admit Source | `hospitalization.admitSource` | NHS Data Dictionary admission source |
+| PV1-36 Discharge Disposition | `extension[dischargeMethod]` ([Discharge Method](StructureDefinition-DischargeMethod.html)) | NHS Data Dictionary discharge method, as UK Core |
+| PV1-37 Discharged to Location | `hospitalization.dischargeDisposition` | NHS Data Dictionary discharge destination, as UK Core |
 | PV1-19 Visit Number | `identifier` - type `VN` (Visit) or `AN` (spell), by CX.5 | See [Identifiers](#identifiers) |
 | PV1-44 / PV1-45 Admit / Discharge Date/Time | `period.start` / `period.end` | |
 {:.grid}

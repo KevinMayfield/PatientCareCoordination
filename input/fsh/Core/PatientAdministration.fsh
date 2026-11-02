@@ -6,9 +6,13 @@
 // 2026-11-01). Changes from the source: Obligation markers and the GS1 SRIN encounter
 // identifier slice are removed; the Organization identifier slice is discriminated on
 // system and the Practitioner identifier is not sliced (the source slices on type,
-// which these identifier profiles do not fix); AdmissionSource, DischargeDisposition
-// and Specialty bindings are extensible, and AdmissionSource / DischargeDisposition include
-// the UK Core England code systems directly (UK Core is not a dependency).
+// which these identifier profiles do not fix); AdmissionSource, DischargeDestination
+// and Specialty bindings are extensible, and AdmissionSource / DischargeDestination /
+// DischargeMethod include the UK Core England code systems directly (UK Core is not a
+// dependency). HospitalSpell.hospitalization.dischargeDisposition is bound to discharge
+// DESTINATION, not discharge method as in the source, following UK Core Encounter
+// (UKCore-DischargeDestination); discharge method is in the DischargeMethod extension,
+// which mirrors Extension-UKCore-DischargeMethod.
 // Location, EpisodeOfCare, Schedule and Slot are new, following the Interweave (YHCR)
 // profiles (https://fhir.interweavedigital.com/R4/artifacts.html). Keep in step with
 // the sources - see notes/research.md.
@@ -208,7 +212,9 @@ Copied from the [NW GMSA FHIR IG](https://nw-gmsa.github.io/en/).
 * partOf 0..0
 * hospitalization MS
 * hospitalization.admitSource from AdmissionSource (extensible)
-* hospitalization.dischargeDisposition from DischargeDisposition (extensible)
+* hospitalization.dischargeDisposition from DischargeDestination (extensible)
+* hospitalization.dischargeDisposition ^short = "Discharge destination - where the patient went (PV1-37)"
+* extension contains DischargeMethod named dischargeMethod 0..1 MS
 
 Profile:        Visit
 Parent:         Encounter
@@ -317,17 +323,47 @@ Copied from the [NW GMSA FHIR IG](https://nw-gmsa.github.io/en/).
 * ^experimental = false
 * include codes from system https://fhir.hl7.org.uk/CodeSystem/UKCore-SourceOfAdmissionEngland
 
-ValueSet: DischargeDisposition
-Id: discharge-disposition
-Title: "Discharge Disposition"
+ValueSet: DischargeDestination
+Id: discharge-destination
+Title: "Discharge Destination"
+Description: """
+`NHS Data Model and Dictionary` [DISCHARGE DESTINATION](https://www.datadictionary.nhs.uk/attributes/discharge_destination.html)
+- [UKCoreDischargeDestination](https://simplifier.net/hl7fhirukcorer4/valueset-ukcore-dischargedestination)
+
+Bound to `Encounter.hospitalization.dischargeDisposition` ("category or kind of location
+after discharge"), as in UK Core Encounter.
+"""
+* ^experimental = false
+* include codes from system https://fhir.hl7.org.uk/CodeSystem/UKCore-DischargeDestinationEngland
+
+ValueSet: DischargeMethodVS
+Id: discharge-method
+Title: "Discharge Method"
 Description: """
 `NHS Data Model and Dictionary` [DISCHARGE METHOD CODE](https://www.datadictionary.nhs.uk/data_elements/discharge_method_code__hospital_provider_spell_.html)
 - [UKCoreDischargeMethod](https://simplifier.net/hl7fhirukcorer4/valueset-ukcore-dischargemethod)
 
-Copied from the [NW GMSA FHIR IG](https://nw-gmsa.github.io/en/).
+Copied from the [NW GMSA FHIR IG](https://nw-gmsa.github.io/en/) (where it was bound to
+`dischargeDisposition`); here used by the [Discharge Method](StructureDefinition-DischargeMethod.html) extension.
 """
 * ^experimental = false
 * include codes from system https://fhir.hl7.org.uk/CodeSystem/UKCore-DischargeMethodEngland
+
+Extension: DischargeMethod
+Id: DischargeMethod
+Title: "Discharge Method"
+Description: """
+How the patient was discharged from a Hospital Spell (e.g. on clinical advice, self
+discharge, died) - HL7 v2 PV1-36. The destination is `hospitalization.dischargeDisposition`.
+
+DUPLICATION: mirrors [Extension-UKCore-DischargeMethod](https://simplifier.net/hl7fhirukcorer4/extension-ukcore-dischargemethod)
+(UK Core is not a dependency of this guide) - **To confirm** whether to use the UK Core
+extension directly.
+"""
+Context: Encounter
+* ^experimental = true
+* value[x] only CodeableConcept
+* valueCodeableConcept from DischargeMethodVS (extensible)
 
 ValueSet: Specialty
 Id: specialty

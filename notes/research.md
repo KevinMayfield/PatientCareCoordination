@@ -58,6 +58,7 @@ outside `input/`. Dates are when the source was checked.
 | 50 | Clinical Observations (NHS England, 2.0.0-Alpha) oxygen delivery route codes 9999017 (headbox) and 9999016 (high flow) are not SNOMED CT identifiers; Vital Signs offers only nasal cannula and mask | IG authors, NHS England | To confirm |
 | 51 | IG Publisher link bug: Questionnaire item `definition` to a local profile element with a choice type renders as `StructureDefinition-Observation.html#Observation.value[x]`, but the profile page anchor is `Observation.value_x_` - 13 HTML_LINK_CHECK errors on the Vital Signs page (definitions kept on this guide's Observation profile). Report to the IG Publisher tools team (chat.fhir.org #tooling) | IG authors | Open |
 | 17 | Publisher / canonical: publisher changed to Kevin Mayfield; canonical `https://fhir.acmeexample.org.uk/PatientCareCoordination` and package id `fhir.acmeexample.org.uk.patientcarecoordination` (a fictitious example domain), replacing the NW Genomics ones copied from the sibling IGs (2026-11-02) | IG authors | Resolved |
+| 52 | Discharge disposition: `HospitalSpell.hospitalization.dischargeDisposition` is now bound to discharge **destination** (UK Core `UKCore-DischargeDestination`, as UK Core Encounter 2.5.0) with discharge method in a local `DischargeMethod` extension mirroring `Extension-UKCore-DischargeMethod`. The NW GMSA source binds discharge **method** to `dischargeDisposition` - raise with NW GMSA; decide whether to use the UK Core extension directly | IG authors | Open |
 
 ## Sources Checked (2026-11-01)
 
