@@ -10,7 +10,6 @@ Recipient, which replies with an **accept** or a **decline**.
 ### References
 
 - [IHE PCC 360X](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_360X.pdf) PCC TF-2 3.55
-- [Virtually Healthcare - Patient Referral (PCC-55)](https://virtually-healthcare.github.io/I12.html)
 - [eRS FHIR API](https://digital.nhs.uk/developer/api-catalogue/e-referral-service-fhir), [BaRS FHIR API](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir)
 - [NW GMSA HL7 v2](https://nw-gmsa.github.io/en/hl7v2.html) - MSH, PID, PV1, ORC, OBR conventions
 - [HL7 v2-to-FHIR ORC to ServiceRequest](https://build.fhir.org/ig/HL7/v2-to-fhir/ConceptMap-segment-orc-to-servicerequest.html) and [OBR to ServiceRequest](https://build.fhir.org/ig/HL7/v2-to-fhir/ConceptMap-segment-obr-to-servicerequest.html)

@@ -11,7 +11,6 @@ at the end of care. It closes the loop.
 
 - [IHE PCC 360X](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_360X.pdf) PCC TF-2 3.57
 - [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/) (1.0.0 STU 1)
-- [Virtually Healthcare - Discharge Report (PCC-57)](https://virtually-healthcare.github.io/A03.html)
 - [Transfer of Care](https://digital.nhs.uk/services/transfer-of-care-initiative)
 - [Referral Outcome Reports](Reports.html)
 

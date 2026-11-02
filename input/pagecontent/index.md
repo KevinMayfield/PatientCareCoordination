@@ -89,7 +89,6 @@ flowchart LR
 ### Related Guides
 
 - [IHE PCC 360X Closed Loop Referral](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_360X.pdf) (Rev. 1.2 Trial Implementation, 2021-04-14)
-- [Virtually Healthcare](https://virtually-healthcare.github.io/#clinical-process) - the clinical process and the 360X referral and discharge pattern for primary and community care
 - [NW GMSA](https://nw-gmsa.github.io/en/) - laboratory workflow, enterprise integration patterns and the Health Data API; [Genetic Referrals](https://nw-gmsa.github.io/en/GeneticReferrals.html) applies the same closed loop to clinical genetics
 - [Cancer Pathology Report](https://kevinmayfield.github.io/CancerPathologyReport/) and [Enterprise Imaging](https://kevinmayfield.github.io/Imaging/) - the same order and report pattern for pathology and radiology
 - [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/) (1.0.0 STU 1) and [EU Health Data API](https://hl7.eu/fhir/health-data-api/1.0.0-ballot/en/) (1.0.0-ballot)

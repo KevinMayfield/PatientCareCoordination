@@ -18,8 +18,7 @@ Description: """
 The social setting in which the person lives - household, accommodation, occupation,
 education, lifestyle, smoking, alcohol, drug / substance use, social circumstances
 (including caring responsibilities), access, dependants and household environment. Based
-on the [Virtually Healthcare Social Context](https://virtually-healthcare.github.io/Questionnaire-SocialContext.html)
-questionnaire, completed from the PRSB [Core Information Standard](https://theprsb.org/standards/core-information-standard/)
+on the PRSB [Core Information Standard](https://theprsb.org/standards/core-information-standard/)
 v2.01 Social context section. Used as referral supporting information, for example for
 social prescribing, community, virtual ward and exercise referrals.
 """
@@ -30,7 +29,6 @@ Usage: #definition
 * status = #draft
 * experimental = true
 * subjectType = #Patient
-* derivedFrom = "https://fhir.virtually.healthcare/Questionnaire/SocialContext"
 
 * item[+]
   * linkId = "HOUSEHOLD"

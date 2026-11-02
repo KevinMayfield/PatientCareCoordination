@@ -14,7 +14,6 @@ a specialist - they need a **shared care plan** that each can read and update. I
 - [IHE PCC Dynamic Care Planning (DCP)](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_DCP.pdf) (Rev. 3.1 Trial Implementation, 2019-09-27; FHIR R4)
 - [FHIR CarePlan](https://hl7.org/fhir/R4/careplan.html), [CareTeam](https://hl7.org/fhir/R4/careteam.html), [Task](https://hl7.org/fhir/R4/task.html)
 - [FHIR Workflow Management Communication Patterns](https://hl7.org/fhir/R4/workflow-management.html)
-- [Virtually Healthcare - Clinical Process](https://virtually-healthcare.github.io/#clinical-process) (Plan step)
 
 ### Actors and Transactions
 

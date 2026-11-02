@@ -31,7 +31,6 @@ both data and process and is mapped onto the general pattern, not used as a mode
 - [National Record Locator (NRL)](https://digital.nhs.uk/developer/api-catalogue/national-record-locator-fhir) and [Multicast Notification Service (MNS)](https://digital.nhs.uk/developer/api-catalogue/multicast-notification-service)
 - [PRSB standards](https://theprsb.org/standards/) - clinical headings for letters and discharge summaries
 - [NW GMSA - Genetic Referrals](https://nw-gmsa.github.io/en/GeneticReferrals.html) - analysis of the eRS FHIR resource model and BaRS
-- [Virtually Healthcare - Kettering XML](https://virtually-healthcare.github.io/kettering.html)
 - [GP Connect](https://digital.nhs.uk/services/gp-connect) and [GP Connect specifications](https://digital.nhs.uk/services/gp-connect/gp-connect-specifications-for-developers) (checked 2026-11-01)
 - [IM1 pairing integration](https://digital.nhs.uk/services/gp-it-futures-systems/im1-pairing-integration)
 - [Electronic Prescription Service (EPS)](https://digital.nhs.uk/services/electronic-prescription-service), [EPS FHIR API](https://digital.nhs.uk/developer/api-catalogue/electronic-prescription-service-fhir) and [Prescription Status Update API](https://digital.nhs.uk/developer/api-catalogue/prescription-status-update-fhir) (checked 2026-11-01)

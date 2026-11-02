@@ -96,8 +96,8 @@ These are record metadata, not questions: in a form they are
 
 | Questionnaire | Based on | PRSB section | Used for |
 |---|---|---|---|
-| [Social Context](Questionnaire-SocialContext.html) | Virtually Healthcare, completed from the CIS | Social context | Referral supporting information; patient summary social history |
-| [Vital Signs](Questionnaire-VitalSigns.html) | Virtually Healthcare; NHS England Clinical Observations codes | Examination findings | Referral supporting information; virtual ward monitoring |
+| [Social Context](Questionnaire-SocialContext.html) | CIS | Social context | Referral supporting information; patient summary social history |
+| [Vital Signs](Questionnaire-VitalSigns.html) | NHS England Clinical Observations codes | Examination findings | Referral supporting information; virtual ward monitoring |
 | [Care Assessment](Questionnaire-CareAssessment.html) | HRAC v1.1 | About me, individual requirements, care needs summary, assessed level of care, primary support reason, risks, concerns | Input to a [Care Plan](StructureDefinition-PatientCarePlan.html) |
 | [Exercise referral forms](ReferralForms.html) | HL7 Physical Activity IG; PAR-Q+ (structure only) | Assessment scales | Referral and pre-attendance forms |
 {:.grid}

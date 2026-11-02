@@ -11,8 +11,7 @@ IHE Dynamic Care Planning.
 
 Related: [NW GMSA](https://nw-gmsa.github.io/en/),
 [Cancer Pathology Report](https://kevinmayfield.github.io/CancerPathologyReport/),
-[Enterprise Imaging](https://kevinmayfield.github.io/Imaging/),
-[Virtually Healthcare](https://virtually-healthcare.github.io/).
+[Enterprise Imaging](https://kevinmayfield.github.io/Imaging/).
 
 - Pages: `input/pagecontent/`
 - Build: `sushi build .`, then the HL7 FHIR IG Publisher (`./_genonce.sh`)

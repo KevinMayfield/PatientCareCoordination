@@ -11,7 +11,6 @@ the referral, and may be sent more than once.
 ### References
 
 - [IHE PCC 360X](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_360X.pdf) PCC TF-2 3.59
-- [Virtually Healthcare - Consultation Note](https://virtually-healthcare.github.io/A04.html)
 - [Transfer of Care](https://digital.nhs.uk/services/transfer-of-care-initiative) - outpatient letter
 
 ### Interaction

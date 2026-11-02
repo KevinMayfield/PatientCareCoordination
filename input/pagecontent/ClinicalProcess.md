@@ -5,14 +5,11 @@ must not be used for implementation or clinical purposes.
 </div>
 
 A referral is one step in a clinical process. This page places the closed loop
-referral in that process, following the
-[Virtually Healthcare clinical process](https://virtually-healthcare.github.io/#clinical-process),
-which is aligned with the nursing process (ADPIE: Assessment, Diagnosis, Planning,
+referral in that process, aligned with the nursing process (ADPIE: Assessment, Diagnosis, Planning,
 Implementation, Evaluation).
 
 ### References
 
-- [Virtually Healthcare - Clinical Process](https://virtually-healthcare.github.io/#clinical-process)
 - [NW GMSA - How To Engineer Interoperability](https://nw-gmsa.github.io/en/HowToEngineerInteroperability.html) - clinical pathway, workflow requirements and information requirements
 - [IHE PCC 360X](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_360X.pdf) and [IHE PCC Dynamic Care Planning (DCP)](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_DCP.pdf)
 

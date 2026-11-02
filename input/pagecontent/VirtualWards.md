@@ -14,7 +14,6 @@ at the patient's home and a **shared care plan** with monitoring.
 ### References
 
 - NHS England [Virtual wards](https://www.england.nhs.uk/virtual-wards/) and [Virtual wards operational framework](https://www.england.nhs.uk/long-read/virtual-wards-operational-framework/) (PRN01289, published 27 August 2024, updated 4 July 2025)
-- [Virtually Healthcare - Clinical Process](https://virtually-healthcare.github.io/#clinical-process) - assessment, care plan, implement, evaluate in community care
 - [IHE PCC Dynamic Care Planning (DCP)](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_DCP.pdf) - see [Dynamic Care Planning](DCP.html)
 - [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/)
 
