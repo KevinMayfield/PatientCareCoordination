@@ -1,17 +1,23 @@
 Logical:        Referral
 Id:             Referral
-Title:          "Referral"
+Title:          "Clinical Referral"
 Description:    """
 **Proof of concept - not an authoritative source.**
 
 The information exchanged during a closed loop referral, from the referral request to
 the referral outcome. Based on the data items of the
 [IHE 360X](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_360X.pdf)
-transactions (PCC TF-2 3.55 to 3.61), with the NHS England items carried by
-[eRS](https://digital.nhs.uk/developer/api-catalogue/e-referral-service-fhir) and
-[BaRS](https://digital.nhs.uk/developer/api-catalogue/booking-and-referral-fhir).
+transactions (PCC TF-2 3.55 to 3.61), FHIR Workflow and HL7 v2 orders, with the UBRN
+from [eRS](https://digital.nhs.uk/developer/api-catalogue/e-referral-service-fhir).
 It is the same for a referral to an outpatient clinic, a community service or a
-[virtual ward](VirtualWards.html).
+[virtual ward](VirtualWards.html). National services such as BaRS are mapped onto this
+model (see the [BaRS review](BaRS.html)), not the other way round.
+
+The referral stays small: the clinical content is in separate documents referenced as
+supporting information - a [Discharge Report](StructureDefinition-DischargeReport.html)
+or clinic letter for the episode, a [Patient Summary](StructureDefinition-PatientSummary.html)
+and referral forms. A referral may be one activity of a
+[Care Plan](StructureDefinition-CarePlanModel.html).
 
 The **Mappings** tab shows each element in HL7 v2 (360X) and FHIR.
 """
@@ -43,7 +49,11 @@ Characteristics: #can-be-target
 * validityPeriod 0..1 Period "Validity" "Period the referral is valid for"
 * reasonForReferral 1..* CodeableConcept "Reason for referral" "Coded (SNOMED CT) or text"
 * referralQuestion 0..1 string "Referral question" "The clinical question for the Referral Recipient"
-* clinicalInformation 0..* Reference(DocumentReference or Bundle or QuestionnaireResponse) "Clinical information" "Referral letter or FHIR Document with the relevant clinical record"
+* clinicalDocument 0..* Reference(DocumentReference or Bundle) "Clinical document" "The referrer's account of the episode that led to the referral - Discharge Report (HL7 Europe HDR) or clinic letter"
+* patientSummary 0..1 Reference(DocumentReference or Bundle) "Patient summary" "The patient's background (HL7 Europe Patient Summary), when the recipient cannot query the record"
+* forms 0..* Reference(QuestionnaireResponse) "Referral forms" "Forms completed for the referral - see Referral Forms"
+* observations 0..* Reference(Observation) "Observations" "Findings needed by the recipient, e.g. vital signs"
+* carePlan 0..1 Reference(CarePlan) "Care plan" "The care plan this referral carries out, if any"
 * dateOfReferral 1..1 dateTime "Date of referral" "When the referral was made"
 
 // Status - PCC-55 to PCC-58
@@ -84,7 +94,10 @@ Title:          "HL7 v2.5.1 (IHE 360X)"
 * validityPeriod -> "TQ1-6"
 * reasonForReferral -> "OBR-31"
 * referralQuestion -> "OBX-5 (OBX-11 O, OBX-29 QST)"
-* clinicalInformation -> "CDA document in the XDM package (360X); NHS: OBX type ED or RP, or MDM^T02"
+* clinicalDocument -> "CDA document in the XDM package (360X); NHS: OBX type ED or RP, or MDM^T02"
+* patientSummary -> "CDA document in the XDM package (360X); NHS: OBX type ED or RP"
+* forms -> "OBX (ask at order entry)"
+* observations -> "OBX"
 * dateOfReferral -> "ORC-9"
 * status -> "ORC-1 / ORC-5"
 * statusReason -> "ORC-16"
@@ -115,7 +128,11 @@ Title:          "FHIR R4"
 * validityPeriod -> "Task.restriction.period (or ServiceRequest.occurrencePeriod)"
 * reasonForReferral -> "ServiceRequest.reasonCode / reasonReference"
 * referralQuestion -> "ServiceRequest.note"
-* clinicalInformation -> "ServiceRequest.supportingInfo"
+* clinicalDocument -> "ServiceRequest.supportingInfo (Bundle - HL7 Europe HDR, or DocumentReference)"
+* patientSummary -> "ServiceRequest.supportingInfo (Bundle - HL7 Europe EPS, or DocumentReference)"
+* forms -> "ServiceRequest.supportingInfo (QuestionnaireResponse)"
+* observations -> "ServiceRequest.supportingInfo (Observation)"
+* carePlan -> "ServiceRequest.basedOn (CarePlan)"
 * dateOfReferral -> "ServiceRequest.authoredOn"
 * status -> "Task.businessStatus (and Task.status, ServiceRequest.status)"
 * statusReason -> "Task.statusReason"
@@ -125,4 +142,4 @@ Title:          "FHIR R4"
 * appointment.provider -> "Appointment.participant.actor"
 * appointment.status -> "Appointment.status"
 * interimNote -> "Task.output (clinical document - Composition with HL7 Europe HDR section codes)"
-* outcome -> "Task.output (Referral Outcome document)"
+* outcome -> "Task.output (Discharge Report - HL7 Europe HDR, or clinic letter)"

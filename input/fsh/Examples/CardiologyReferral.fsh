@@ -12,7 +12,6 @@ Alias: $gmc-number = https://fhir.hl7.org.uk/Id/gmc-number
 Alias: $condition-clinical = http://terminology.hl7.org/CodeSystem/condition-clinical
 Alias: $condition-category = http://terminology.hl7.org/CodeSystem/condition-category
 Alias: $v3-ActCode = http://terminology.hl7.org/CodeSystem/v3-ActCode
-Alias: $event-basedOn = http://hl7.org/fhir/StructureDefinition/event-basedOn
 
 // Participants
 
@@ -237,12 +236,6 @@ InstanceOf: Composition
 Title: "Clinic Letter - Interim (cardiology clinic)"
 Description: "Interim Consultation Note [PCC-59]: after the first clinic, answers the referral question and gives the date of the cardiac catheterisation. An outpatient letter, so not an HL7 Europe HDR (inpatient encounters only); it uses the HDR section codes."
 Usage: #example
-* extension[$event-basedOn].valueReference = Reference(CardiologyReferral)
-* extension[$event-basedOn].valueReference.identifier.type = $v2-0203#PLAC
-* extension[$event-basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
-* extension[$event-basedOn].valueReference.identifier.value = "REF-2026-000123"
-* extension[$event-basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
-* extension[$event-basedOn].valueReference.identifier.assigner.identifier.value = "P89020"
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-55501"
 * status = #final
@@ -273,12 +266,6 @@ InstanceOf: http://hl7.eu/fhir/hdr/StructureDefinition/composition-eu-hdr
 Title: "Hospital Discharge Report - Referral Outcome (final)"
 Description: "Referral Outcome [PCC-57]: the HL7 Europe Hospital Discharge Report after the cardiac catheterisation admission, with the suggested plan of care. The patient is discharged back to the GP."
 Usage: #example
-* extension[basedOn].valueReference = Reference(CardiologyReferral)
-* extension[basedOn].valueReference.identifier.type = $v2-0203#PLAC
-* extension[basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
-* extension[basedOn].valueReference.identifier.value = "REF-2026-000123"
-* extension[basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
-* extension[basedOn].valueReference.identifier.assigner.identifier.value = "P89020"
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-55777"
 * status = #final

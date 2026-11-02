@@ -65,7 +65,7 @@ The referral `ServiceRequest.status` becomes `completed`.
 
 360X used the XPHR or C-CDA documents. Whatever the type, the document **SHALL**:
 
-- reference the referral (`Composition.extension[basedOn]` with the Referral ID);
+- be linked to the referral by the workflow that carries it (`Task.output`, `MDM^T02` TXA-14, `DocumentReference.context.related`) - see [Referral Outcome Reports](Reports.html);
 - identify the patient with the same identifier as the referral;
 - include the answer to the referral question and the plan of care, including any
   onward (secondary) referral the Referral Recipient has made;

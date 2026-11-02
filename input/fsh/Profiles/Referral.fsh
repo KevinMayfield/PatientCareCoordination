@@ -43,7 +43,8 @@ Title:          "Referral Request"
 Description:    """
 `Referral` - the request from the Referral Initiator to the Referral Recipient
 ([Referral Request [PCC-55]](PCC-55.html)). Equivalent to HL7 v2 `OMG^O19` (360X) or
-`REF_I12`, the eRS `ServiceRequest` and the BaRS referral `ServiceRequest`. Also used
+`REF_I12` and the eRS `ServiceRequest`; BaRS referrals are mapped onto it (see
+[BaRS](BaRS.html)). Also used
 for referrals to a [virtual ward](VirtualWards.html).
 """
 

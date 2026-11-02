@@ -47,8 +47,8 @@ sequenceDiagram
 #### Clinical Document
 
 A clinic letter as a FHIR Document: `Composition` (LOINC 11488-4 Consult Note) with the
-[HL7 Europe HDR](https://hl7.eu/fhir/hdr/) section codes, referencing the referral
-(`basedOn` extension), with sections as needed. HDR itself is for inpatient stays - see
+[HL7 Europe HDR](https://hl7.eu/fhir/hdr/) section codes, with sections as needed. It is linked to the referral by the status
+update (`Task.output`, or TXA-14 in HL7 v2), not inside the document. HDR itself is for inpatient stays - see
 [Referral Outcome Reports](Reports.html):
 
 | Section | LOINC | Content |

@@ -138,7 +138,10 @@ menu:
   Data Models (Volume 3):
     Patient Administration: PatientAdministration.html
     FHIR Resources: DataModel.html
-    Logical Model: StructureDefinition-Referral.html
+    Clinical Referral (logical): StructureDefinition-Referral.html
+    Discharge Report (logical): StructureDefinition-DischargeReport.html
+    Patient Summary (logical): StructureDefinition-PatientSummary.html
+    Care Plan and Execution (logical): StructureDefinition-CarePlanModel.html
     PRSB Standards: PRSB.html
     Terminology: terminology.html
   Appendices:

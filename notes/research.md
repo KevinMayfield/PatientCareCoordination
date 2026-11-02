@@ -53,6 +53,7 @@ outside `input/`. Dates are when the source was checked.
 | 45 | SNOMED CT 2140231000000104 "Referral to Community Pharmacy Pharmacy First Service" (BaRS Application 5 Task.code) - not in the tx.fhir.org UK Edition (2023-04-12) | IG authors | To confirm |
 | 46 | PRSB standards (111 Referral, Community Pharmacy, Core Information Standard) to HL7 Europe HDR / EPS section mappings | IG authors, PRSB | To confirm |
 | 47 | Outpatient letters: HDR allows only inpatient encounters and fixes Composition.type to 34105-7; outpatient letters use a plain Composition with HDR section codes. Ask HL7 Europe whether HDR (or a sibling) will cover outpatient / ambulatory encounters | IG authors, HL7 Europe | Open |
+| 48 | HL7 Europe HDR composition-eu-hdr slices `extension:basedOn` with the core R4 `event-basedOn` extension, whose context does not include Composition - the validator rejects it (Extension_EXTP_Context_Wrong). This guide links documents to the referral from the workflow instead (Task.output, TXA-14, DocumentReference.context.related). Raise with HL7 Europe | IG authors, HL7 Europe | Open |
 | 17 | Publisher / canonical: copied the NHS North West Genomics publisher and `fhir.nwgenomics.nhs.uk` canonical from the sibling IGs - confirm this is right for a general referral guide | IG authors | To confirm |
 
 ## Sources Checked (2026-11-01)

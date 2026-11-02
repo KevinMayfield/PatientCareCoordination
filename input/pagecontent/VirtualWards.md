@@ -61,8 +61,8 @@ sequenceDiagram
 |---|---|---|---|
 | Refer | Initiator refers, with the ward's eligibility form ([Referral Forms](ReferralForms.html)); a single point of access may triage and forward | [PCC-55](PCC-55.html) | [Referral Request](StructureDefinition-ReferralRequest.html) |
 | Accept / decline | Virtual ward team accepts, or declines (e.g. needs face-to-face hospital care) | [PCC-55](PCC-55.html), [PCC-56](PCC-56.html) | [Referral Task](StructureDefinition-ReferralTask.html) |
-| Admit | The stay starts; the patient's home is the location | HL7 v2 ADT A01 / A04 - **To confirm** which event trusts use | [Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html) |
-| Plan | Monitoring, visits, medication and escalation plan, shared with the care team | [Dynamic Care Planning](DCP.html) | [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html) |
+| Admit | The stay starts; the patient's home is the location | HL7 v2 ADT A01 / A04 - **To confirm** which event trusts use | [Hospital Spell](StructureDefinition-HospitalSpell.html) (location the patient's home) |
+| Plan | Monitoring, visits, medication and escalation plan, shared with the care team | [Dynamic Care Planning](DCP.html) | [Care Plan](StructureDefinition-PatientCarePlan.html) |
 | Monitor | Readings from the patient or devices; at least daily review | Device / remote monitoring platform; FHIR `Observation` | Vital signs `Observation` |
 | Update the referrer | Optional interim note (e.g. escalation, change of plan) | [PCC-59](PCC-59.html) | Clinical document (HDR section codes) |
 | Prescribe | Medicines for the patient at home | [EPS](NHSEngland.html#electronic-prescription-service-eps) (secondary / community care) - **To confirm** current practice | `MedicationRequest` |
@@ -85,7 +85,7 @@ sequenceDiagram
 
 The virtual ward care plan is the plan the whole team works to: who visits, what is
 monitored and how often, thresholds and escalation, medication. It is a `CarePlan`
-([Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html), from the HDR
+([Care Plan](StructureDefinition-PatientCarePlan.html), from the HDR
 CarePlan) with `category` SNOMED CT 960751000000107 |Remote health monitoring care
 plan|, linked to the stay. Each activity references what carries it out: a referral
 (e.g. to community nursing), a `Task`, an `Appointment` or a monitoring `ServiceRequest`.

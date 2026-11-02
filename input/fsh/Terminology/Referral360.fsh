@@ -10,7 +10,7 @@ Description: """
 Business status of a referral, from the IHE 360X state transitions (PCC TF-1 X.4.1).
 Carried in `Task.businessStatus`; the matching `Task.status` and HL7 v2 ORC-1 / ORC-5
 values are on the [FHIR Resources](DataModel.html#referral-status) page.
-`information-requested` is not in 360X - it covers the eRS and BaRS "return to referrer" step.
+`information-requested` is not in 360X - it covers the eRS "return to referrer" step.
 """
 * ^experimental = true
 * ^caseSensitive = true

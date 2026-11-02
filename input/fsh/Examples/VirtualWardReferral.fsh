@@ -156,15 +156,14 @@ Usage: #example
 // Virtual ward stay
 
 Instance: VirtualWardStay
-InstanceOf: VirtualWardEncounter
-Title: "Virtual Ward Encounter - Respiratory virtual ward (step-up)"
-Description: "The virtual ward stay at the patient's home, admitted as a step-up."
+InstanceOf: HospitalSpell
+Title: "Hospital Spell - Respiratory virtual ward (step-up)"
+Description: "The virtual ward stay at the patient's home, admitted as a step-up. A virtual ward stay is a Hospital Spell (Account Number) whose location is the patient's home."
 Usage: #example
-* identifier.type = $v2-0203#AN
-* identifier.system = "https://fhir.mft.nhs.uk/Id/spell"
-* identifier.value = "VW-20261006-01"
-* identifier.assigner.identifier.system = $ods-code
-* identifier.assigner.identifier.value = "R0A"
+* identifier[HospitalSpellIdentifier].type = $v2-0203#AN
+* identifier[HospitalSpellIdentifier].value = "VW-20261006-01"
+* identifier[HospitalSpellIdentifier].assigner.identifier.system = $ods-code
+* identifier[HospitalSpellIdentifier].assigner.identifier.value = "R0A"
 * status = #finished
 * class = $v3-ActCode#IMP
 * serviceType = $sct#418112009 "Pulmonary medicine"
@@ -179,8 +178,8 @@ Usage: #example
 * serviceProvider = Reference(R0A)
 
 Instance: VirtualWardPlan
-InstanceOf: VirtualWardCarePlan
-Title: "Virtual Ward Care Plan - remote monitoring"
+InstanceOf: PatientCarePlan
+Title: "Care Plan - virtual ward remote monitoring"
 Description: "Treatment plan for the stay: twice-daily SpO2 by pulse oximeter, daily review, escalation if SpO2 below 88%."
 Usage: #example
 * status = #completed
@@ -233,11 +232,6 @@ Usage: #example
 Instance: VirtualWardDischargeComposition
 InstanceOf: http://hl7.eu/fhir/hdr/StructureDefinition/composition-eu-hdr
 Usage: #inline
-* extension[basedOn].valueReference.identifier.type = $v2-0203#PLAC
-* extension[basedOn].valueReference.identifier.system = "https://fhir.example-practice.nhs.uk/Id/referral"
-* extension[basedOn].valueReference.identifier.value = "REF-2026-000456"
-* extension[basedOn].valueReference.identifier.assigner.identifier.system = $ods-code
-* extension[basedOn].valueReference.identifier.assigner.identifier.value = "P84673"
 * identifier.system = "https://fhir.mft.nhs.uk/Id/document"
 * identifier.value = "DOC-77801"
 * status = #final
@@ -269,7 +263,7 @@ Usage: #inline
 * address.postalCode = "M13 9PL"
 
 Instance: VirtualWardStayInline
-InstanceOf: VirtualWardEncounter
+InstanceOf: http://hl7.eu/fhir/hdr/StructureDefinition/encounter-eu-hdr
 Usage: #inline
 * identifier.type = $v2-0203#AN
 * identifier.system = "https://fhir.mft.nhs.uk/Id/spell"

@@ -82,8 +82,9 @@ The Health Data API actors (capabilities from the 1.0.0-ballot CapabilityStateme
 | Later care | Each organisation holds its own copy | Anyone with a legitimate relationship finds it |
 {:.grid}
 
-The Referral ID still links everything: the published document references the referral
-it answers, and the status message references the published document.
+The Referral ID still links everything: the status message (Task) references the
+referral and the published document, and the document's `DocumentReference.context.related`
+references the referral.
 
 ### Single Patient Record and "Write Back"
 

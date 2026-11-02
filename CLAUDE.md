@@ -39,7 +39,8 @@ NW GMSA IG (`../FHIRGenomics`).
   PCC-61), Volume 3 Data Models, then Appendices (`WorkflowPatterns.md` order and report pattern, and assessments of
   NHS England services: `NHSEngland.md` referral services, `NHSEnglandDiagnostics.md`
   diagnostic orders).
-- FSH: `input/fsh/` - logical model `Referral.fsh` at the top level, `Profiles/`,
+- FSH: `input/fsh/` - logical models at the top level (`Referral.fsh` Clinical Referral,
+  `DischargeReport.fsh`, `PatientSummary.fsh`, `CarePlanModel.fsh`), `Profiles/`,
   `Terminology/`, `Examples/`, `Core/`, `DataTypes/`.
 - A new page must be added to both `pages:` and `menu:` in `sushi-config.yaml`.
 - Research notes and open questions that should not be published:

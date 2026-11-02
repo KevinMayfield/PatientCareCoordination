@@ -28,12 +28,13 @@ the EU Health Data API.
 | Test or examination | LAB-3, RAD-128 | Diagnostic report | See [Cancer Pathology Report](https://kevinmayfield.github.io/CancerPathologyReport/) and [Enterprise Imaging](https://kevinmayfield.github.io/Imaging/) |
 {:.grid}
 
-Each report **SHALL** reference the referral it answers, by the Referral ID (and the
-UBRN if eRS was used):
+Each report **SHALL** be linked to the referral it answers, by the Referral ID (and the
+UBRN if eRS was used). The link is made by the **workflow** that carries the document,
+not inside the FHIR Document:
 
 | Format | Where the referral reference goes |
 |---|---|
-| FHIR Document | `Composition.extension[basedOn]` ([event-basedOn](https://hl7.org/fhir/extensions/StructureDefinition-event-basedOn.html), as in HDR) |
+| FHIR Task / FHIR Message | `Task.output` references the document; `Task.basedOn` is the referral ([Referral Task](StructureDefinition-ReferralTask.html)) |
 | FHIR DocumentReference | `DocumentReference.context.related` (the `ServiceRequest`) - **To confirm** against the Health Data API |
 | HL7 v2 `MDM^T02` | ORC-2 / OBR-2 (the v2.5.1 `MDM_T02` order group) and TXA-14 placer order number; TXA-12 is the document's own number - see the [PCC-57 example](PCC-57.html#example) |
 | HL7 v2 `ORU^R01` / `OSU^O51` (360X) | ORC-2 Referral ID |
@@ -69,8 +70,10 @@ Transfer of Care eDischarge document.
 {:.grid}
 
 The heading mapping is indicative only - **To confirm** against the PRSB eDischarge
-standard. This guide uses HDR as published, with one rule: the Composition's `basedOn`
-extension **SHALL** reference the referral.
+standard. This guide uses HDR as published. HDR offers a `basedOn` extension on the
+Composition (`event-basedOn`), but the FHIR R4 validator does not allow that extension
+on `Composition`, so this guide does not use it: the document is linked to the referral
+by the workflow (table above). See `notes/research.md` #48.
 
 **HDR is for inpatient stays.** HDR's `Encounter` only allows inpatient classes
 (`IMP`, `ACUTE`, `NONAC`, `OBSENC`, `SS`) and its `Composition.type` is fixed to

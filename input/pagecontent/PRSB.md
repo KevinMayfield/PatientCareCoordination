@@ -55,7 +55,7 @@ flowchart LR
 | Referral | `ServiceRequest` and its clinical information (`supportingInfo`: FHIR Document, letter, `QuestionnaireResponse`) | [Referral Request](StructureDefinition-ReferralRequest.html) |
 | Letter (outpatient) | FHIR Document | HDR section structure (HDR itself is inpatient only - **Open**) |
 | Discharge | FHIR Document | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) |
-| Care plan | `CarePlan`, shared through DCP or sent in the outcome | [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html), HDR `CarePlan` |
+| Care plan | `CarePlan`, shared through DCP or sent in the outcome | [Care Plan](StructureDefinition-PatientCarePlan.html), HDR `CarePlan` |
 | Shared record view | Health Data API (document or resource sharing) | - |
 | Cross-cutting | Document metadata, sections, `Provenance` | All documents |
 {:.grid}

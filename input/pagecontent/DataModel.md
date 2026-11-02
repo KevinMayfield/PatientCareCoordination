@@ -4,14 +4,47 @@
 must not be used for implementation or clinical purposes.
 </div>
 
-The FHIR resources for a closed loop referral. The information content is described by
-the [Referral](StructureDefinition-Referral.html) logical model, whose **Mappings** tab
-shows each item in HL7 v2 (360X) and FHIR.
+The information models and FHIR resources for a closed loop referral and the care it
+belongs to.
+
+### Information Models
+
+Four logical models describe the information, independent of how it is exchanged. Each
+model's **Mappings** tab shows its elements in FHIR (and HL7 v2 where used).
+
+| Model | What it is | FHIR | Based on |
+|---|---|---|---|
+| [Clinical Referral](StructureDefinition-Referral.html) | The request and its workflow: who refers whom, for what and why; status; appointments; links to the documents | `ServiceRequest` + `Task`, `Appointment` ([profiles below](#profiles)) | IHE 360X, FHIR Workflow, HL7 v2 orders; UBRN from eRS |
+| [Discharge Report](StructureDefinition-DischargeReport.html) | The **outcome**: discharge summary or clinic letter that closes the referral - and an input to the next one | FHIR Document - [HL7 Europe HDR](https://hl7.eu/fhir/hdr/), used as published | HDR sections; PRSB discharge and outpatient letter standards |
+| [Patient Summary](StructureDefinition-PatientSummary.html) | The patient's background, for a recipient without the record | FHIR Document - [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/) / IPS | EPS / IPS sections; PRSB Core Information Standard |
+| [Care Plan and Execution](StructureDefinition-CarePlanModel.html) | Who is doing what, for which needs and goals - and the referrals, tasks and encounters that carry it out | `CarePlan` ([Care Plan](StructureDefinition-PatientCarePlan.html)), `CareTeam`, `Goal`; activities reference `ServiceRequest` / `Task` | IHE DCP, FHIR CarePlan, social care plans; PRSB Personalised Care and Support Plan |
+{:.grid}
+
+```mermaid
+flowchart LR
+    CP[Care Plan<br/>who is doing what] -- "activity" --> CR[Clinical Referral<br/>ServiceRequest + Task]
+    PS[Patient Summary<br/>EPS] -. "supportingInfo<br/>(input)" .-> CR
+    DR1[Discharge Report / letter<br/>HDR - previous episode] -. "supportingInfo<br/>(input)" .-> CR
+    CR -- "Task.output<br/>(outcome)" --> DR2[Discharge Report / letter<br/>HDR - this episode]
+    DR2 -- "activity outcome" --> CP
+```
+
+The referral itself stays small; the clinical content travels as documents, which can
+also be published to a shared care record and retrieved by API instead of being sent
+(see [EU Health Data API](HealthDataAPI.html)).
+
+**Not modelled on BaRS.** None of these models takes its structure from BaRS. In
+particular: the referral's request, reason and requester are on the `ServiceRequest`
+(not a `Task`, `Condition` and `Practitioner` as in BaRS Application 5); workflow state
+is a `Task`, not a combination of `ServiceRequest`, `Encounter` and `CarePlan` statuses;
+a `CarePlan` is a plan, not an assessment; and the patient's local identifier always has
+a type and assigning organisation. See the [BaRS review](BaRS.html).
 
 ### References
 
 - [FHIR Workflow](https://hl7.org/fhir/R4/workflow.html), [ServiceRequest](https://hl7.org/fhir/R4/servicerequest.html), [Task](https://hl7.org/fhir/R4/task.html)
-- [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/) and [HL7 Europe Base](https://hl7.eu/fhir/base/)
+- [HL7 Europe Hospital Discharge Report](https://hl7.eu/fhir/hdr/), [HL7 Europe Patient Summary](https://hl7.eu/fhir/eps/1.0.0-ballot/) and [HL7 Europe Base](https://hl7.eu/fhir/base/)
+- [IHE Dynamic Care Planning](DCP.html) and FHIR [CarePlan](https://hl7.org/fhir/R4/careplan.html)
 - [NW GMSA - Genetic Referrals: Target Referral Model](https://nw-gmsa.github.io/en/GeneticReferrals.html#target-referral-model)
 
 ### Resource Model
@@ -58,13 +91,13 @@ erDiagram
     ServiceRequest }o--|| Patient : subject
     ServiceRequest }o--|| PractitionerRole : "requester (Referral Initiator)"
     ServiceRequest }o--o{ HealthcareService : "performer (Referral Recipient)"
-    ServiceRequest }o--o| CarePlan : basedOn
+    ServiceRequest }o--o| CarePlan : "basedOn (care plan activity)"
     Task }o--|| ServiceRequest : "basedOn / focus"
     Task }o--o| HealthcareService : owner
     Task ||--o{ Appointment : output
     Task ||--o{ Composition : output
     Appointment }o--|| ServiceRequest : basedOn
-    Composition }o--|| ServiceRequest : "basedOn (extension)"
+    ServiceRequest }o--o{ Composition : "supportingInfo (input documents)"
     Composition }o--o| Encounter : encounter
     Encounter }o--|| ServiceRequest : basedOn
     CarePlan }o--o| Encounter : encounter
@@ -78,8 +111,7 @@ erDiagram
 | [Referral Task](StructureDefinition-ReferralTask.html) | Task | Workflow state and status updates | PCC-55 to PCC-59 `OSU^O51` |
 | [Referral Appointment](StructureDefinition-ReferralAppointment.html) | Appointment | Appointments and no-shows | PCC-60, PCC-61 `SIU` |
 | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) (used as published) | Composition / Bundle (`composition-eu-hdr`, `bundle-eu-hdr`) | Outcome after an inpatient or virtual ward stay; section codes also used for outpatient letters | PCC-57, PCC-59 (document) |
-| [Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html) | HL7 Europe HDR Encounter | Virtual ward stay | - |
-| [Virtual Ward Care Plan](StructureDefinition-VirtualWardCarePlan.html) | HL7 Europe HDR CarePlan | Virtual ward treatment plan | - (DCP) |
+| [Care Plan](StructureDefinition-PatientCarePlan.html) | HL7 Europe HDR CarePlan | Care plan for any episode (e.g. a virtual ward treatment plan); activities reference referrals and tasks | - (DCP) |
 | `Questionnaire` / `QuestionnaireResponse` (core) | - | Referral forms, in `supportingInfo` or `Task.input` / `output` - see [Referral Forms](ReferralForms.html) | OBX (ask at order entry) |
 | [Patient](StructureDefinition-Patient.html) | HL7 Europe Patient | Patient (NW GMSA conventions) | PID |
 | Core NHS patient administration - Organization, Practitioner, PractitionerRole, RelatedPerson, Location, Encounter, Hospital Spell, Visit, Episode Of Care, Schedule, Slot | NW GMSA / Interweave | See [Patient Administration](PatientAdministration.html) | PID, PV1, SCH |
@@ -94,7 +126,7 @@ identifier data types (NHS Number, MRN, ODS code and others) are copied from the
 
 | Identifier | HL7 v2 | FHIR | Assigned by |
 |---|---|---|---|
-| Referral ID | ORC-2, OBR-2, SCH-26 | `ServiceRequest.identifier:referralId` (type `PLAC`); referenced from `Task.basedOn`, `Appointment.basedOn`, `Composition` `basedOn`, `Encounter.basedOn` | Referral Initiator |
+| Referral ID | ORC-2, OBR-2, SCH-26 | `ServiceRequest.identifier:referralId` (type `PLAC`); referenced from `Task.basedOn`, `Appointment.basedOn`, `Encounter.basedOn`, `DocumentReference.context.related` (documents are linked through `Task.output`) | Referral Initiator |
 | UBRN | Not in 360X | `ServiceRequest.identifier:ubrn` (`https://fhir.nhs.uk/Id/UBRN`) | eRS |
 | NHS Number | PID-3 | `Patient.identifier:nhsNumber` | NHS (PDS) |
 | Local patient identifier | PID-3 | `Patient.identifier:MedicalRecordNumber` | Each organisation |

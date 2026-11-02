@@ -101,8 +101,10 @@ Rules of thumb:
 - An **A&E attendance** followed by an admission is two encounters - the A&E Visit and the
   inpatient spell - linked if required by a grouping (Interweave Encounter Grouping) - see
   below.
-- A **virtual ward stay** is treated as a spell ([Virtual Ward Encounter](StructureDefinition-VirtualWardEncounter.html),
-  identifier type `AN`) - **To confirm**.
+- A **virtual ward stay** is a [Hospital Spell](StructureDefinition-HospitalSpell.html)
+  (identifier type `AN`) whose location is the patient's home - no separate profile.
+  Recording it as a spell is **To confirm** against NHS England virtual ward data
+  collection rules.
 - A **community service, programme or team** caseload is an EpisodeOfCare; each contact
   is a Visit within it.
 - Every identifier carries its assigning organisation (ODS code in `assigner`), because
