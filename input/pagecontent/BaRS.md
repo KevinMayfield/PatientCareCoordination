@@ -16,6 +16,9 @@ finding quotes the source; points not checked are marked **To confirm**.
 - BaRS Core 1.6.0: [Standard Pattern For Composites](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Core/1-6-0/Standard-Pattern-Composite-Messages/Standard-Pattern-For-Composites), [Message Headers](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Core/1-6-0/Standard-Pattern-Composite-Messages/Message-Headers), [Use Case Categories](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Core/1-6-0/Standard-Pattern-Composite-Messages/Use-Case-Categories), [Journey ID](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Core/1-6-0/BaRS-FHIR-Usage/Journey-ID)
 - BaRS Applications (guide v1.12.1): [1 Bookings and Referrals into UEC](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Applications/BaRS-Applications/Applications/BaRS-APP1), [4 Referral into UEC for Validation](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Applications/BaRS-Applications/Applications/BaRS-APP4), [5 Referrals into Pharmacy](https://simplifier.net/guide/nhsbookingandreferralstandard/Home/Applications/BaRS-Applications/Applications/BaRS-APP5)
 - [FHIR Workflow - Request / Task / Event](https://hl7.org/fhir/R4/workflow.html) and [FHIR Messaging](https://hl7.org/fhir/R4/messaging.html)
+- [HL7 Europe Hospital Discharge Report (HDR)](https://hl7.eu/fhir/hdr/) 1.0.0 and [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/) 1.0.0-ballot (package `hl7.fhir.eu.eps`, 2026-06-06; [CI build](https://build.fhir.org/ig/hl7-eu/eps/))
+- [PRSB standards](PRSB.html) - the requirements behind the BaRS data models
+- [Domain-Driven Design - Anti-Corruption Layer](https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer)
 
 ### Summary
 
@@ -28,7 +31,8 @@ finding quotes the source; points not checked are marked **To confirm**.
 | 4 | How is a patient without an NHS Number identified? | A "Local patient identifier" with no type or assigning organisation | MRN with identifier type `MR` and the assigning organisation (ODS code) |
 | 5 | Are payloads proportionate? | Organisations, practitioners, locations and services are sent as full resources, many "MUST" | Identifier references (ODS, professional codes) unless more is needed |
 | 6 | Can an implementer tell what each message contains? | **With difficulty.** The meaning of a message comes from combinations of codes and statuses, and receivers may define their own MessageDefinitions | Explicit event and status codes |
-| 7 | Is the referral payload in line with existing practice? | **No** (Application 5). The referral is mixed with the sender's consultation: Encounter, Condition, CarePlan, Task and MedicationStatement each carry part of the request | `ServiceRequest` with `code`, `reasonCode`, `requester` (PractitionerRole), `encounter` (Visit Number); the consultation as `supportingInfo` - [below](#application-5-referral-mixed-with-the-consultation) |
+| 7 | Is the referral payload in line with existing practice? | **No** (Application 5). The referral is mixed with the sender's consultation: Encounter, Condition, CarePlan, Task and MedicationStatement each carry part of the request | `ServiceRequest` with `code`, `reasonCode`, `requester` (PractitionerRole), `encounter` (Visit Number); the consultation as `supportingInfo` - [below](#7-application-5-referral-mixed-with-the-consultation) |
+| 8 | How should a system adopt BaRS? | - | Behind an **anti-corruption layer**, so BaRS models stay at the edge - [below](#adopting-bars-an-anti-corruption-layer) |
 {:.grid}
 
 ### What BaRS Does Well
@@ -127,7 +131,7 @@ does the same. Using `Encounter.status` to say whether a referral was accepted m
 referral workflow with the recipient's own patient administration.
 
 Application 5 does include a `Task`, but not in this role - see
-[section 7](#application-5-referral-mixed-with-the-consultation).
+[section 7](#7-application-5-referral-mixed-with-the-consultation).
 
 This guide's [Referral Order (O19)](MessageDefinition-referral-order.html) currently has
 the ServiceRequest as its focus and [O51](MessageDefinition-referral-order-status.html)
@@ -270,25 +274,131 @@ consultation that led to the referral, and of the patient's background - not the
 referral.
 
 In existing practice the referral (`ServiceRequest`) stays small and points to the
-supporting information with `ServiceRequest.supportingInfo`. That information can be:
+supporting information with `ServiceRequest.supportingInfo`. eRS works this way: the
+referral carries the clinical information and patient summaries as attachments
+(HL7 v3 or PDF) referenced from `ServiceRequest.supportingInfo`. The supporting
+information can be:
 
-| Option | Contents | Fits when | Notes |
+| Option | Contents | Fits when | FHIR Document |
 |---|---|---|---|
-| **Consultation note** (a document) | What happened at the consultation that made the referral: findings, vital signs, new medicines and allergies, the referral reason | Always - it is the referrer's account of this episode | Same pattern as the outcome: a [Consultation Note](StructureDefinition-ConsultationNote.html) or PRSB-based letter; vital signs as `Observation` ([Vital Signs](Questionnaire-VitalSigns.html)) |
-| **Patient summary** (IPS) | Problems, current medicines, allergies, vital signs, immunisations - the background, not the episode | The receiver has no access to the patient's record (e.g. a community pharmacy) | [International Patient Summary](https://hl7.org/fhir/uv/ips/) is already a dependency of this guide; NHS England equivalents are GP Connect Access Record and the shared care records |
+| **Clinical document** for the episode | What happened at the consultation or stay that made the referral: findings, vital signs, new medicines and allergies, the referral reason | Always - it is the referrer's account of this episode | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) - this guide's [Discharge Report](StructureDefinition-DischargeReport.html), and the [Consultation Note](StructureDefinition-ConsultationNote.html) with the same structure for outpatient and primary care encounters (HDR itself allows only inpatient encounters); vital signs as `Observation` ([Vital Signs](Questionnaire-VitalSigns.html)) |
+| **Patient summary** | Problems, current medicines, allergies, vital signs, immunisations - the background, not the episode | The receiver has no access to the patient's record (e.g. a community pharmacy) | [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/), the European profile of the International Patient Summary (IPS). NHS England equivalents are GP Connect Access Record and the shared care records |
 | **Query the record** | Whatever the receiver needs, when it needs it | The receiver can query an API | Preferred - see [EU Health Data API](HealthDataAPI.html) and [Query Existing Data [PCC-44]](QEDm.html). BaRS itself asks only for what is "not available on existing records", which assumes the receiver can read them |
 {:.grid}
 
 Suggested approach for this guide: the `ServiceRequest` carries the request (`code`,
 `reasonCode`, `requester`, `encounter`, `occurrence`); `supportingInfo` references a
-**consultation note** for the episode, plus a **patient summary (IPS)** only where the
-receiver cannot query the record. Whether the consultation note or IPS should be the
-default for referrals to services without record access (such as community pharmacy) is
-**Open**.
+**clinical document** (HDR structure) for the episode, plus a **patient summary (EPS)**
+only where the receiver cannot query the record. Whether the clinical document or the
+patient summary should be the default for referrals to services without record access
+(such as community pharmacy) is **Open**.
+
+Keeping the referral separate from its supporting documents is also **future proof**.
+NHS England shared care records - and the Single Patient Record - are expected to hold
+patient summaries and discharge reports. When they do, the referral does not change:
+`supportingInfo` references the published document (by `DocumentReference` or URL, see
+[Document Sharing [MHD]](MHD.html) and [EU Health Data API](HealthDataAPI.html)) instead
+of carrying a copy. The receiver then retrieves the documents through an API when it
+needs them, so they **no longer need to be in the message payload** at all - the
+message carries only the workflow (the referral and its status). A payload that embeds
+the consultation in the referral bundle, as BaRS does, has to be redesigned for that.
+
+#### PRSB Standards and FHIR Documents
+
+The BaRS data models come from PRSB standards: Application 1 from the PRSB 111 referral
+work ("PRSB have defined and endorsed an information model"), Application 5 from "the
+Community Pharmacy Standard v3.0 as defined and endorsed by the Professional Records
+Standards Body (PRSB)". PRSB standards are headings for a **document** - what a
+clinician needs to read - so they map more naturally onto FHIR Documents than onto a
+BaRS message bundle:
+
+| PRSB standard | BaRS | FHIR Document |
+|---|---|---|
+| [111 Referral Standard](https://theprsb.org/standards/111referralstandard) | Application 1 (111 to emergency care) | Clinical document for the 111 assessment (HDR structure), referenced from `supportingInfo` |
+| [Community Pharmacy Standard](https://theprsb.org/standards/communitypharmacy/) | Application 5 (Pharmacy First) | Referral: clinical document for the GP consultation. Pharmacy consultation returned to the GP: clinical document [PCC-57] |
+| [Clinical Referral Information Standard](https://theprsb.org/standards/clinical-referral-information-standard/) | - | The referral letter (`ServiceRequest` + clinical document) |
+| [Outpatient Letter Standard](https://theprsb.org/standards/outpatientletterstandard) | - | [Consultation Note](StructureDefinition-ConsultationNote.html) |
+| [Transfer of Care - Acute Inpatient Discharge Standard](https://theprsb.org/standards/edischargesummary) and [Emergency Care Discharge Standard](https://theprsb.org/standards/emergencycaredischarge) | - | [HL7 Europe HDR](https://hl7.eu/fhir/hdr/) / [Discharge Report](StructureDefinition-DischargeReport.html) |
+| [Core Information Standard](https://theprsb.org/standards/core-information-standard/) | - | [HL7 Europe Patient Summary (EPS)](https://hl7.eu/fhir/eps/1.0.0-ballot/) |
+{:.grid}
+
+See [PRSB Standards](PRSB.html) for the full list and where each fits in the clinical
+process. The PRSB to HDR / EPS section mappings are **To confirm**.
+
+### Adopting BaRS: an Anti-Corruption Layer
+
+A system that supports referrals generally - [IHE 360X](360X.html),
+[IHE Dynamic Care Planning](DCP.html),
+[IHE Dynamic Care Team Management (DCTM)](https://www.ihe.net/uploadedFiles/Documents/PCC/IHE_PCC_Suppl_DCTM.pdf),
+HL7 v2, FHIR Workflow and FHIR Documents - should not let one national standard's
+model shape its core. The domain-driven design **anti-corruption layer** is the usual
+answer: a translation layer at the edge that converts between the external model (BaRS)
+and the system's own model, so BaRS concepts never enter the core.
+
+```mermaid
+flowchart LR
+    subgraph EXT [External - BaRS]
+        B1[BaRS $process-message<br/>ServiceRequest, Encounter,<br/>CarePlan, Task, Condition ...]
+    end
+    subgraph ACL [Anti-corruption layer]
+        T1[Translate message<br/>to 360X event]
+        T2[Map payload to<br/>general model]
+        T3[Assemble BaRS<br/>responses]
+    end
+    subgraph CORE [Referral system - general model]
+        C1[ServiceRequest + Task<br/>360X state]
+        C2[FHIR Documents<br/>HDR, EPS]
+        C3[Appointment, Encounter<br/>Patient Administration]
+        C4[CarePlan, CareTeam<br/>DCP / DCTM]
+    end
+    B1 --> T1 --> C1
+    B1 --> T2 --> C2
+    T2 --> C3
+    C1 --> T3 --> B1
+    C2 --> T3
+```
+
+Tips for the layer:
+
+| Concern | BaRS (external) | General model (core) |
+|---|---|---|
+| Event | `eventCoding` + `reason` + resource statuses (see [section 6](#6-hard-to-tell-what-each-message-contains)) | One 360X transaction and [Referral Task](StructureDefinition-ReferralTask.html) `businessStatus` - decide the event once, in the layer |
+| What is requested | `Task.code`, `Task.restriction` (Application 5) | `ServiceRequest.code`, `occurrence`, `priority` |
+| Why | `Condition`, `CarePlan.activity.outcomeCodeableConcept` | `ServiceRequest.reasonCode` / `reasonReference` |
+| Requester | `Practitioner`; organisation in `MessageHeader.sender` | `PractitionerRole` with practitioner and organisation (ODS) identifiers |
+| Patient | NHS Number, or an untyped local identifier | NHS Number plus MRN with type and assigning organisation; keep the BaRS value as received for replies |
+| Encounter | Sender's assessment Encounter; receiver's "planned" Encounter | Visit Number / Spell identifier ([Patient Administration](PatientAdministration.html)); the receiver's reference as a filler identifier on the ServiceRequest |
+| Clinical content | CarePlan, Condition, Observation, MedicationStatement, AllergyIntolerance, Flag, QuestionnaireResponse | `supportingInfo`: a clinical document (HDR structure), patient summary (EPS), forms (`QuestionnaireResponse`) |
+| Correlation | Original `Bundle.id` (`MessageHeader.response.identifier`), Journey ID | Referral ID (`ServiceRequest.identifier`), with the BaRS ids kept as additional identifiers |
+| Outcome | Status in a response | Clinical document [PCC-57] - sent by another route (e.g. MESH, GP Connect Send Document) if BaRS cannot carry it |
+{:.grid}
+
+- **Keep it at the edge.** Only the layer knows BaRS profiles, MessageDefinitions, use
+  case categories and the Endpoint Catalogue. The core sees 360X events and the general
+  resources.
+- **Translate both ways.** Inbound BaRS messages become core events; core events (accept,
+  decline, cancel, outcome) are turned into BaRS responses only for partners that use
+  BaRS. Other partners get HL7 v2 or FHIR Messages from the same core events
+  ([Exchange Options](Transport.html)).
+- **Keep the original.** Store the received BaRS bundle unchanged for audit and
+  re-processing; the translated resources reference it (`Provenance`).
+- **One layer per external standard.** eRS, BaRS and HL7 v2 each get their own
+  translator into the same core. This puts BaRS on the same footing as **eRS**, whose
+  referral is a `ServiceRequest` with the clinical information and patient summary
+  attached through `supportingInfo`.
+- **Documents by reference when they are shared.** Store the clinical document and
+  patient summary as documents in the core, so they can be published to a shared care
+  record and referenced, rather than rebuilt from BaRS resources each time.
+- **Report gaps, don't absorb them.** Where BaRS cannot carry something the core needs
+  (a referral identifier, a typed patient identifier, the outcome document), the layer
+  fills it from configuration or another route and records the gap, rather than
+  changing the core model.
 
 ### Using BaRS with This Guide
 
-Where BaRS is the route (for example NHS 111 to an emergency department):
+### Using BaRS with This Guide
+
+In summary, where BaRS is the route (for example NHS 111 to an emergency department):
 
 - map each BaRS message to the 360X transaction in the [table above](#message-model-compared-with-360x)
   and record the state as a [Referral Task](StructureDefinition-ReferralTask.html);
@@ -298,6 +408,8 @@ Where BaRS is the route (for example NHS 111 to an emergency department):
   the requesting practitioner and organisation into a `PractitionerRole`;
 - keep a Referral ID and the sender's patient identifier (with type and assigning
   organisation) on both sides;
-- send the outcome as a clinical document ([Consultation Note](StructureDefinition-ConsultationNote.html)
-  or [Discharge Report](StructureDefinition-DischargeReport.html)) where BaRS has no
-  equivalent.
+- send the outcome as a clinical document ([HL7 Europe HDR](https://hl7.eu/fhir/hdr/):
+  [Discharge Report](StructureDefinition-DischargeReport.html), or the
+  [Consultation Note](StructureDefinition-ConsultationNote.html) for outpatient
+  encounters) where BaRS has no equivalent;
+- do all of this in an [anti-corruption layer](#adopting-bars-an-anti-corruption-layer).

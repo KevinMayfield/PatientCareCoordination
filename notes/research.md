@@ -51,6 +51,7 @@ outside `input/`. Dates are when the source was checked.
 | 43 | BaRS: later decline (PCC-56) and cancel confirmation (PCC-58) equivalents | NHS England BaRS team | To confirm |
 | 44 | Referral supporting information for receivers without record access (e.g. community pharmacy): consultation note, IPS patient summary, or both? (BaRS review, Application 5) | IG authors, PRSB | Open |
 | 45 | SNOMED CT 2140231000000104 "Referral to Community Pharmacy Pharmacy First Service" (BaRS Application 5 Task.code) - not in the tx.fhir.org UK Edition (2023-04-12) | IG authors | To confirm |
+| 46 | PRSB standards (111 Referral, Community Pharmacy, Core Information Standard) to HL7 Europe HDR / EPS section mappings | IG authors, PRSB | To confirm |
 | 17 | Publisher / canonical: copied the NHS North West Genomics publisher and `fhir.nwgenomics.nhs.uk` canonical from the sibling IGs - confirm this is right for a general referral guide | IG authors | To confirm |
 
 ## Sources Checked (2026-11-01)
@@ -65,6 +66,9 @@ outside `input/`. Dates are when the source was checked.
   service; federated XCA (ITI-38, ITI-39) and XCA-I (RAD-75) over SOAP, mTLS + XUA
   SAML; MHD endpoint planned; PDM as a document reference source. Not checked: which
   document metadata (order / accession number) can be searched.
+- 2026-11-02: HL7 Europe Patient Summary (EPS) - package hl7.fhir.eu.eps, 1.0.0-ballot
+  (2026-06-06, STU 1 ballot), CI build 1.0.0-ci-build; scope: European patient summary
+  aligned with eHN guidelines, links to IPS 2.0. Section list not checked.
 - 2026-11-02: BaRS. API v1.0.7 OpenAPI "Booking and Referral API" 1.0.0
   (digital.nhs.uk/restapi/oas/413106): $process-message, MessageDefinition, Slot,
   Appointment, ServiceRequest; MessageDefinition example lists 15 focus entries (incl.
