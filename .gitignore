@@ -16,3 +16,6 @@
 /_build.sh
 /_build.bat
 /Specifications/NationalGenomics/
+
+# IG Publisher by-product
+/Requirements-fromNarrative.json
