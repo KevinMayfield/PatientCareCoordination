@@ -90,34 +90,37 @@ outcome to the referral it made.
 ### Booking and Referral Standard (BaRS)
 
 BaRS is a FHIR R4 standard for sending booking and referral information between NHS
-service providers, through a national API that routes each request to the target
-service. Its first uses were in urgent and emergency care (for example NHS 111 and
-ambulance services referring to and booking into other services) - **To confirm**
-the current use cases.
+services, using FHIR Messaging (`$process-message` at both ends) through a national API
+that routes each request to the target service. Its Applications cover urgent and
+emergency care (NHS 111, integrated urgent care and ambulance services referring to and
+booking into emergency departments, urgent treatment centres and community services)
+and referrals into community pharmacy.
 
-| BaRS concept | 360X | FHIR (this guide) | Assessment |
-|---|---|---|---|
-| Referral (process a message) | Referral Request [PCC-55] | [Referral Request](StructureDefinition-ReferralRequest.html) | Map BaRS to this profile; check that the Referral ID, reason, referral question and clinical information are carried |
-| Booking (get slots, process a message) | Appointment Notification [PCC-60] | [Referral Appointment](StructureDefinition-ReferralAppointment.html) | Booking is a separate concern from the referral workflow |
-| Follow-up from the target service | Accept / Decline [PCC-55], [PCC-56], cancel [PCC-58] | [Referral Task](StructureDefinition-ReferralTask.html) | Optional "follow-up" only - no defined accept / decline / cancel state machine |
-| Outcome | Referral Outcome [PCC-57] | [Consultation Note](StructureDefinition-ConsultationNote.html) / [Discharge Report](StructureDefinition-DischargeReport.html) | Not defined - the loop is not closed |
-| Get referrals / bookings for a patient | Not in 360X (query) | Search `ServiceRequest`, `Appointment` (REST) | - |
+| BaRS concept | 360X | FHIR (this guide) |
+|---|---|---|
+| Referral request (`servicerequest-request`, `new`) | Referral Request [PCC-55] | [Referral Request](StructureDefinition-ReferralRequest.html) |
+| Interim validation response - accepted or rejected (Application 4) | Accept / Decline [PCC-55] | [Referral Task](StructureDefinition-ReferralTask.html) |
+| Referral update with `ServiceRequest.status` `revoked` | Cancellation [PCC-58] | Referral Task |
+| Full validation response (Application 4) | Referral Outcome [PCC-57] (status only, no clinical document) | Referral Task; [Consultation Note](StructureDefinition-ConsultationNote.html) / [Discharge Report](StructureDefinition-DischargeReport.html) |
+| Booking request (get slots, book, update, cancel) | Appointment Notification [PCC-60] | [Referral Appointment](StructureDefinition-ReferralAppointment.html) |
+| Did-not-attend response | No-Show [PCC-61] | Referral Task |
+| Get referrals / bookings for a patient | Not in 360X (query) | Search `ServiceRequest`, `Appointment` (REST) |
 {:.grid}
 
-**Assessment.** BaRS is known to **under-engineer both its data and its process
-standards** for the closed loop: the API page describes routing a request to a target
-service, which "may" send a follow-up, but no referral state machine (accept, decline,
-cancel, interim report, outcome) and no outcome document linked to the referral. This
-guide therefore does **not** take BaRS as the model for referral workflow. Implementers
-follow 360X and the general standards (HL7 v2 `OMG^O19` / `OSU^O51`, FHIR
-`ServiceRequest` + `Task`, FHIR Documents for the outcome); where BaRS has to be used for
-a route (for example NHS 111), it is mapped onto those, and the missing steps are
-supplied by them. Gaps to record - **To confirm** against the BaRS implementation guide:
+**Assessment.** BaRS covers most of the closed loop and has the same shape as 360X:
+asynchronous request and response messages between sender and receiver. The gaps are
+in how the messages are defined:
 
-- referral status after the first response (later decline, cancellation, completion);
-- the outcome report and its link to the referral;
-- coded data in the referral (reason, question) rather than free text;
-- separation of booking from referral (360X Scheduling Option is optional and independent).
+- payloads are loosely defined;
+- workflow state is inferred from combinations of resource statuses rather than an
+  explicit status;
+- the BaRS `CarePlan` carries the sender's assessment;
+- a patient without an NHS Number has only an untyped local identifier;
+- parties are sent as full resources rather than identifier references.
+
+The detailed review, with the evidence, is in the
+[Booking and Referral Standard (BaRS)](BaRS.html) appendix. Where BaRS is the route,
+map it onto 360X and this guide's resources as described there.
 
 ### Transfer of Care
 

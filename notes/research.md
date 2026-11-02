@@ -46,6 +46,11 @@ outside `input/`. Dates are when the source was checked.
 | 38 | Can the IG Publisher / tx.fhir.org expand the UK refsets used by Social Context (1027891000000106, 999001571000000109, 999000891000000102)? Same issue as Imaging #15 | IG authors | To confirm |
 | 39 | RF1-11 External Referral Identifier for the UBRN in REF_I12 - NHS practice? | Trust integration teams | To confirm |
 | 40 | PAR-Q+ in a FHIR Questionnaire needs written permission from the PAR-Q+ Collaboration (eparmedx@gmail.com); the example is structure-only | IG authors | Open |
+| 41 | Should the Referral Order (O19) FHIR message carry a Task (status requested, focus the ServiceRequest) and use the Task as its focus, so every 360X message focuses on the Task? (BaRS review, point 2) | IG authors | Open |
+| 42 | BaRS: does any Application carry a referral business identifier (ServiceRequest.identifier)? Correlation found only via MessageHeader.response.identifier (original Bundle.id) and the Journey ID (EpisodeOfCare reference) | NHS England BaRS team | To confirm |
+| 43 | BaRS: later decline (PCC-56) and cancel confirmation (PCC-58) equivalents | NHS England BaRS team | To confirm |
+| 44 | Referral supporting information for receivers without record access (e.g. community pharmacy): consultation note, IPS patient summary, or both? (BaRS review, Application 5) | IG authors, PRSB | Open |
+| 45 | SNOMED CT 2140231000000104 "Referral to Community Pharmacy Pharmacy First Service" (BaRS Application 5 Task.code) - not in the tx.fhir.org UK Edition (2023-04-12) | IG authors | To confirm |
 | 17 | Publisher / canonical: copied the NHS North West Genomics publisher and `fhir.nwgenomics.nhs.uk` canonical from the sibling IGs - confirm this is right for a general referral guide | IG authors | To confirm |
 
 ## Sources Checked (2026-11-01)
@@ -60,6 +65,19 @@ outside `input/`. Dates are when the source was checked.
   service; federated XCA (ITI-38, ITI-39) and XCA-I (RAD-75) over SOAP, mTLS + XUA
   SAML; MHD endpoint planned; PDM as a document reference source. Not checked: which
   document metadata (order / accession number) can be searched.
+- 2026-11-02: BaRS. API v1.0.7 OpenAPI "Booking and Referral API" 1.0.0
+  (digital.nhs.uk/restapi/oas/413106): $process-message, MessageDefinition, Slot,
+  Appointment, ServiceRequest; MessageDefinition example lists 15 focus entries (incl.
+  Bundle, MessageHeader) each 1..1. Simplifier guide v1.12.1 / Core 1.6.0 / package
+  1.42.0: Standard Pattern For Composites (pseudo-code), Message Headers ("manual,
+  business logic, check"), Use Case Categories, Journey ID (EpisodeOfCare); Applications
+  1 (UEC), 4 (validation: interim and full responses), 5 (pharmacy) payload tables:
+  CarePlan status fixed completed with triage outcome codes; Patient.identifier local
+  identifier with no type / assigner; Organization referenced as a resource.
+  Application 5 v1.2.1 (guide 1.12.1): Task carries code (2140231000000104) and
+  restriction.period, referenced from CarePlan.activity; ServiceRequest.reasonCode only
+  for cancellation; requester -> Practitioner; MedicationStatement = new medication at
+  the encounter; requirements ask for BMI, BP service type, new meds / allergies.
 - 2026-11-02: MNS Genomic Order Management Event (genomic-order-event-1), private beta,
   last edited 18 August 2026. Triggers: ServiceRequest, Task, DiagnosticReport created /
   updated; Specimen status; consent. Notification only (read from GOMS); FHIR history

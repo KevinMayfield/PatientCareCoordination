@@ -117,7 +117,7 @@ graph TD
 | Document Sharing | Referral letter published; recipient notified | FHIR Document published to a Document Access Provider; initiator queries or is notified | Shared care records, NRL |
 | Resource Sharing | Recipient reads the ServiceRequest and clinical record | Initiator reads Conditions, CarePlans, results | Some regions |
 | Event Notifications | Notify the recipient a referral exists | Notify the initiator a report exists | Emerging (MNS) |
-| Conversational Workflow | Task-based: accept, decline, request information | Task completed, output references the report | eRS API, GOMS; BaRS (partial - see [assessment](NHSEngland.html#booking-and-referral-standard-bars)) |
+| Conversational Workflow | Task-based: accept, decline, request information | Task completed, output references the report | eRS API, GOMS; BaRS (status inferred from resource statuses - see [BaRS](BaRS.html)) |
 {:.grid}
 
 Sharing data through an API (Document and Resource Sharing, see
@@ -135,7 +135,7 @@ Each NHS England service implements part of the pattern for one setting:
 | Service | Order | Status | Scheduling | Report | Link report to order |
 |---|---|---|---|---|---|
 | eRS | Yes (GP to consultant-led outpatients) | Yes (triage, accept, return to referrer) | Yes | No - clinic letters go by other routes | No |
-| BaRS | Yes (mainly urgent and emergency care) | Yes | Yes | Limited - **To confirm** | Within BaRS |
+| BaRS | Yes (urgent and emergency care, community pharmacy) | Yes (Application 4: accept, reject, final response) | Yes | Status only - no clinical document | Within BaRS (original Bundle id, Journey ID) |
 | Transfer of Care | No | No | No | Yes (discharge, outpatient, ED letters) | No - **To confirm** |
 | MESH + Kettering XML | No | No | No | Yes (documents to GP) | No |
 | GP Connect | Clinical information (read GP record) | No | GP appointments | Yes (Send Document; Update Record from community pharmacy) | **To confirm** |

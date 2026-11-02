@@ -17,8 +17,8 @@ NW GMSA IG (`../FHIRGenomics`).
 - **General standards take precedence over NHS England standards.** Never assume a
   national standard is correct: assess it against IHE / HL7 v2 / FHIR / CDA and record
   gaps. eRS and EPS are trusted, well-engineered references within their scope (the
-  author worked on them). BaRS under-engineers both data and process - map it onto 360X, never use it as
-  the model. Do not adopt "write access to other organisations' records" (e.g. the
+  author worked on them). BaRS has the 360X shape but loose definitions (see
+  `input/pagecontent/BaRS.md`) - map it onto 360X, never use it as the model. Do not adopt "write access to other organisations' records" (e.g. the
   virtual wards framework); use `ORU_R01` messaging, REST APIs, or CDA / FHIR Documents.
 - **HL7 v2 is the baseline; IHE XDS / XDM / XDR are optional.** Every
   interaction has an HL7 v2 equivalent (360X v2.5.1 messages).

@@ -211,7 +211,7 @@ the Task returns to `requested`. HL7 v2 equivalent - **Open**.
 | | eRS | BaRS | HL7 v2 (trust / region) |
 |---|---|---|---|
 | Referral | eRS referral with attachments (UBRN) | `ServiceRequest` in a FHIR Message | `OMG^O19` (360X) or `REF_I12` |
-| Accept / decline | eRS triage outcome: accept, return to referrer, reject | Response from the target service - **To confirm** | `OSU^O51` or `RRI_I12` |
+| Accept / decline | eRS triage outcome: accept, return to referrer, reject | Interim validation response (Application 4) - see [BaRS](BaRS.html) | `OSU^O51` or `RRI_I12` |
 | Message | | | `OMG^O19` (360X) or `REF_I12` - see [Patient Referral [I12]](I12.html) |
-| Mapping to this guide | UBRN in `identifier:ubrn`; eRS service as `performer` | Map to [Referral Request](StructureDefinition-ReferralRequest.html); status, cancellation and outcome are not defined by BaRS and follow this guide | As above |
+| Mapping to this guide | UBRN in `identifier:ubrn`; eRS service as `performer` | Map to [Referral Request](StructureDefinition-ReferralRequest.html) and [Referral Task](StructureDefinition-ReferralTask.html) - see [BaRS](BaRS.html) | As above |
 {:.grid}

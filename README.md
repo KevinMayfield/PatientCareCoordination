@@ -1,4 +1,4 @@
-# Closed Loop Referral and Care Coordination (Proof of Concept)
+# Care Coordination and 360 Referrals (Proof of Concept)
 
 > **Proof of concept.** This FHIR Implementation Guide is a demonstration only. It is **not** an authoritative source, is not endorsed by NHS England, IHE or HL7, and must not be used for implementation or clinical purposes.
 

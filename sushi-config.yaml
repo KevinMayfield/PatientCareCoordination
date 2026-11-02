@@ -3,7 +3,7 @@ id: fhir.nwgenomics.nhs.uk.patientcarecoordination
 canonical: https://fhir.nwgenomics.nhs.uk/PatientCareCoordination
 version: 0.1.0
 name: PatientCareCoordination
-title: Closed Loop Referral and Care Coordination (Proof of Concept)
+title: Care Coordination and 360 Referrals (Proof of Concept)
 description: PROOF OF CONCEPT ONLY - not an authoritative source. General order (referral) and report (outcome) workflow patterns for NHS England, based on IHE 360X Closed Loop Referral, covering eRS, BaRS, Transfer of Care, MESH, GP Connect, IM1, EPS, HL7 v2, HL7 Europe Hospital Discharge Report and EU Health Data API, extended to virtual wards (hospital at home) and IHE Dynamic Care Planning
 releaseLabel: proof-of-concept
 status: draft
@@ -107,6 +107,9 @@ pages:
   NHSEngland.md:
     title: NHS England Referral and Report Services
     generation: markdown
+  BaRS.md:
+    title: Booking and Referral Standard (BaRS)
+    generation: markdown
   NHSEnglandDiagnostics.md:
     title: NHS England Diagnostic Order Services
     generation: markdown
@@ -141,5 +144,6 @@ menu:
   Appendices:
     Order and Report Workflow Pattern: WorkflowPatterns.html
     NHS England Referral and Report Services: NHSEngland.html
+    Booking and Referral Standard (BaRS): BaRS.html
     NHS England Diagnostic Order Services: NHSEnglandDiagnostics.html
   Artifacts: artifacts.html
