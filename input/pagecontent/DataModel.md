@@ -29,6 +29,10 @@ flowchart LR
     DR2 -- "activity outcome" --> CP
 ```
 
+How the Clinical Referral breaks down into FHIR resources, who owns each one and how they
+travel is described on the [Clinical Referral](StructureDefinition-Referral.html#from-logical-model-to-implementation-model)
+model page.
+
 The referral itself stays small; the clinical content travels as documents, which can
 also be published to a shared care record and retrieved by API instead of being sent
 (see [EU Health Data API](HealthDataAPI.html)).

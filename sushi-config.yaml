@@ -110,6 +110,9 @@ pages:
   DataModel.md:
     title: Overview Model
     generation: markdown
+  ReferralDomainModel.md:
+    title: Clinical Referral Domain Model
+    generation: markdown
   Templates.md:
     title: Composition, Archetypes and Templates
     generation: markdown
@@ -167,6 +170,7 @@ menu:
     Patient Demographics [ITI-78] / [ITI-119]: ITI-78.html
   Data Models (Volume 3):
     Overview Model: DataModel.html
+    Clinical Referral Domain Model: ReferralDomainModel.html
     Patient Administration: PatientAdministration.html
     Clinical Referral (logical): StructureDefinition-Referral.html
     Discharge Report (logical): StructureDefinition-DischargeReport.html
