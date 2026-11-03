@@ -10,8 +10,10 @@ This logical model says **what** information a closed loop referral carries. An
 implementation splits it into FHIR resources, each **owned** by one side of the
 exchange, and sends them by one of the [Exchange Options](Transport.html). The
 **Mappings** tab gives the element-level mapping; this section shows the breakdown.
-The request part alone - `ServiceRequest` and what it references, without the workflow,
-appointments or outcome - is the [Clinical Referral Domain Model](ReferralDomainModel.html).
+
+**Next:** the [Clinical Referral Domain Model](ReferralDomainModel.html) goes into more
+detail on how the bulk of this model - the request: `ServiceRequest` and what it
+references - is implemented, field by field, in FHIR and HL7 v2.
 
 ```mermaid
 flowchart LR

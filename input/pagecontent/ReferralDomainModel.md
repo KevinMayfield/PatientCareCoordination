@@ -21,8 +21,11 @@ The same shape is used for **diagnostic orders**: the NW GMSA
 [Genomic Test Order](https://nw-gmsa.github.io/en/Questionnaire-GenomicTestOrder.html)
 is a `ServiceRequest` with the patient, hospital spell, requester and reason, plus a
 specimen. A referral is that order without the specimen and with richer supporting
-information. The [Clinical Referral](StructureDefinition-Referral.html) logical model
-covers the whole closed loop; this page is its request part.
+information.
+
+This page follows the [Clinical Referral](StructureDefinition-Referral.html) logical model
+and its breakdown into an implementation model: it covers the bulk of that model - the
+request - in detail.
 
 ### References
 

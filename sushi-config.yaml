@@ -170,9 +170,9 @@ menu:
     Patient Demographics [ITI-78] / [ITI-119]: ITI-78.html
   Data Models (Volume 3):
     Overview Model: DataModel.html
-    Clinical Referral Domain Model: ReferralDomainModel.html
     Patient Administration: PatientAdministration.html
     Clinical Referral (logical): StructureDefinition-Referral.html
+    Clinical Referral Domain Model: ReferralDomainModel.html
     Discharge Report (logical): StructureDefinition-DischargeReport.html
     Patient Summary (logical): StructureDefinition-PatientSummary.html
     Care Plan and Execution (logical): StructureDefinition-CarePlanModel.html
